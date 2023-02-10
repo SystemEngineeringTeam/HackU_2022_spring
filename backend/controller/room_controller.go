@@ -7,7 +7,6 @@ import (
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/structs"
 )
 
-func GetRooms(c *gin.Context) {
+func GetRoom(c *gin.Context) {
 
-	c.JSON(http.StatusOK, result)
 }
