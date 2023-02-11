@@ -1,0 +1,47 @@
+### 本番ではGETメソッドのパラメータ「roomId」にはカンマ区切りで複数の部屋IDが入ります。
+### REST CLIENTではカンマで区切るとリクエストが送れなくなるので複数の部屋IDを送って動作を調べたい時は、curl コマンドを打って確かめてください
+
+### 部屋idから部屋の詳細情報を取得
+GET  http://localhost:8080/api/room/details?roomId=fd2aDsAf=2 HTTP/1.1
+
+### 参加している部屋の一覧を取得（閲覧したことのある部屋一覧を見るときに叩く）
+GET  http://localhost:8080/api/room?roomId=dmlksd HTTP/1.1
+
+###部屋を建てるまたは、小部屋を作成する（childrenに部屋IDを追加していく）
+POST  http://localhost:8080/api/room/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "roomName": "成人式2次会", // string 部屋の名前
+    "roomMarker": "たなか", // string 部屋を建てる人の名前
+    "parent": "3n2fS9", // string? 作る部屋の親部屋のID
+}
+
+### 参加者の追加
+POST  http://localhost:8080/api/room/:roomId/member/ HTTP/1.1
+Content-Type: application/json
+
+### 部屋の概要を変更
+PUT  http://localhost:8080/api/room/:roomId/ HTTP/1.1
+content-type: application/json
+
+{
+    "roomKey": "fjfnewi23932n", // string 部屋に対応するキー
+    "room": { ... }, // 変更後の部屋のデータ roomIdやmakerなどは変更できない
+}
+
+### 参加者の変更（名前、または備考欄を変更する時）
+PUT  http://localhost:8080/api/room/:roomId/member/:userId/ HTTP/1.1
+content-type: application/json
+
+{
+    "nextRoomId": "vsvdv2", // string? 移動先の部屋ID　省けば変更しない
+    "name": "今井ゆう", // string? 変更後の名前　省けば変更しない
+    "comment": "こんにちは", // string? 変更後のコメント
+}
+
+### 部屋を削除
+DELETE  http://localhost:8080/api/room/:roomId/:roomKey/ HTTP/1.1
+
+### 部屋からの退室
+DELETE  http://localhost:8080/api/room/:roomId/member/:userId/ HTTP/1.1
