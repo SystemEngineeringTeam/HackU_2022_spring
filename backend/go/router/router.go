@@ -10,6 +10,9 @@ func Init() {
 	// 部屋idから部屋の詳細情報を取得
 	r.GET("/api/room/details/")
 
+	// 部屋idから部屋の詳細情報を取得
+	r.GET("/api/room/details/")
+
 	// 参加している部屋の一覧を取得（閲覧したことのある部屋一覧を見るときに叩く）
 	r.GET("/api/room?roomId=dmlksd")
 
