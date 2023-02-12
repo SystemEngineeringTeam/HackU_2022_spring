@@ -2,7 +2,7 @@ import { HStack, Box, Text } from "@chakra-ui/react";
 
 import { members } from '../../sample/member';
 
-export const DisplayParticipants = () => {
+export const ParticipantsAmount = () => {
   return (
     <HStack>
       <Box>

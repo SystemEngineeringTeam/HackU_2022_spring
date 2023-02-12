@@ -8,7 +8,7 @@ type Props = {
   onClick: () => void;
 };
 
-export const PrimaryButton: FC<Props> = memo((props) => {
+export const PrimaryButton: FC<Props> = (props) => {
   const { children, disabled = false, loading = false, onClick } = props;
   return (
     <Button
@@ -23,4 +23,4 @@ export const PrimaryButton: FC<Props> = memo((props) => {
       {children}
     </Button>
   );
-});
+};
