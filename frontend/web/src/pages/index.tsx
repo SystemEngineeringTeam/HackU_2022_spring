@@ -1,37 +1,11 @@
+import { DisplaySummary } from "@/components/molecules/DisplaySummary";
+import { EditSummary } from "@/components/molecules/EditSummary";
 import { CloseIcon, EditIcon, SmallCloseIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Divider,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Switch,
-  Text,
-  Icon,
-  IconButton,
-  Input,
-  Textarea,
-  Button,
-  VStack,
-  Center,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, Text } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 
 export default function Home() {
   const [isEditSummary, setIsEditSummary] = useState(false);
-  const [draftSummary, setDraftSummary] = useState("");
-  const [summary, setSummary] = useState("");
-
-  const onClickEditButton = () => setIsEditSummary(!isEditSummary);
-
-  const onClickPreserveSummary = (draftSummary: string) => {
-    setSummary(draftSummary);
-    setIsEditSummary(!isEditSummary);
-  };
-
-  const onChangeDraftSummary = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setDraftSummary(e.target.value);
 
   return (
     <>
@@ -51,56 +25,16 @@ export default function Home() {
       <Divider borderColor="gray.400" />
       <Flex justify="space-between">
         {isEditSummary ? (
-          <>
-            <VStack w="100%" align="strech">
-              <Flex w="100%">
-                <Textarea
-                  placeholder="例：カラオケの場所（https://...）"
-                  value={draftSummary}
-                  onChange={onChangeDraftSummary}
-                />
-                <IconButton
-                  padding={1}
-                  mr={1}
-                  as={SmallCloseIcon}
-                  variant="none"
-                  colorScheme="white"
-                  textAlign="end"
-                  size="sm"
-                  aria-label="Edit Icon"
-                  onClick={onClickEditButton}
-                />
-              </Flex>
-              <Center>
-                <Button
-                  w="80%"
-                  mb={4}
-                  backgroundColor="orange.400"
-                  color="white"
-                  onClick={() => onClickPreserveSummary(draftSummary)}
-                >
-                  変更を保存する
-                </Button>
-              </Center>
-            </VStack>
-          </>
+          <EditSummary
+            isEditSummary={isEditSummary}
+            setIsEditSummary={setIsEditSummary}
+          />
         ) : (
           <>
-            <Box padding={4}>
-              <Text whiteSpace="unset">{summary}</Text>
-            </Box>
-            <Box>
-              <IconButton
-                padding={1}
-                as={EditIcon}
-                variant="none"
-                colorScheme="white"
-                textAlign="end"
-                size="sm"
-                aria-label="Edit Icon"
-                onClick={onClickEditButton}
-              />
-            </Box>
+            <DisplaySummary
+              isEditSummary={isEditSummary}
+              setIsEditSummary={setIsEditSummary}
+            />
           </>
         )}
       </Flex>
