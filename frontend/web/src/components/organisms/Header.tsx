@@ -24,7 +24,7 @@ export const Header: FC = () => {
             fontSize={{ base: "md", md: "lg" }}
             // onClick={onClickHome}
           >
-            ユーザ管理アプリ
+            人数管理する蔵（仮）
           </Heading>
         </Flex>
 

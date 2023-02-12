@@ -1,16 +1,16 @@
-import { DisplaySummary } from "@/components/molecules/DisplaySummary";
-import { EditSummary } from "@/components/molecules/EditSummary";
-import { CloseIcon, EditIcon, SmallCloseIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 import { Box, Divider, Flex, Text } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+
+import { EditSummary } from "../components/molecules/EditSummary";
+import { DisplaySummary } from "../components/molecules/DisplaySummary";
+import { DisplayParticipants } from "../components/organisms/DisplayParticipants";
 
 export default function Home() {
   const [isEditSummary, setIsEditSummary] = useState(false);
 
   return (
     <>
-      {/* <Flex> */}
-      <Box padding={4}>
+      <Box p={4}>
         <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
           部屋のタイトル
         </Text>
@@ -21,7 +21,6 @@ export default function Home() {
             <Switch size="md" />
           </FormControl>
         </Box> */}
-      {/* </Flex> */}
       <Divider borderColor="gray.400" />
       <Flex justify="space-between">
         {isEditSummary ? (
@@ -38,8 +37,11 @@ export default function Home() {
           </>
         )}
       </Flex>
-
       <Divider borderColor="gray.400" />
+
+      <Box p={4}>
+        <DisplayParticipants />
+      </Box>
     </>
   );
 }
