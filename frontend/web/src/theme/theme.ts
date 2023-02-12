@@ -9,6 +9,14 @@ const thema = extendTheme({
       },
     },
   },
+  // components: {
+  //   Button: {
+  //     baseStyle: {
+  //       color: "red.500",
+  //       backgroundColor: "orange.400",
+  //     },
+  //   },
+  // },
 });
 
 export default thema;

@@ -1,5 +1,7 @@
 import { HStack, Box, Text } from "@chakra-ui/react";
 
+import { members } from '../../sample/member';
+
 export const DisplayParticipants = () => {
   return (
     <HStack>
@@ -17,7 +19,7 @@ export const DisplayParticipants = () => {
       </Box>
       <Box>
         <Text fontSize="lg" fontWeight="bold" whiteSpace="unset">
-          14人
+          {members.length}人
         </Text>
       </Box>
     </HStack>
