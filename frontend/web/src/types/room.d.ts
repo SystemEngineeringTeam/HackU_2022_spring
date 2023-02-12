@@ -6,7 +6,7 @@ export type Room = {
   memberAmount: number;
   summary: string;
   isOpen: boolean;
-  lastUpdate: Date;
+  lastUpdate: string;
   roomChildren: Array<string>;
   roomParent: number | null;
   members: Array<Member>;
