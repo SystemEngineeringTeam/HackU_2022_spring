@@ -32,7 +32,7 @@ export const MemberCard: FC<Props> = (props) => {
         </Text>
       </Box>
       <Center mr={2}>
-        <HStack spacing={8}>
+        <HStack >
           <IconButtonWithText iconButton={UpDownIcon} iconLabel="移動" />
           <IconButtonWithText iconButton={DeleteIcon} iconLabel="削除" />
         </HStack>
