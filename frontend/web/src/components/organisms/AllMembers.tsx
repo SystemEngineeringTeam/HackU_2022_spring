@@ -1,3 +1,4 @@
+import { useRecoilValue } from "recoil";
 import {
   Card,
   CardBody,
@@ -7,10 +8,12 @@ import {
   StackDivider,
 } from "@chakra-ui/react";
 
-import { members } from "@/sample/member";
-import { MemberCard } from "../atoms/member/memberCard";
+import { MemberCard } from "../atoms/member/MemberCard";
+import { roomDetailsState } from "../../store/roomDetailsState";
 
-export const AllParticipant = () => {
+export const AllMembers = () => {
+  const roomDetaills = useRecoilValue(roomDetailsState);
+
   return (
     <Card>
       <CardHeader>
@@ -19,7 +22,7 @@ export const AllParticipant = () => {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
-          {members.map((member) => (
+          {roomDetaills.members.map((member) => (
             <MemberCard
               key={member.memberId}
               name={member.name}

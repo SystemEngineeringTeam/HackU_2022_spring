@@ -1,8 +1,9 @@
+import { useRecoilValue } from "recoil";
 import { HStack, Box, Text } from "@chakra-ui/react";
+import { roomDetailsState } from "../../store/roomDetailsState";
 
-import { members } from '../../sample/member';
-
-export const ParticipantsAmount = () => {
+export const MembersAmount = () => {
+  const roomDetails = useRecoilValue(roomDetailsState);
   return (
     <HStack>
       <Box>
@@ -19,7 +20,7 @@ export const ParticipantsAmount = () => {
       </Box>
       <Box>
         <Text fontSize="lg" fontWeight="bold" whiteSpace="unset">
-          {members.length}人
+          {roomDetails.members.length}人
         </Text>
       </Box>
     </HStack>

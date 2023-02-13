@@ -1,20 +1,8 @@
-import {
-  Box,
-  Card,
-  CardHeader,
-  Divider,
-  Text,
-  Heading,
-  CardBody,
-  Stack,
-  StackDivider,
-} from "@chakra-ui/react";
+import { Box, Divider, Text } from "@chakra-ui/react";
 
-import { members } from "../sample/member";
 import { Summary } from "@/components/organisms/Summary";
-import { MemberCard } from "@/components/atoms/member/memberCard";
-import { ParticipantsAmount } from "../components/organisms/ParticipantsAmount";
-import { AllParticipant } from "@/components/organisms/AllParticipant";
+import { MembersAmount } from "../components/organisms/MembersAmount";
+import { AllMembers } from "@/components/organisms/AllMembers";
 
 export default function Home() {
   return (
@@ -31,16 +19,12 @@ export default function Home() {
           </FormControl>
         </Box> */}
       <Divider borderColor="gray.400" />
-
       <Summary />
-
       <Divider borderColor="gray.400" />
-
       <Box p={4}>
-        <ParticipantsAmount />
+        <MembersAmount />
       </Box>
-
-      <AllParticipant />
+      <AllMembers />
     </>
   );
 }
