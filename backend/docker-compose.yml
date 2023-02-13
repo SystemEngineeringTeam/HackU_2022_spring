@@ -1,7 +1,7 @@
 version: "3"
 services:
   go:
-    container_name: koukaten2022_GO
+    container_name: HackU2022Spring_GO
     build:
       context: ./docker/go
       dockerfile: Dockerfile
@@ -17,7 +17,7 @@ services:
       - "mysql"
 
   mysql:
-    container_name: koukaten2022_DB
+    container_name: HackU2022Spring_DB
     build:
       context: ./docker/mysql
       dockerfile: Dockerfile
