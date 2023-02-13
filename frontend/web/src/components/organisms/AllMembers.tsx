@@ -8,7 +8,7 @@ import {
   StackDivider,
 } from "@chakra-ui/react";
 
-import { MemberCard } from "../atoms/member/MemberCard";
+import { MemberCard } from "../molecules/member/MemberCard";
 import { roomDetailsState } from "../../store/roomDetailsState";
 
 export const AllMembers = () => {
