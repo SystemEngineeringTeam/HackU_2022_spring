@@ -9,8 +9,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { ModalMoveMember } from "../molecules/ModalMoveMember";
-import { ModalDeleteMember } from "../molecules/ModalDeleteMember";
+import { ModalMoveMember } from "../../molecules/ModalMoveMember";
+import { ModalDeleteMember } from "../../molecules/ModalDeleteMember";
 
 type Props = {
   iconButton: As<any>;
@@ -24,21 +24,20 @@ export const IconButtonWithText: FC<Props> = (props) => {
 
   return (
     <>
-      <Button backgroundColor="white" onClick={onOpen}>
+      <Button backgroundColor="white" onClick={onOpen} _hover={{}} _active={{}}>
         <VStack>
           <Icon
             as={iconButton}
             variant="none"
             colorScheme="white"
             size="sm/2"
-            aria-label="Delete Icon"
+            aria-label={iconLabel}
           />
           <Box>
             <Text fontSize="xs">{iconLabel}</Text>
           </Box>
         </VStack>
       </Button>
-
       {iconLabel === "削除" ? (
         <ModalDeleteMember isOpen={isOpen} onClose={onClose} />
       ) : (
