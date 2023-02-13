@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const FixedBottomButtons: FC<Props> = (props) => {
-const { leftButtonTitle, rightButtonTitle } = props;
+  const { leftButtonTitle, rightButtonTitle } = props;
 
   return (
     <HStack
