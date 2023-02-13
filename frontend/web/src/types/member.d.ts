@@ -1,6 +1,6 @@
 export type Member = {
-  name: string
-  userId: string
-  registrationDate: Date
-  comment: string
+  memberId: number;
+  name: string;
+  registrationDate: string;
+  comment: string;
 };

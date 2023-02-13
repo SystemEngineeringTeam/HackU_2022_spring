@@ -1,9 +1,26 @@
-import { Heading } from "@chakra-ui/react";
+import { Box, Divider, Text } from "@chakra-ui/react";
+
+import { Summary } from "@/components/organisms/Summary";
+import { AllMembers } from "@/components/organisms/AllMembers";
+import { MembersAmount } from "../components/organisms/MembersAmount";
+import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 
 export default function Home() {
   return (
     <>
-      <Heading>Welcome to Next.js!</Heading>
+      <FixedBottomButtons />
+      <Box p={4}>
+        <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
+          部屋のタイトル
+        </Text>
+      </Box>
+      <Divider borderColor="gray.400" />
+      <Summary />
+      <Divider borderColor="gray.400" />
+      <Box p={4}>
+        <MembersAmount />
+      </Box>
+      <AllMembers />
     </>
   );
 }

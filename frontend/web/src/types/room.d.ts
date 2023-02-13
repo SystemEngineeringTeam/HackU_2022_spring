@@ -1,12 +1,12 @@
 import { Member } from "./member";
 
 export type Room = {
-  roomId: string;
+  roomId: number;
   roomName: string;
   memberAmount: number;
   summary: string;
   isOpen: boolean;
-  lastUpdate: Date;
+  lastUpdate: string;
   roomChildren: Array<string>;
   roomParent: number | null;
   members: Array<Member>;
