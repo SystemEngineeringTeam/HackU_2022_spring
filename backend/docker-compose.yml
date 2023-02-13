@@ -19,11 +19,11 @@ services:
   mysql:
     container_name: HackU2022_Spring_DB
     build:
-      context: ./Docker/mysql
-      dockerfile: Dockerfile
+      context: ./docker/mysql
+      dockerfile: dockerfile
     ports:
       - "3306:3306"
     volumes:
-      - ./Docker/mysql/init:/docker-entrypoint-initdb.d
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: admin
