@@ -9,17 +9,32 @@ type Props = {
 
 export const useGetRooms = () => {
   const [allRooms, setAllRooms] = useState<undefined | Room[]>();
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [error, setError] = useState<Error | undefined>(undefined);
+
   const fetchAllRooms = useCallback(
     async (props: Props) => {
-      const response = await axios.get<Room[]>('/api/room', {
-        params: {
-          roomIds: props.roomIds,
-          deep: props.deep
+      setIsLoaded(false);
+      setIsError(false);
+
+      try {
+        const response = await axios.get<Room[]>('/api/room', {
+          params: {
+            roomIds: props.roomIds,
+            deep: props.deep
+          }
+        });
+        setIsLoaded(true);
+        setAllRooms(response.data);
+      } catch (e) {
+        if (e instanceof Error) {
+          setIsError(true);
+          setError(e);
         }
-      });
-      setAllRooms(response.data);
+      }
     }, []
   );
 
-  return { allRooms, setAllRooms, fetchAllRooms };
+  return { fetchAllRooms, isLoaded, allRooms, isError, error };
 };
