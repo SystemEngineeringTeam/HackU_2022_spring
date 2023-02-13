@@ -1,8 +1,6 @@
-import { Box, Center, Divider, Text } from "@chakra-ui/react";
+import { Box, Center, Text } from "@chakra-ui/react";
 
-import { Summary } from "@/components/organisms/Summary";
-import { AllMembers } from "@/components/organisms/AllMembers";
-import { MembersAmount } from "../components/organisms/MembersAmount";
+import { AllRooms } from "@/components/organisms/AllRooms";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 
 export default function Home() {
@@ -16,6 +14,7 @@ export default function Home() {
           </Text>
         </Center>
       </Box>
+      <AllRooms />
     </>
   );
 }

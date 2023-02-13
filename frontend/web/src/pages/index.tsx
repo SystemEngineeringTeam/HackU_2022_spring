@@ -2,7 +2,7 @@ import { Box, Divider, Text } from "@chakra-ui/react";
 
 import { Summary } from "@/components/organisms/Summary";
 import { AllMembers } from "@/components/organisms/AllMembers";
-import { MembersAmount } from "../components/organisms/MembersAmount";
+import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
       <Summary />
       <Divider borderColor="gray.400" />
       <Box p={4}>
-        <MembersAmount />
+        <MembersAmount p="2" bg="orange.300" fontSize="md" />
       </Box>
       <AllMembers />
     </>
