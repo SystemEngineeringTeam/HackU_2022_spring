@@ -31,8 +31,8 @@ export const MemberCard: FC<Props> = (props) => {
           {comment}
         </Text>
       </Box>
-      <Center mr={2}>
-        <HStack >
+      <Center>
+        <HStack>
           <IconButtonWithText iconButton={UpDownIcon} iconLabel="移動" />
           <IconButtonWithText iconButton={DeleteIcon} iconLabel="削除" />
         </HStack>

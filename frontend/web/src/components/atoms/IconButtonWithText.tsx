@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   As,
   Box,
@@ -7,8 +8,9 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { FC } from "react";
-import { ModalParticipantDelete } from "../molecules/ModalParticipantDelete";
+
+import { ModalMoveMember } from "../molecules/ModalMoveMember";
+import { ModalDeleteMember } from "../molecules/ModalDeleteMember";
 
 type Props = {
   iconButton: As<any>;
@@ -30,7 +32,6 @@ export const IconButtonWithText: FC<Props> = (props) => {
             colorScheme="white"
             size="sm/2"
             aria-label="Delete Icon"
-            
           />
           <Box>
             <Text fontSize="xs">{iconLabel}</Text>
@@ -38,7 +39,11 @@ export const IconButtonWithText: FC<Props> = (props) => {
         </VStack>
       </Button>
 
-      <ModalParticipantDelete isOpen={isOpen} onClose={onClose} />
+      {iconLabel === "削除" ? (
+        <ModalDeleteMember isOpen={isOpen} onClose={onClose} />
+      ) : (
+        <ModalMoveMember isOpen={isOpen} onClose={onClose} />
+      )}
     </>
   );
 };

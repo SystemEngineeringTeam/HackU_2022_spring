@@ -19,7 +19,6 @@ export const AllMembers = () => {
       <CardHeader>
         <Heading size="md">参加者一覧</Heading>
       </CardHeader>
-
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
           {roomDetaills.members.map((member) => (
