@@ -45,7 +45,8 @@ export const EditSummary: FC<Props> = (props) => {
           onChange={onChangeDraftSummary}
         />
         <IconButton
-          padding={1}
+          p={1}
+          mr={1}
           as={SmallCloseIcon}
           variant="none"
           colorScheme="white"

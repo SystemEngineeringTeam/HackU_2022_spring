@@ -28,10 +28,9 @@ export const ModalDeleteMember: FC<Props> = (props) => {
         <ModalHeader>削除しますか？</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Center >
+          <Center>
             <HStack spacing={4}>
               <Button
-              
                 color="white"
                 backgroundColor="orange.400"
                 onClick={onClose}

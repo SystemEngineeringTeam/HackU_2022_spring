@@ -12,7 +12,6 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-
 type Props = {
   onClose: () => void;
   isOpen: boolean;
@@ -30,6 +29,7 @@ export const MenuDrawer: FC<Props> = (props) => {
               <Box>メニュー</Box>
               <IconButton
                 as={SmallCloseIcon}
+                variant="unstyled"
                 size="sm"
                 bg="white"
                 aria-label="Delete Icon"

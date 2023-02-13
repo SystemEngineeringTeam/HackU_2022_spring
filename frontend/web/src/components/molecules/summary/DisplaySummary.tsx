@@ -19,12 +19,13 @@ export const DisplaySummary: FC<Props> = (props) => {
 
   return (
     <>
-      <Box padding={4}>
+      <Box as="button" padding={4}>
         <Text whiteSpace="unset">{summary}</Text>
       </Box>
       <Box>
         <IconButton
-          padding={1}
+          p={1}
+          mr={1}
           as={EditIcon}
           variant="none"
           colorScheme="white"
