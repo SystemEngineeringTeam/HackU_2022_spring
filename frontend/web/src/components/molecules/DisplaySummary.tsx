@@ -1,8 +1,9 @@
-import { summaryState } from "@/store/summaryState";
-import { EditIcon } from "@chakra-ui/icons";
-import { Box, IconButton, Text } from "@chakra-ui/react";
 import { FC } from "react";
 import { useRecoilValue } from "recoil";
+import { EditIcon } from "@chakra-ui/icons";
+import { Box, IconButton, Text } from "@chakra-ui/react";
+
+import { summaryState } from "../../store/summaryState";
 
 type Props = {
   isEditSummary: boolean;
