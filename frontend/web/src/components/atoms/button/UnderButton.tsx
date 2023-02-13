@@ -6,10 +6,11 @@ type Props = {
   width?: string;
   color: string;
   title: string;
+  onClick?: () => void;
 };
 
 export const UnderButton: FC<Props> = (props) => {
-  const { height = "100", width = "50", color, title } = props;
+  const { height = "100", width = "50", color, title, onClick } = props;
 
   return (
     <Button
@@ -20,6 +21,7 @@ export const UnderButton: FC<Props> = (props) => {
       rounded=""
       _hover={{ bg: `${color}.500` }}
       _active={{ bg: `${color}.600` }}
+      onClick={onClick}
     >
       {title}
     </Button>
