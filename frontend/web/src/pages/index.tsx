@@ -20,9 +20,7 @@ export default function Home() {
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
-      <Box p={4}>
-        <MembersAmount p="2" bg="orange.300" fontSize="md" />
-      </Box>
+      
       <AllMembers />
     </>
   );
