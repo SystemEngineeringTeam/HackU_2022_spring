@@ -1,5 +1,5 @@
 export type Member = {
-  memberId: string;
+  memberId: number;
   name: string;
   registrationDate: string;
   comment: string;

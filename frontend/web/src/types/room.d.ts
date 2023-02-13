@@ -1,7 +1,7 @@
 import { Member } from "./member";
 
 export type Room = {
-  roomId: string;
+  roomId: number;
   roomName: string;
   memberAmount: number;
   summary: string;
