@@ -3,7 +3,14 @@ import { Divider, HStack } from "@chakra-ui/react";
 
 import { UnderButton } from "../atoms/button/UnderButton";
 
-export const FixedBottomButtons: FC = () => {
+type Props = {
+  leftButtonTitle: string;
+  rightButtonTitle: string;
+};
+
+export const FixedBottomButtons: FC<Props> = (props) => {
+const { leftButtonTitle, rightButtonTitle } = props;
+
   return (
     <HStack
       height="70px"
@@ -13,9 +20,9 @@ export const FixedBottomButtons: FC = () => {
       zIndex={1}
       bottom="0%"
     >
-      <UnderButton color="orange" title="参加者を追加する" />
+      <UnderButton color="orange" title={leftButtonTitle} />
       <Divider orientation="vertical" borderColor="white" />
-      <UnderButton color="teal" title="小部屋を追加する" />
+      <UnderButton color="teal" title={rightButtonTitle} />
     </HStack>
   );
 };

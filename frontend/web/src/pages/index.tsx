@@ -8,7 +8,10 @@ import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 export default function Home() {
   return (
     <>
-      <FixedBottomButtons />
+      <FixedBottomButtons
+        leftButtonTitle="参加者を追加する"
+        rightButtonTitle="小部屋を追加する"
+      />
       <Box p={4}>
         <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
           部屋のタイトル
