@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 
 import { MemberCard } from "../molecules/member/MemberCard";
-import { roomDetailsState } from "../../store/roomDetailsState";
+import { roomDetailsState } from "@/store/roomDetailsState";
 
 export const AllMembers = () => {
   const roomDetaills = useRecoilValue(roomDetailsState);

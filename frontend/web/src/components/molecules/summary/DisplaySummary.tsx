@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { EditIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Text } from "@chakra-ui/react";
 
-import { summaryState } from "../../../store/summaryState";
+import { summaryState } from "@/store/summaryState";
 
 type Props = {
   isEditSummary: boolean;
@@ -16,6 +16,7 @@ export const DisplaySummary: FC<Props> = (props) => {
   const summary = useRecoilValue(summaryState);
 
   const onClickEditButton = () => setIsEditSummary(!isEditSummary);
+
   return (
     <>
       <Box padding={4}>
