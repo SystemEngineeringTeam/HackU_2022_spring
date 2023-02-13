@@ -2,7 +2,7 @@ import { FC } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Flex, Heading, IconButton, useDisclosure } from "@chakra-ui/react";
 
-import { MenuDrawer } from "../molecules/MenuDrawer";
+import { MenuDrawer } from "../molecules/drawer/MenuDrawer";
 
 export const Header: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

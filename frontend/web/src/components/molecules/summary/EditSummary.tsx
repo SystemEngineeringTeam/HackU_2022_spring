@@ -10,8 +10,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import { summaryState } from "../../store/summaryState";
-import { UnderButton } from "../atoms/button/UnderButton";
+import { summaryState } from "../../../store/summaryState";
+import { UnderButton } from "../../atoms/button/UnderButton";
 
 type Props = {
   isEditSummary: boolean;
