@@ -1,7 +1,7 @@
 CREATE DATABASE data_sets;
 
 /* CREATE TABLE */
-CREATE TABLE IF NOT EXISTS data_sets.rooms( 
+CREATE TABLE data_sets.rooms( 
     id INT NOT NULL AUTO_INCREMENT, /* 部屋ID */
     room_name VARCHAR(20), /* 部屋の名前 */
     member_amount INT, /* 参加者の総数 */
@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS data_sets.rooms(
     last_update VARCHAR(15), /* 最終更新日時 */
     room_parent int, /* 親部屋のID（この部屋が親の場合はnull) */
     room_maker VARCHAR(15), /* 部屋作成者の名前 */
+    primary key (id)
 ) ENGINE = InnoDB;
 
 /* INSERT QUERY */
