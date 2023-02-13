@@ -1,8 +1,8 @@
-import { FC, memo, useCallback } from "react";
-import { Flex, Box, Heading, Link } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
-import { MenuIconButton } from "../atoms/button/MenuIconButton";
-import { useNavigate } from "react-router-dom";
+import { FC } from "react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { Flex, Heading, IconButton, useDisclosure } from "@chakra-ui/react";
+
+import { MenuDrawer } from "../molecules/MenuDrawer";
 
 export const Header: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,23 +18,20 @@ export const Header: FC = () => {
         padding={{ base: 3, md: 5 }}
       >
         <Flex align="center" as="a" mr={8} _hover={{ cursor: "pointer" }}>
-          <Heading
-            as="h1"
-            fontSize={{ base: "md", md: "lg" }}
-            // onClick={onClickHome}
-          >
+          <Heading as="h1" fontSize={{ base: "md", md: "lg" }}>
             人数管理する蔵（仮）
           </Heading>
         </Flex>
-        <MenuIconButton onOpen={onOpen} />
+        <IconButton
+          aria-label="メニューボタン"
+          icon={<HamburgerIcon />}
+          size="md"
+          variant="unstyled"
+          onClick={onOpen}
+          display={{ base: "black", md: "none" }}
+        />
       </Flex>
-      {/* <MenuDrawer
-        onClose={onClose}
-        isOpen={isOpen}
-        onClickHome={onClickHome}
-        onClickUserManagement={onClickUserManagement}
-        onClickSetting={onClickSetting}
-      /> */}
+      <MenuDrawer onClose={onClose} isOpen={isOpen} />
     </>
   );
 };

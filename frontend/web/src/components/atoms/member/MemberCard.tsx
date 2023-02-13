@@ -1,16 +1,8 @@
-import { DeleteIcon, UpDownIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Heading,
-  HStack,
-  IconButton,
-  Text,
-  Flex,
-  Center,
-} from "@chakra-ui/react";
 import { FC } from "react";
-import { VStack } from "@chakra-ui/react";
-import { IconButtonWithText } from "../IconButtonWithText";
+import { DeleteIcon, UpDownIcon } from "@chakra-ui/icons";
+import { Box, Heading, HStack, Text, Flex, Center } from "@chakra-ui/react";
+
+import { IconButtonWithText } from "../button/IconButtonWithText";
 
 type Props = {
   name: string;
