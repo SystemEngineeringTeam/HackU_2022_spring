@@ -4,7 +4,7 @@ services:
     container_name: HackU2022_Spring_GO
     build:
       context: ./docker/go
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     stdin_open: true
     tty: true
     env_file:
