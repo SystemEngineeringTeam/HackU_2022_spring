@@ -20,7 +20,7 @@ docker compose up -d
 
 koukaten2022_GOのコンテナに入る
 ```
-docker exec -it koukaten2022_GO ash
+docker exec -it HackU2022_Spring_GO ash
 ```
 cmdディレクトリに入る
 
@@ -38,7 +38,7 @@ go run main.go
 
 koukaten2022_DBのコンテナに入る
 ```
-docker exec -it koukaten2022_DB /bin/bash
+docker exec -it HackU2022_Spring_DB /bin/bash
 ```
 mysqlにログイン(パスワードはadmin)
 ```
