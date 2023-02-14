@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import {
   FormErrorMessage,
   FormLabel,
@@ -11,10 +12,13 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-import { AllRooms } from "@/components/organisms/AllRooms";
-import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-
 export default function Home() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
   return (
     <>
       <Box p={4}>
@@ -23,19 +27,50 @@ export default function Home() {
             部屋を作成
           </Text>
         </Center>
-
-        <FormControl>
-          <FormLabel>Email address</FormLabel>
-          <Input type="email" />
-          <FormLabel>Email address</FormLabel>
-
-          <Textarea
-            placeholder="例：カラオケの場所（https://...）"
-            //   value={draftSummary}
-            //   onChange={onChangeDraftSummary}
-          />
-        </FormControl>
       </Box>
+      <form>
+        <FormControl>
+          <FormLabel>
+            <Text
+              as="mark"
+              p={2}
+              color="white"
+              bg="teal.200"
+              fontSize="md"
+              fontWeight="bold"
+            >
+              部屋名
+            </Text>
+          </FormLabel>
+          <Input
+            id="roomName"
+            type="text"
+            {...register("roomName", {
+              required: true,
+            })}
+          />
+          <FormErrorMessage>
+            {errors.roomName && errors.roomName.message}
+          </FormErrorMessage>
+
+          <FormLabel>
+            <Text
+              as="mark"
+              p={2}
+              color="white"
+              bg="teal.200"
+              fontSize="md"
+              fontWeight="bold"
+            >
+              部屋の説明
+            </Text>
+          </FormLabel>
+          <Textarea placeholder="例：カラオケの場所（https://...）" />
+        </FormControl>
+        <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
+        Submit
+      </Button>
+      </form>
     </>
   );
 }
