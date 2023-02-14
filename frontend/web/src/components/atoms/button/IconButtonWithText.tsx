@@ -9,8 +9,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { ModalMoveMember } from "../../molecules/modal/ModalMoveMember";
-import { ModalDeleteMember } from "../../molecules/modal/ModalDeleteMember";
+import { ModalMoveMember } from "@/components/molecules/modal/ModalMoveMember";
+import { ModalDeleteMember } from "@/components/molecules/modal/ModalDeleteMember";
 
 type Props = {
   iconButton: As<any>;

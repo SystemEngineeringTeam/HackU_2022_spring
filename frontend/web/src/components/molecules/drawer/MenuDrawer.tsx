@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { IconButton } from "@chakra-ui/react";
+import { SmallCloseIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -10,8 +11,6 @@ import {
   DrawerOverlay,
   Flex,
 } from "@chakra-ui/react";
-
-import { SmallCloseIcon } from "@chakra-ui/icons";
 
 type Props = {
   onClose: () => void;
@@ -30,6 +29,7 @@ export const MenuDrawer: FC<Props> = (props) => {
               <Box>メニュー</Box>
               <IconButton
                 as={SmallCloseIcon}
+                variant="unstyled"
                 size="sm"
                 bg="white"
                 aria-label="Delete Icon"

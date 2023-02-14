@@ -8,9 +8,9 @@ CREATE TABLE data_sets.rooms(
     summary VARCHAR(50), /* 部屋の概要 */
     is_open boolean, /* 参加者の受付状況 */
     last_update VARCHAR(15), /* 最終更新日時 */
-    room_parent int, /* 親部屋のID（この部屋が親の場合はnull) */
+    room_parent INT, /* 親部屋のID（この部屋が親の場合はnull) */
     room_maker VARCHAR(15), /* 部屋作成者の名前 */
-    primary key (id)
+    PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
 /* INSERT QUERY */
