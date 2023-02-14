@@ -36,5 +36,5 @@ export const usePostRoom = () => {
     }, []
   );
 
-  return { postRoom, isLoaded, allRooms: createdRoom, isError, error };
+  return { postRoom, isLoaded, createdRoom, isError, error };
 };
