@@ -6,7 +6,7 @@ type Room struct {
 	MemberAmount int      `json:"memberAmount"`
 	Summary      string   `json:"summary"`
 	IsOpen       bool     `json:"isOpen"`
-	LastUpdate  string   `json:"lastUpdated"`
+	LastUpdate   string   `json:"lastUpdated"`
 	RoomParent   int      `json:"roomParent"`
 	RoomMaker    string   `json:"roomMaker"`
 	Members      []Member `gorm:"foreignKey:RoomId"`
@@ -15,7 +15,6 @@ type Room struct {
 type Member struct {
 	ID               int    `json:"memberId"`
 	RoomId           int    `json:"roomId"`
-	UserId           int    `gorm:"primaryKey"`
 	UserName         string `json:"name"`
 	RegistrationDate string `json:"registrationDate"`
 	Comment          string `json:"comment"`
