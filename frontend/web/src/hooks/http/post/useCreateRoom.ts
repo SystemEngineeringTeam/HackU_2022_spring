@@ -3,30 +3,30 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomIds: string[];
-  deep: number;
+  roomName: string;
+  roomMaker: string;
+  parent?: string;
 };
 
-export const useGetRooms = () => {
-  const [allRooms, setAllRooms] = useState<undefined | Room[]>();
+export const useCreateRoom = () => {
+  const [room, setRoom] = useState<undefined | Room[]>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  const fetchAllRooms = useCallback(
+  const createRoom = useCallback(
     async (props: Props) => {
       setIsLoaded(false);
       setIsError(false);
 
       try {
-        const response = await axios.get<Room[]>('/api/room', {
-          params: {
-            roomIds: props.roomIds,
-            deep: props.deep
-          }
+        const response = await axios.post<Room[]>('/api/room', {
+          roomName: props.roomName,
+          roomMaker: props.roomMaker,
+          parent: props.parent
         });
         setIsLoaded(true);
-        setAllRooms(response.data);
+        setRoom(response.data);
       } catch (e) {
         if (e instanceof Error) {
           setIsError(true);
@@ -36,5 +36,5 @@ export const useGetRooms = () => {
     }, []
   );
 
-  return { fetchAllRooms, isLoaded, allRooms, isError, error };
+  return { createRoom, isLoaded, room, isError, error };
 };

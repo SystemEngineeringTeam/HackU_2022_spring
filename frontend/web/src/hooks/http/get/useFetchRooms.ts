@@ -3,30 +3,30 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomId: string;
-  memberId: string;
-  name: string;
-  comment: string;
+  roomIds: string[];
+  deep: number;
 };
 
-export const usePutMember = () => {
-  const [editMember, setEditMember] = useState<undefined | Room[]>();
+export const useGetRooms = () => {
+  const [rooms, setRooms] = useState<undefined | Room[]>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  const putMember = useCallback(
+  const fetchRooms = useCallback(
     async (props: Props) => {
       setIsLoaded(false);
       setIsError(false);
 
       try {
-        const response = await axios.put<Room[]>(`/api/room/${props.roomId}/member/${props.memberId}`, {
-          name: props.name,
-          comment: props.comment
+        const response = await axios.get<Room[]>('/api/room', {
+          params: {
+            roomIds: props.roomIds,
+            deep: props.deep
+          }
         });
         setIsLoaded(true);
-        setEditMember(response.data);
+        setRooms(response.data);
       } catch (e) {
         if (e instanceof Error) {
           setIsError(true);
@@ -36,5 +36,5 @@ export const usePutMember = () => {
     }, []
   );
 
-  return { putMember, isLoaded, editMember, isError, error };
+  return { fetchRooms, isLoaded, rooms, isError, error };
 };
