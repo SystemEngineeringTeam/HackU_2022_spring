@@ -1,5 +1,6 @@
 import { useRecoilValue } from "recoil";
 import {
+  Box,
   Card,
   CardBody,
   CardHeader,
@@ -8,8 +9,9 @@ import {
   StackDivider,
 } from "@chakra-ui/react";
 
-import { MemberCard } from "../atoms/member/MemberCard";
-import { roomDetailsState } from "../../store/roomDetailsState";
+import { MemberCard } from "../molecules/member/MemberCard";
+import { roomDetailsState } from "@/store/roomDetailsState";
+import { MembersAmount } from './MembersAmount';
 
 export const AllMembers = () => {
   const roomDetaills = useRecoilValue(roomDetailsState);
@@ -18,6 +20,10 @@ export const AllMembers = () => {
     <Card>
       <CardHeader>
         <Heading size="md">参加者一覧</Heading>
+        <Box pt={4}>
+        <MembersAmount p="2" bg="orange.300" fontSize="md" />
+      </Box>
+
       </CardHeader>
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
