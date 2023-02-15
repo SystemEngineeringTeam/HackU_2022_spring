@@ -14,7 +14,6 @@ Content-Type: application/json
 {
     "roomName": "成人式2次会",
     "summary" : "gaburitikin",
-    "roomParent": 0,
     "roomMaker": "たなか"
 }
 
