@@ -1,12 +1,21 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { Flex, Heading, IconButton, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 
 import { MenuDrawer } from "@/components/molecules/drawer/MenuDrawer";
+import { useRouter } from "next/router";
 
 export const Header: FC = () => {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const onClickHome = useCallback(() => router.push("/"), [router]);
   return (
     <>
       <Flex
@@ -18,9 +27,15 @@ export const Header: FC = () => {
         padding={{ base: 1, md: 5 }}
       >
         <Flex align="center" as="a" ml={2} _hover={{ cursor: "pointer" }}>
-          <Heading as="h1" fontSize={{ base: "md", md: "lg" }}>
-            人数管理する蔵（仮）
-          </Heading>
+          <Box>
+            <Heading
+              as="h1"
+              fontSize={{ base: "md", md: "lg" }}
+              onClick={onClickHome}
+            >
+              人数管理する蔵（仮）
+            </Heading>
+          </Box>
         </Flex>
         <IconButton
           icon={<HamburgerIcon />}
