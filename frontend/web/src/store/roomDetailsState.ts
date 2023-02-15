@@ -2,8 +2,8 @@ import { atom } from "recoil";
 
 import { Room } from "../types/room";
 
-export const roomDetailsState = atom<Array<Room>>({
-  key: "roomDetailsState",
+export const roomsState = atom<Array<Room>>({
+  key: "roomState",
   default: [
     {
       roomId: 1, // string 部屋ID
@@ -70,7 +70,7 @@ export const roomDetailsState = atom<Array<Room>>({
         {
           memberId: 10, // string ユーザーId
           name: "さかもと",
-          comment: "",
+          comment: "吐きそう",
           tag: "カラオケ",
         },
       ],
@@ -78,8 +78,8 @@ export const roomDetailsState = atom<Array<Room>>({
     },
     {
       roomId: 2, // string 部屋ID
-      roomName: "成人式2次会", // string 部屋の名前
-      memberAmount: 15, // number その部屋にいる参加者の総数
+      roomName: "追い出し会", // string 部屋の名前
+      memberAmount: 12, // number その部屋にいる参加者の総数
       summary: "カラオケ：ここにある", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
       lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
@@ -88,9 +88,9 @@ export const roomDetailsState = atom<Array<Room>>({
     },
     {
       roomId: 3, // string 部屋ID
-      roomName: "成人式2次会", // string 部屋の名前
-      memberAmount: 15, // number その部屋にいる参加者の総数
-      summary: "カラオケ：ここにある", // string 部屋の概要
+      roomName: "打ち上げ", // string 部屋の名前
+      memberAmount: 18, // number その部屋にいる参加者の総数
+      summary: "お酒美味しい〜", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
       lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
@@ -98,9 +98,9 @@ export const roomDetailsState = atom<Array<Room>>({
     },
     {
       roomId: 4, // string 部屋ID
-      roomName: "成人式2次会", // string 部屋の名前
-      memberAmount: 15, // number その部屋にいる参加者の総数
-      summary: "カラオケ：ここにある", // string 部屋の概要
+      roomName: "新入生歓迎会", // string 部屋の名前
+      memberAmount: 5, // number その部屋にいる参加者の総数
+      summary: "新刊BBQ", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
       lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
@@ -108,9 +108,9 @@ export const roomDetailsState = atom<Array<Room>>({
     },
     {
       roomId: 5, // string 部屋ID
-      roomName: "成人式2次会", // string 部屋の名前
-      memberAmount: 15, // number その部屋にいる参加者の総数
-      summary: "カラオケ：ここにある", // string 部屋の概要
+      roomName: "クリスマスパーティー", // string 部屋の名前
+      memberAmount: 55, // number その部屋にいる参加者の総数
+      summary: "メリクリ！", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
       lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
