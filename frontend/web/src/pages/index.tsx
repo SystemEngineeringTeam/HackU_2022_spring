@@ -4,6 +4,7 @@ import { Summary } from "@/components/organisms/Summary";
 import { AllMembers } from "@/components/organisms/AllMembers";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
+import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
           部屋のタイトル
         </Text>
       </Box>
+      <ShareQrCode text="textstring"/>
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
