@@ -12,9 +12,9 @@ import (
 func SqlConnect() (database *gorm.DB) {
 	USER := os.Getenv("MYSQL_USER")
 	PASS := os.Getenv("MYSQL_PASSWORD")
-	PROTOCOL := os.Getenv("MYSQL_PROTCOL")
+	PROTOCOL := os.Getenv("MYSQL_PROTOCOL")
 	DBNAME := os.Getenv("MYSQL_DBNAME")
-	
+
 	dsn := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
 	dialector := mysql.Open(dsn)
 
