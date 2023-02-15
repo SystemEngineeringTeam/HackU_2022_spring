@@ -7,11 +7,12 @@ type Props = {
 
 export const ShareQrCode: FC<Props> = (props) => {
   const { Image } = useQRCode();
+  const href = globalThis.window?.location.href;
 
   return (
     // eslint-disable-next-line jsx-a11y/alt-text
     <Image
-      text={props.text}
+      text={href}
       options={{
         type: 'image/jpeg',
         quality: 0.3,
