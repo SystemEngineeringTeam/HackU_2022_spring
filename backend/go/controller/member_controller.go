@@ -25,7 +25,7 @@ func AddMember(c *gin.Context) {
 	db := lib.SqlConnect()
 
 	// レコードの作成
-	user := models.Member{ID: 1, RoomId: roomId, UserName: json.UserName, Comment: json.Comment}
+	user := models.Member{ID: 1, RoomId: roomId, MemberName: json.MemberName, Comment: json.Comment, Tag: ""}
 
 	// レコードを追加（IDはAUTO_INCREMENTなので除外）
 	db.Omit("ID").Create(&user)
