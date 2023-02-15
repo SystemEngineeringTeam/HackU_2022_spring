@@ -16,8 +16,8 @@ func AddMember(c *gin.Context) {
 	fmt.Println("AddMember")
 
 	// 送られてきたjsonを取得
-	var json models.Member
-	if err := c.ShouldBindJSON(&json); err != nil {
+	var reqjson models.Member
+	if err := c.BindJSON(&reqjson); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -29,11 +29,11 @@ func AddMember(c *gin.Context) {
 	db := lib.SqlConnect()
 
 	// ユーザデータを追加
-	json.RoomId = roomId
-	json.Tag = ""
+	reqjson.RoomId = roomId
+	reqjson.Tag = ""
 
 	// レコードを追加（IDはAUTO_INCREMENTなので除外）
-	if err := db.Create(&json).Error; err != nil {
+	if err := db.Create(&reqjson).Error; err != nil {
 		log.Fatal(err)
 	}
 
@@ -41,7 +41,7 @@ func AddMember(c *gin.Context) {
 	fmt.Println("created User")
 
 	// 追加後のメンバーデータを返す
-	c.JSON(http.StatusOK, json)
+	c.JSON(http.StatusOK, reqjson)
 }
 
 // メンバーの削除 r.DELETE("/api/room/:roomId/member/:userId/", controller.DeleteMember)
