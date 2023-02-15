@@ -39,11 +39,11 @@ export const MenuDrawer: FC<Props> = (props) => {
             </Flex>
           </DrawerHeader>
           <DrawerBody p={0} bg="gray.100">
-            <Link href="/room_list">
-              <Button w="100%">閲覧したことのあるイベント</Button>
+            <Link href="/">
+              <Button w="100%">閲覧したことのある部屋</Button>
             </Link>
             <Link href="/room_building">
-              <Button w="100%">新しいイベントを作成</Button>
+              <Button w="100%">新しい部屋を作成</Button>
             </Link>
           </DrawerBody>
         </DrawerContent>

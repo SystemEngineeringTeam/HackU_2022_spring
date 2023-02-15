@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import {
   FormErrorMessage,
@@ -25,9 +26,16 @@ export default function RoomBuilding() {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
+  const router = useRouter();
+
+  const onClickPushRoomList = () => router.push("/");
+
   return (
     <>
-      <FixedBottomButtons leftButtonTitle="部屋一覧を見る" />
+      <FixedBottomButtons
+        leftButtonTitle="部屋一覧を見る"
+        leftButtonOnClick={onClickPushRoomList}
+      />
       <Box p={2}>
         <Center>
           <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">

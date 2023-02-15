@@ -1,4 +1,5 @@
 import { FC, useCallback } from "react";
+import { useRouter } from "next/router";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -9,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 import { MenuDrawer } from "@/components/molecules/drawer/MenuDrawer";
-import { useRouter } from "next/router";
+
 
 export const Header: FC = () => {
   const router = useRouter();
