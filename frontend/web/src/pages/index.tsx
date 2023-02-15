@@ -18,10 +18,10 @@ export default function Home() {
           部屋のタイトル
         </Text>
       </Box>
-      <ShareQrCode text="textstring"/>
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
+      <ShareQrCode text="textstring"/>
       <AllMembers />
     </>
   );
