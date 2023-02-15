@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { FC, memo, ReactNode } from "react";
 import { Header } from "../organisms/Header";
 
@@ -11,6 +12,7 @@ export const HeaderLayout: FC<Props> = (props) => {
     <>
       <Header />
       {children}
+      <Box h="70px" bg="white"></Box>
     </>
   );
 };
