@@ -30,6 +30,13 @@ export default function RoomBuilding() {
 
   const onClickPushRoomList = () => router.push("/");
 
+  const onSubmit = handleSubmit((data) => {
+    // POST で値を送る
+
+    // roomIdと同じパスに遷移？
+    router.push("/1");
+  });
+
   return (
     <>
       <FixedBottomButtons
@@ -43,11 +50,7 @@ export default function RoomBuilding() {
           </Text>
         </Center>
       </Box>
-      <form
-        onSubmit={handleSubmit(() => {
-          console.log("ddd");
-        })}
-      >
+      <form onSubmit={onSubmit}>
         <Box p={4}>
           <FormControl isInvalid={errors.roomName !== undefined}>
             <FormLabel mb={3}>
