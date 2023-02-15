@@ -8,3 +8,9 @@ CREATE TABLE data_sets.members( /* ユーザデータ */
     PRIMARY KEY (id),
     FOREIGN KEY room (room_id) REFERENCES rooms (id) /* 外部キーの生成 */
 ) ENGINE = InnoDB; 
+
+/* INSERT QUERY */
+INSERT INTO
+    data_sets.members(id, room_id, user_name, registration_date, comment)
+VALUES
+    (1, 2, "山田太郎", "2022-01-03", "23時まで");
