@@ -1,6 +1,7 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 
 import { AllMembers } from "./AllMembers";
+import { AccordionMembers } from "./AccordionMembers";
 
 export const TabsAllMemberOrSmallRooms = () => {
   return (
@@ -13,8 +14,8 @@ export const TabsAllMemberOrSmallRooms = () => {
         <TabPanel>
           <AllMembers />
         </TabPanel>
-        <TabPanel>
-          <p>two!</p>
+        <TabPanel p={0}>
+          <AccordionMembers />
         </TabPanel>
       </TabPanels>
     </Tabs>
