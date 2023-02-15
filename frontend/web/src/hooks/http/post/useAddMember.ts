@@ -1,4 +1,4 @@
-import { Room } from "@/types/room";
+import { Member } from "@/types/member";
 import axios from "axios";
 import { useCallback, useState } from "react";
 
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const useAddMember = () => {
-  const [room, setRoom] = useState<undefined | Room[]>();
+  const [member, setMember] = useState<undefined | Member[]>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -20,12 +20,12 @@ export const useAddMember = () => {
       setIsError(false);
 
       try {
-        const response = await axios.post<Room[]>(`/api/room/${props.roomId}/member`, {
+        const response = await axios.post<Member[]>(`/api/room/${props.roomId}/member`, {
           name: props.name,
           comment: props.comment
         });
         setIsLoaded(true);
-        setRoom(response.data);
+        setMember(response.data);
       } catch (e) {
         if (e instanceof Error) {
           setIsError(true);
@@ -35,5 +35,5 @@ export const useAddMember = () => {
     }, []
   );
 
-  return { addMember, isLoaded, room, isError, error };
+  return { addMember, isLoaded, member, isError, error };
 };

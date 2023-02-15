@@ -1,4 +1,4 @@
-import { Room } from "@/types/room";
+import { Member } from "@/types/member";
 import axios from "axios";
 import { useCallback, useState } from "react";
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const useEditMember = () => {
-  const [room, setRoom] = useState<undefined | Room[]>();
+  const [member, setMember] = useState<undefined | Member[]>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -21,12 +21,12 @@ export const useEditMember = () => {
       setIsError(false);
 
       try {
-        const response = await axios.put<Room[]>(`/api/room/${props.roomId}/member/${props.memberId}`, {
+        const response = await axios.put<Member[]>(`/api/room/${props.roomId}/member/${props.memberId}`, {
           name: props.name,
           comment: props.comment
         });
         setIsLoaded(true);
-        setRoom(response.data);
+        setMember(response.data);
       } catch (e) {
         if (e instanceof Error) {
           setIsError(true);
@@ -36,5 +36,5 @@ export const useEditMember = () => {
     }, []
   );
 
-  return { editMember, isLoaded, room, isError, error };
+  return { editMember, isLoaded, member, isError, error };
 };
