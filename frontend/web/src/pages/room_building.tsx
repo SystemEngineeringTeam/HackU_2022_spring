@@ -10,6 +10,7 @@ import {
   Center,
   Textarea,
 } from "@chakra-ui/react";
+
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 
 type InputContent = {
@@ -90,8 +91,8 @@ export default function RoomBuilding() {
         <Center>
           <Button
             type="submit"
-            backgroundColor="orange.400"
             color="white"
+            backgroundColor="orange.400"
             w="40%"
             mt={4}
             _hover={{ bg: "orange.500" }}

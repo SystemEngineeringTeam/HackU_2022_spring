@@ -11,7 +11,6 @@ import {
 
 import { MemberCard } from "../molecules/member/MemberCard";
 import { roomDetailsState } from "@/store/roomDetailsState";
-import { MembersAmount } from "./MembersAmount";
 
 export const AllMembers = () => {
   const roomDetaills = useRecoilValue(roomDetailsState);
