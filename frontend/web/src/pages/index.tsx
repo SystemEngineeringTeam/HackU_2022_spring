@@ -20,7 +20,6 @@ export default function Home() {
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
-      
       <AllMembers />
     </>
   );
