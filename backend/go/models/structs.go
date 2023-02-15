@@ -16,5 +16,5 @@ type Member struct {
 	RoomId     int    `json:"roomId"`
 	MemberName string `json:"name"`
 	Comment    string `json:"comment"`
-	tag        string `json:"tag"`
+	Tag        string `json:"tag"`
 }
