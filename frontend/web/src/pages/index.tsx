@@ -1,9 +1,9 @@
-import { Box, Divider, Text } from "@chakra-ui/react";
+import { Box, Divider, Heading, Text } from "@chakra-ui/react";
 
 import { Summary } from "@/components/organisms/Summary";
-import { AllMembers } from "@/components/organisms/AllMembers";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
+import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 
 export default function Home() {
   return (
@@ -20,7 +20,13 @@ export default function Home() {
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
-      <AllMembers />
+      <Box p={4}>
+        <Heading size="md">参加者一覧</Heading>
+        <Box pt={4}>
+          <MembersAmount p="2" bg="orange.300" fontSize="md" />
+        </Box>
+      </Box>
+      <TabsAllMemberOrSmallRooms />
     </>
   );
 }
