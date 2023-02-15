@@ -7,7 +7,7 @@ import {
   AccordionPanel,
   AccordionItem,
   Stack,
-  StackDivider,
+  Divider,
 } from "@chakra-ui/react";
 
 import { roomsState } from "@/store/roomDetailsState";
@@ -20,32 +20,40 @@ export const AccordionMembers = () => {
     .map((ele) => ele.tag)
     .filter((elem, index, self) => self.indexOf(elem) === index);
 
-    console.log(tags)
+  console.log(tags);
   return (
-    <Accordion  allowMultiple>
-      <AccordionItem>
-        {tags.map((tag) => (
-          <>
+    <Accordion allowMultiple>
+      {tags.map((tag) => (
+        <>
+          <AccordionItem key={tag}>
             <h2>
-              <AccordionButton key={tag}>
+              <AccordionButton p={4}>
                 <Box as="span" flex="1" textAlign="left">
                   {tag}
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
-            <Stack divider={<StackDivider />} spacing={4}>
-              {rooms[0].members.map((member) =>
-                member.tag === tag && (
-                  <AccordionPanel key={member.memberId} pb={4}>
-                    <MemberCard name={member.name} comment={member.comment} />
-                  </AccordionPanel>
-                )  
-              )}
-            </Stack>
-          </>
-        ))}
-      </AccordionItem>
+            <AccordionPanel pb={4}>
+              <Stack spacing={4}>
+                {rooms[0].members.map(
+                  (member) =>
+                    member.tag === tag && (
+                      <>
+                        <MemberCard
+                          key={member.memberId}
+                          name={member.name}
+                          comment={member.comment}
+                        />
+                        <Divider />
+                      </>
+                    )
+                )}
+              </Stack>
+            </AccordionPanel>
+          </AccordionItem>
+        </>
+      ))}
     </Accordion>
   );
 };
