@@ -3,17 +3,38 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/models"
 	"github.com/gin-gonic/gin"
-	// "github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/structs"
 )
 
 // メンバーの追加 r.POST("/api/room/:roomId/member/", controller.AddMember)
 func AddMember(c *gin.Context) {
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"message": "AddMember",
-	// })
 	fmt.Println("AddMember")
+
+	// 送られてきたjsonを取得
+	var json models.Member
+	c.BindJSON(&json)
+
+	// URLパスからroomIdを取得
+	roomId, _ := strconv.Atoi(c.Param("roomId"))
+
+	// データベースに接続
+	db := lib.SqlConnect()
+
+	// レコードの作成
+	user := models.Member{ID: 1, RoomId: roomId, UserName: json.UserName, Comment: json.Comment}
+
+	// レコードを追加（IDはAUTO_INCREMENTなので除外）
+	db.Omit("ID").Create(&user)
+
+	// 追加できたことを知らせる
+	fmt.Println("created User")
+
+	// 追加後のメンバーデータを返す
+	c.JSON(http.StatusOK, json)
 }
 
 // メンバーの削除 r.DELETE("/api/room/:roomId/member/:userId/", controller.DeleteMember)
