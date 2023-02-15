@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### 参加者の追加
-POST  http://localhost:8080/api/room/2/member/ HTTP/1.1
+POST  http://localhost:8080/api/room/1/member/ HTTP/1.1
 Content-Type: application/json
 
 {
