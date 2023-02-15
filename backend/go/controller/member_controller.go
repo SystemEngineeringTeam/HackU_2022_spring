@@ -32,7 +32,7 @@ func AddMember(c *gin.Context) {
 	reqjson.RoomId = roomId
 	reqjson.Tag = ""
 
-	// レコードを追加（IDはAUTO_INCREMENTなので除外）
+	// レコードを追加
 	if err := db.Create(&reqjson).Error; err != nil {
 		log.Fatal(err)
 	}
