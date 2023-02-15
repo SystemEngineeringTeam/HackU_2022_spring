@@ -14,6 +14,6 @@ CREATE TABLE data_sets.rooms(
 
 /* INSERT QUERY */
 INSERT INTO
-    data_sets.rooms(id, room_name, member_amount, summary, is_open, last_update, room_maker)
+    data_sets.rooms(room_name, member_amount, summary, is_open, last_update, room_maker)
 VALUES
-    (2, "test", 10, "3000円以内がいい", true, "2022-01-03", 1, "田中");
+    ("test", 10, "3000円以内がいい", true, "2022-01-03", "田中");
