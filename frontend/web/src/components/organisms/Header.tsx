@@ -11,7 +11,6 @@ import {
 
 import { MenuDrawer } from "@/components/molecules/drawer/MenuDrawer";
 
-
 export const Header: FC = () => {
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();

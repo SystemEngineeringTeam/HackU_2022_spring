@@ -20,7 +20,7 @@ export const FixedBottomButtons: FC<Props> = (props) => {
 
   return (
     <HStack
-      height="70px"
+      h="70px"
       w="100%"
       spacing={0}
       position="fixed"
