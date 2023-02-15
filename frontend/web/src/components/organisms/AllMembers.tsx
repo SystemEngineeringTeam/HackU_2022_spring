@@ -16,7 +16,7 @@ export const AllMembers = () => {
   const roomDetaills = useRecoilValue(roomDetailsState);
 
   return (
-    <Stack divider={<StackDivider />} spacing="4">
+    <Stack divider={<StackDivider />} spacing={4}>
       {roomDetaills.members.map((member) => (
         <MemberCard
           key={member.memberId}
