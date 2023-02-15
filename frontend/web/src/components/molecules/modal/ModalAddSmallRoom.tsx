@@ -1,4 +1,5 @@
-import { FC, useState, ChangeEvent } from "react";
+import { FC } from "react";
+import { useForm } from "react-hook-form";
 import {
   Button,
   Center,
@@ -14,10 +15,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Select,
   Text,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 
 type Props = {
   isOpen: boolean;
@@ -89,7 +88,6 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
                 >
                   作成
                 </Button>
-
                 <Button onClick={onClose}>戻る</Button>
               </HStack>
             </Center>
