@@ -15,7 +15,7 @@ func Init() {
 	r.GET("/api/room?roomId=dmlksd")
 
 	// 部屋を建てるまたは、小部屋を作成する（childrenに部屋IDを追加していく）
-	r.POST("/api/room/", controller.PostRoom)
+	r.POST("/api/room/", controller.ResponseCreateRoom)
 
 	// 参加者の追加
 	r.POST("/api/room/:roomId/member/")

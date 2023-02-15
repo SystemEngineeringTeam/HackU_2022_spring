@@ -9,12 +9,11 @@ import (
 )
 
 func RoomCreate(room models.Room) models.Room {
-
 	db := lib.SqlConnect()
 
 	room.MemberAmount = 1
 	room.IsOpen = true
-	room.LastUpdate = GetTime()
+	room.LastUpdate = lib.GetTime()
 
 	if err := db.Create(&room).Error; err != nil {
 		log.Fatal(err)
