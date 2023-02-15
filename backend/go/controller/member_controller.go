@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -16,7 +17,10 @@ func AddMember(c *gin.Context) {
 
 	// 送られてきたjsonを取得
 	var json models.Member
-	c.BindJSON(&json)
+	if err := c.ShouldBindJSON(&json); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// URLパスからroomIdを取得
 	roomId, _ := strconv.Atoi(c.Param("roomId"))
@@ -24,11 +28,14 @@ func AddMember(c *gin.Context) {
 	// データベースに接続
 	db := lib.SqlConnect()
 
-	// レコードの作成
-	user := models.Member{ID: 1, RoomId: roomId, MemberName: json.MemberName, Comment: json.Comment, Tag: ""}
+	// ユーザデータを追加
+	json.RoomId = roomId
+	json.Tag = ""
 
 	// レコードを追加（IDはAUTO_INCREMENTなので除外）
-	db.Omit("ID").Create(&user)
+	if err := db.Create(&json).Error; err != nil {
+		log.Fatal(err)
+	}
 
 	// 追加できたことを知らせる
 	fmt.Println("created User")
