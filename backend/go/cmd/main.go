@@ -1,9 +1,6 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/router"
 	"gorm.io/gorm"
 
@@ -16,18 +13,18 @@ func main() {
 
 	// データベース接続確認
 	//db connected!!　とコンソールに表示されたら接続成功
-	db := lib.SqlConnect()
+	// db := lib.SqlConnect()
 
 	// データベースの値をとれているか確認
 	// &{2 test 10 3000円以内がいい true 2022-01-03 1 田中 []} と表示されれば成功
 	// 一番最後のから配列は member テーブルの情報が入るようにしたい
 	// struct.go に for文をまわして格納する用の関数を作るのが良さそう
-	res := GetRooms(db)
-	fmt.Println(res[0])
+	// res := GetRooms(db)
+	// fmt.Println(res[0])
 
 	// &{1, 2, 山田太郎, 2022-01-03, 23時まで} と表示されれば成功
-	res2 := GetMembers(db)
-	fmt.Println(res2[0])
+	// res2 := GetMembers(db)
+	// fmt.Println(res2[0])
 }
 
 // テスト用の関数
