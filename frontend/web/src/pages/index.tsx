@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Box, Center, Text } from "@chakra-ui/react";
 
@@ -9,7 +10,10 @@ export default function RoomList() {
 
   const onClickPushRoomBuilding = () => router.push("/room_building");
 
-  // ルームカードを押すと[member_list].tsxにroomIdをクエリで渡して遷移
+  useEffect(() => {
+    // GET リクエストを送ってグローバルステイトで管理しているroomsにデータを格納する
+    // getSeverSidePropsを使うかUseEffectを使う
+  }, []);
 
   return (
     <>
