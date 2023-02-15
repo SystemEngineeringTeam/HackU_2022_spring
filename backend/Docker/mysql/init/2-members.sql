@@ -11,6 +11,6 @@ CREATE TABLE data_sets.members( /* ユーザデータ */
 
 /* INSERT QUERY */
 INSERT INTO
-    data_sets.members(id, room_id, user_name, registration_date, comment)
+    data_sets.members(id, room_id, user_name, registration_date, comment, tag)
 VALUES
-    (1, 2, "山田太郎", "2022-01-03", "23時まで");
+    (1, 2, "山田太郎", "2022-01-03", "23時まで", "カラオケ");
