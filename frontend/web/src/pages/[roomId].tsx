@@ -85,7 +85,7 @@ export default function RoomId() {
         </Box>
         <Box>
           <Text textAlign="right" fontSize="sm" textColor="gray.500">
-            {`更新日時 : ${formatDate({ lastUpdated: room.lastUpdated })}`}
+            {`更新日時 : ${formatDate({ lastUpdate: room.lastUpdate })}`}
           </Text>
         </Box>
       </Box>

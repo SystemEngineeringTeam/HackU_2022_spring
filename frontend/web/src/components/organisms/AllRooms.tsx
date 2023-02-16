@@ -18,7 +18,7 @@ export const AllRooms = () => {
             <RoomCard
               key={room.roomId}
               roomName={room.roomName}
-              lastUpdate={formatDate({ lastUpdated: room.lastUpdated })}
+              lastUpdate={formatDate({ lastUpdate: room.lastUpdate })}
               memberAmount={room.memberAmount}
             />
           ))}

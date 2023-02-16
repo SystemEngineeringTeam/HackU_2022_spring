@@ -6,7 +6,7 @@ export type Room = {
   memberAmount: number;
   summary: string;
   isOpen: boolean;
-  lastUpdated: string;
+  lastUpdate: string;
   members: Array<Member>;
   roomMaker: string;
 };
