@@ -3,10 +3,11 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomId: string;
-  memberId: string;
+  roomId: number;
+  memberId: number;
   name: string;
   comment: string;
+  tag: string;
 };
 
 export const useEditMember = () => {

@@ -3,8 +3,7 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomIds: string[];
-  deep: number;
+  roomIds: number[];
 };
 
 export const useGetRooms = () => {
@@ -21,8 +20,7 @@ export const useGetRooms = () => {
       try {
         const response = await axios.get<Room[]>('/api/room', {
           params: {
-            roomIds: props.roomIds,
-            deep: props.deep
+            roomIds: props.roomIds
           }
         });
         setIsLoaded(true);
