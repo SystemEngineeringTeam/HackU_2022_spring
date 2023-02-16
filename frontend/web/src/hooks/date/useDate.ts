@@ -14,6 +14,8 @@ export const useDate = () => {
     const displayDate =
       cuerrentDate.format("YYYY/M/D") === lastUdated.format("YYYY/M/D")
         ? lastUdated.format("h:mm A")
+        : cuerrentDate.format("YYYY") !== lastUdated.format("YYYY")
+        ? `${lastUdated.format("YYYY")}年`
         : lastUdated.format("M / D");
 
     return displayDate;
