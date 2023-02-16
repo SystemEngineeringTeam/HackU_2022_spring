@@ -9,10 +9,7 @@ func Init() {
 	r := gin.Default()
 
 	// 部屋idから部屋の詳細情報を取得
-	r.GET("/api/room/details/")
-
-	// 参加している部屋の一覧を取得（閲覧したことのある部屋一覧を見るときに叩く）
-	r.GET("/api/room?roomId=dmlksd")
+	r.GET("/api/room", controller.ResponseGetRoom)
 
 	// 部屋を建てるまたは、小部屋を作成する（childrenに部屋IDを追加していく）
 	r.POST("/api/room/", controller.ResponseCreateRoom)
@@ -27,7 +24,7 @@ func Init() {
 	r.PUT("/api/room/:roomId/member/:userId/")
 
 	// 部屋を削除
-	r.DELETE("/api/room/:roomId/:roomKey/")
+	r.DELETE("/api/room/:roomId/")
 
 	// 部屋からの退室
 	r.DELETE("/api/room/:roomId/member/:userId/")
