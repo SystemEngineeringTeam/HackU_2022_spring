@@ -17,19 +17,19 @@ func Init() {
 	r.POST("/api/room/", controller.PostRoom)
 
 	// 参加者の追加
-	r.POST("/api/room/:roomId/member/", controller.AddMember)
+	r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
 
 	// 部屋の概要を変更
 	r.PUT("/api/room/:roomId/")
 
 	// 参加者の変更（名前、または備考欄を変更する時）
-	r.PUT("/api/room/:roomId/member/:userId/", controller.ChangeMemberData)
+	r.PUT("/api/room/:roomId/member/:userId/", controller.PutChangeMemberData)
 
 	// 部屋を削除
 	r.DELETE("/api/room/:roomId/:roomKey/")
 
 	// 部屋からの退室
-	r.DELETE("/api/room/:roomId/member/:userId/", controller.DeleteMember)
+	r.DELETE("/api/room/:roomId/member/:userId/", controller.DeletExitMemberData)
 
 	r.Run()
 }
