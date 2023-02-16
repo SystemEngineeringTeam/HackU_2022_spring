@@ -1,15 +1,15 @@
 import dayjs from "dayjs";
+import { useCallback } from "react";
 
 type Props = {
   lastUpdate: string;
 };
 
 export const useDate = () => {
-  const formatDate = (props: Props) => {
+  const formatDate = useCallback((props: Props) => {
     const { lastUpdate } = props;
 
     const currentDate = dayjs();
-    const lastUpdateDate = dayjs(lastUpdate);
 
     if (currentDate.diff(lastUpdate, "second") < 60)
       return `${currentDate.diff(lastUpdate, "second")}秒前`;
@@ -24,6 +24,7 @@ export const useDate = () => {
       return `${currentDate.diff(lastUpdate, "month")}ヶ月前`;
 
     return `${currentDate.diff(lastUpdate, "year")}年前`;
-  };
+  }, []);
+
   return { formatDate };
 };
