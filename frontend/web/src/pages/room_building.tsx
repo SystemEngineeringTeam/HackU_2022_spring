@@ -15,6 +15,8 @@ import {
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 
 type InputContent = {
+  roomMaker: string;
+  comment: string;
   roomName: string;
   summary: string;
 };
@@ -52,8 +54,33 @@ export default function RoomBuilding() {
       </Box>
       <form onSubmit={onSubmit}>
         <Box p={4}>
-          <FormControl isInvalid={errors.roomName !== undefined}>
+        <FormControl isInvalid={errors.roomName !== undefined}>
             <FormLabel mb={3}>
+              <Text
+                as="mark"
+                p={2}
+                color="white"
+                bg="teal.200"
+                fontSize="md"
+                fontWeight="bold"
+              >
+                作成者名
+              </Text>
+            </FormLabel>
+            <Input
+              id="roomMaker"
+              type="text"
+              placeholder="例：山田太郎"
+              {...register("roomMaker", {
+                required: true,
+              })}
+            />
+            {errors.roomName && (
+              <FormErrorMessage>作成者名は必須です。</FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl isInvalid={errors.roomName !== undefined}>
+            <FormLabel mt={8} mb={3}>
               <Text
                 as="mark"
                 p={2}
@@ -92,7 +119,7 @@ export default function RoomBuilding() {
             </FormLabel>
             <Textarea
               id="summary"
-              placeholder="例：カラオケの場所（https://...）"
+              placeholder="例：場所（https://...）"
               {...register("summary", {
                 required: false,
               })}
