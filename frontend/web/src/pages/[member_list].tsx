@@ -10,6 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { useDate } from "@/hooks/date/useDate";
 import { roomsState } from "@/store/roomDetailsState";
 import { Summary } from "@/components/organisms/Summary";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
@@ -21,6 +22,8 @@ import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndC
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { formatDate } = useDate();
 
   const [isModalAddMenberOpen, setIsModalAddMenber] = useState(false);
   const [isDrawerMenberFormOpen, setIsDrawerMenberFormOpen] = useState(false);
@@ -52,10 +55,18 @@ export default function Home() {
         onClose={onModalAddMenberClose}
       />
       <Box p={4}>
-        <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
-          {rooms[0].roomName}
-        </Text>
+        <Box>
+          <Text fontSize="2xl" fontWeight="bold">
+            {rooms[0].roomName}
+          </Text>
+        </Box>
+        <Box>
+          <Text textAlign="right" fontSize="sm" textColor="gray.500">
+            {`更新日時 : ${formatDate({ lastUpdated: rooms[0].lastUpdated })}`}
+          </Text>
+        </Box>
       </Box>
+
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
