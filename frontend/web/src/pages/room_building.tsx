@@ -56,7 +56,7 @@ export default function RoomBuilding() {
       </Box>
       <form onSubmit={onSubmit}>
         <VStack p={4} spacing={8}>
-          <FormControl isInvalid={errors.roomName !== undefined}>
+          <FormControl isInvalid={errors.roomMaker !== undefined}>
             <FormLabel mb={3}>
               <Text
                 as="mark"
@@ -77,7 +77,7 @@ export default function RoomBuilding() {
                 required: true,
               })}
             />
-            {errors.roomName && (
+            {errors.roomMaker && (
               <FormErrorMessage>作成者名は必須です。</FormErrorMessage>
             )}
           </FormControl>

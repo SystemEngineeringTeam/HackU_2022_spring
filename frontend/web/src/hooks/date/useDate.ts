@@ -8,17 +8,22 @@ export const useDate = () => {
   const formatDate = (props: Props) => {
     const { lastUpdate } = props;
 
-    const cuerrentDate = dayjs();
-    const lastUdated = dayjs(lastUpdate);
+    const currentDate = dayjs();
+    const lastUpdateDate = dayjs(lastUpdate);
 
-    const displayDate =
-      cuerrentDate.format("YYYY/M/D") === lastUdated.format("YYYY/M/D")
-        ? lastUdated.format("h:mm A")
-        : cuerrentDate.format("YYYY") !== lastUdated.format("YYYY")
-        ? `${lastUdated.format("YYYY")}年`
-        : lastUdated.format("M / D");
+    if (currentDate.diff(lastUpdate, "second") < 60)
+      return `${currentDate.diff(lastUpdate, "second")}秒前`;
 
-    return displayDate;
+    if (currentDate.diff(lastUpdate, "minute") < 60)
+      return `${currentDate.diff(lastUpdate, "minute")}分前`;
+
+    if (currentDate.diff(lastUpdate, "hour") < 12)
+      return `${currentDate.diff(lastUpdate, "hour")}時間前`;
+
+    if (currentDate.diff(lastUpdate, "month") < 12)
+      return `${currentDate.diff(lastUpdate, "month")}ヶ月前`;
+
+    return `${currentDate.diff(lastUpdate, "year")}年前`;
   };
   return { formatDate };
 };
