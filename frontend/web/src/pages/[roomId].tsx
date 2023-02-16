@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { roomsState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomDetailsState";
 import { Summary } from "@/components/organisms/Summary";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMenber } from "@/components/molecules/modal/ModalAddMenber";
@@ -18,14 +18,17 @@ import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoom";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
+import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isModalAddMenberOpen, setIsModalAddMenber] = useState(false);
   const [isDrawerMenberFormOpen, setIsDrawerMenberFormOpen] = useState(false);
 
-  const [rooms, setRooms] = useRecoilState(roomsState);
+  const [room, setRoom] = useRecoilState(roomState);
 
   const onModalAddMenberOpen = () => setIsModalAddMenber(true);
   const onModalAddMenberClose = () => setIsModalAddMenber(false);
@@ -33,10 +36,24 @@ export default function Home() {
   const onDrawerMenberFormOpen = () => setIsDrawerMenberFormOpen(true);
   const onDrawerMenberFormClose = () => setIsDrawerMenberFormOpen(false);
 
+  const { fetchRooms, rooms: fetched, isLoaded, isError, error } = useGetRooms();
+
   useEffect(() => {
-    // GET リクエストを送ってグローバルステイトで管理しているroomsにデータを格納する
-    // getSeverSidePropsを使うかUseEffectを使う
-  }, []);
+    const roomId = router.query.roomId;
+    if (typeof roomId !== 'string' || !/\d+/.test(roomId)) return;
+    fetchRooms({ roomIds: [Number(roomId)] });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query.roomId]);
+
+  useEffect(() => {
+    if (fetched === undefined) return;
+    setRoom(fetched[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetched]);
+
+  // デバッグ用にコメントアウト
+  // if (isError) return <>Error: {error?.message}</>
+  if (!isLoaded) return <>Now Loading...</>;
 
   return (
     <>
@@ -53,7 +70,7 @@ export default function Home() {
       />
       <Box p={4}>
         <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
-          {rooms[0].roomName}
+          {room.roomName}
         </Text>
       </Box>
       <Divider borderColor="gray.400" />
@@ -66,7 +83,7 @@ export default function Home() {
             p="2"
             bg="orange.300"
             fontSize="md"
-            memberAmount={rooms[0].memberAmount}
+            memberAmount={room.memberAmount}
           />
         </Box>
       </Box>

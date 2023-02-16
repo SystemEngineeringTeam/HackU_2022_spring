@@ -49,7 +49,7 @@ export const EditSummary: FC<Props> = (props) => {
           mr={1}
           as={SmallCloseIcon}
           variant="none"
-          colorScheme="white"
+          colorscheme="white"
           textAlign="end"
           size="sm"
           aria-label="Small Close Icon"

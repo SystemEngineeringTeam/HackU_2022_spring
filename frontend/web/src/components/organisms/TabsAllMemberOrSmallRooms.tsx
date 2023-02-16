@@ -7,8 +7,8 @@ export const TabsAllMemberOrSmallRooms = () => {
   return (
     <Tabs isFitted variant="enclosed">
       <TabList mb="1em">
-        <Tab>参加者のみ表示</Tab>
-        <Tab>小部屋も表示</Tab>
+        <Tab key={0}>参加者のみ表示</Tab>
+        <Tab key={1}>小部屋も表示</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
