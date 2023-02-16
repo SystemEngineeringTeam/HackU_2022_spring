@@ -2,7 +2,12 @@ import { Room } from "@/types/room";
 import axios from "axios";
 import { useCallback, useState } from "react";
 
-type Props = Partial<Room> & Pick<Room, 'roomId'>;
+type Props = {
+  roomId: number,
+  roomName?: string,
+  summary?: string,
+  isOpen?: boolean
+};
 
 export const useEditRoom = () => {
   const [room, setRoom] = useState<undefined | Room[]>();
@@ -16,7 +21,11 @@ export const useEditRoom = () => {
       setIsError(false);
 
       try {
-        const response = await axios.post<Room[]>(`/api/room/${props.roomId}`, props);
+        const response = await axios.post<Room[]>(`/api/room/${props.roomId}`, {
+          roomName: props.roomName,
+          summary: props.summary,
+          isOpen: props.isOpen
+        });
         setIsLoaded(true);
         setRoom(response.data);
       } catch (e) {

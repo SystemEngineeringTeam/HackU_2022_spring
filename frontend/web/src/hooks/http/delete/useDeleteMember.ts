@@ -2,8 +2,8 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomId: string;
-  userId: string;
+  roomId: number;
+  userId: number;
 };
 
 export const useDeleteMember = () => {

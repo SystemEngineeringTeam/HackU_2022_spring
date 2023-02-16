@@ -4,8 +4,8 @@ import { useCallback, useState } from "react";
 
 type Props = {
   roomName: string;
+  summary?: string;
   roomMaker: string;
-  parent?: string;
 };
 
 export const useCreateRoom = () => {
@@ -23,7 +23,7 @@ export const useCreateRoom = () => {
         const response = await axios.post<Room[]>('/api/room', {
           roomName: props.roomName,
           roomMaker: props.roomMaker,
-          parent: props.parent
+          summary: props.summary
         });
         setIsLoaded(true);
         setRoom(response.data);

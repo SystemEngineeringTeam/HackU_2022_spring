@@ -28,7 +28,7 @@ export const DisplaySummary: FC<Props> = (props) => {
           mr={1}
           as={EditIcon}
           variant="none"
-          colorScheme="white"
+          colorscheme="white"
           size="sm"
           aria-label="Edit Icon"
           onClick={onClickEditButton}
