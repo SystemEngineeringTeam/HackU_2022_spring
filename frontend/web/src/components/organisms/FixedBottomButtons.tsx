@@ -6,14 +6,21 @@ import { UnderButton } from "../atoms/button/UnderButton";
 type Props = {
   leftButtonTitle: string;
   rightButtonTitle?: string;
+  leftButtonOnClick?: () => void;
+  rightButtonOnClick?: () => void;
 };
 
 export const FixedBottomButtons: FC<Props> = (props) => {
-  const { leftButtonTitle, rightButtonTitle } = props;
+  const {
+    leftButtonTitle,
+    rightButtonTitle,
+    leftButtonOnClick,
+    rightButtonOnClick,
+  } = props;
 
   return (
     <HStack
-      height="70px"
+      h="70px"
       w="100%"
       spacing={0}
       position="fixed"
@@ -22,13 +29,26 @@ export const FixedBottomButtons: FC<Props> = (props) => {
     >
       {rightButtonTitle === undefined ? (
         <>
-          <UnderButton width="100" color="orange" title={leftButtonTitle} />
+          <UnderButton
+            width="100"
+            color="orange"
+            title={leftButtonTitle}
+            onClick={leftButtonOnClick}
+          />
         </>
       ) : (
         <>
-          <UnderButton color="orange" title={leftButtonTitle} />
+          <UnderButton
+            color="orange"
+            title={leftButtonTitle}
+            onClick={leftButtonOnClick}
+          />
           <Divider orientation="vertical" borderColor="white" />
-          <UnderButton color="teal" title={rightButtonTitle} />
+          <UnderButton
+            color="teal"
+            title={rightButtonTitle}
+            onClick={rightButtonOnClick}
+          />
         </>
       )}
     </HStack>

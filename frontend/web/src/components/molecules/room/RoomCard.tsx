@@ -15,7 +15,12 @@ export const RoomCard: FC<Props> = (props) => {
   return (
     <Box as="button">
       <HStack>
-        <MembersAmount p="1" bg="orange.300" fontSize="sm" />
+        <MembersAmount
+          p="1"
+          bg="orange.300"
+          fontSize="sm"
+          memberAmount={memberAmount}
+        />
       </HStack>
       <Center>
         <Heading size="md" textTransform="uppercase">

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import {
   FormErrorMessage,
@@ -10,6 +11,7 @@ import {
   Center,
   Textarea,
 } from "@chakra-ui/react";
+
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 
 type InputContent = {
@@ -24,9 +26,23 @@ export default function RoomBuilding() {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
+  const router = useRouter();
+
+  const onClickPushRoomList = () => router.push("/");
+
+  const onSubmit = handleSubmit((data) => {
+    // POST で値を送る
+
+    // roomIdと同じパスに遷移？
+    router.push("/1");
+  });
+
   return (
     <>
-      <FixedBottomButtons leftButtonTitle="部屋一覧を見る" />
+      <FixedBottomButtons
+        leftButtonTitle="部屋一覧を見る"
+        leftButtonOnClick={onClickPushRoomList}
+      />
       <Box p={2}>
         <Center>
           <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
@@ -34,11 +50,7 @@ export default function RoomBuilding() {
           </Text>
         </Center>
       </Box>
-      <form
-        onSubmit={handleSubmit(() => {
-          console.log("ddd");
-        })}
-      >
+      <form onSubmit={onSubmit}>
         <Box p={4}>
           <FormControl isInvalid={errors.roomName !== undefined}>
             <FormLabel mb={3}>
@@ -90,8 +102,8 @@ export default function RoomBuilding() {
         <Center>
           <Button
             type="submit"
-            backgroundColor="orange.400"
             color="white"
+            backgroundColor="orange.400"
             w="40%"
             mt={4}
             _hover={{ bg: "orange.500" }}

@@ -1,26 +1,34 @@
-import { Box, Divider, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { Box, Center, Text } from "@chakra-ui/react";
 
-import { Summary } from "@/components/organisms/Summary";
-import { AllMembers } from "@/components/organisms/AllMembers";
-import { MembersAmount } from "@/components/organisms/MembersAmount";
+import { AllRooms } from "@/components/organisms/AllRooms";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 
-export default function Home() {
+export default function RoomList() {
+  const router = useRouter();
+
+  const onClickPushRoomBuilding = () => router.push("/room_building");
+
+  useEffect(() => {
+    // GET リクエストを送ってグローバルステイトで管理しているroomsにデータを格納する
+    // getSeverSidePropsを使うかUseEffectを使う
+  }, []);
+
   return (
     <>
       <FixedBottomButtons
-        leftButtonTitle="参加者を追加する"
-        rightButtonTitle="小部屋を追加する"
+        leftButtonTitle="新しく部屋を作る"
+        leftButtonOnClick={onClickPushRoomBuilding}
       />
       <Box p={4}>
-        <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
-          部屋のタイトル
-        </Text>
+        <Center>
+          <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
+            最近閲覧した部屋
+          </Text>
+        </Center>
       </Box>
-      <Divider borderColor="gray.400" />
-      <Summary />
-      <Divider borderColor="gray.400" />
-      <AllMembers />
+      <AllRooms />
     </>
   );
 }
