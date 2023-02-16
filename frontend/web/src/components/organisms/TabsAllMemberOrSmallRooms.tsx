@@ -1,13 +1,9 @@
-import { useRecoilValue } from "recoil";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 
 import { AllMembers } from "./AllMembers";
-import { roomsState } from "@/store/roomDetailsState";
 import { AccordionMembers } from "./AccordionMembers";
 
 export const TabsAllMemberOrSmallRooms = () => {
-  const rooms = useRecoilValue(roomsState);
-
   return (
     <Tabs isFitted variant="enclosed">
       <TabList mb="1em">

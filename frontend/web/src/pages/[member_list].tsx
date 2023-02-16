@@ -15,9 +15,9 @@ import { Summary } from "@/components/organisms/Summary";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMenber } from "@/components/molecules/modal/ModalAddMenber";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-import { NameAndCommentForm } from "../components/organisms/NameAndCommentForm";
 import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoom";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
+import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -71,7 +71,6 @@ export default function Home() {
         </Box>
       </Box>
       <TabsAllMemberOrSmallRooms />
-
       <Center>
         <Button
           type="submit"
@@ -91,8 +90,7 @@ export default function Home() {
           入力する
         </Button>
       </Center>
-
-      <NameAndCommentForm
+      <NameAndCommentFormDrawer
         isOpen={isDrawerMenberFormOpen}
         onClose={onDrawerMenberFormClose}
       />

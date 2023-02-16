@@ -28,7 +28,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const NameAndCommentForm: FC<Props> = (props) => {
+export const NameAndCommentFormDrawer: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
 
   const {

@@ -20,7 +20,6 @@ export const AccordionMembers = () => {
     .map((ele) => ele.tag)
     .filter((elem, index, self) => self.indexOf(elem) === index);
 
-  console.log(tags);
   return (
     <Accordion allowMultiple>
       {tags.map((tag) => (

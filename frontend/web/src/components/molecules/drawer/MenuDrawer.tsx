@@ -14,12 +14,12 @@ import {
 } from "@chakra-ui/react";
 
 type Props = {
-  onClose: () => void;
   isOpen: boolean;
+  onClose: () => void;
 };
 
 export const MenuDrawer: FC<Props> = (props) => {
-  const { onClose, isOpen } = props;
+  const { isOpen, onClose } = props;
 
   return (
     <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
