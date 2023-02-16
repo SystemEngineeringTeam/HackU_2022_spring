@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,14 +11,11 @@ func Init() {
 	// 部屋idから部屋の詳細情報を取得
 	r.GET("/api/room/details/")
 
-	// 部屋idから部屋の詳細情報を取得
-	r.GET("/api/room/details/")
-
 	// 参加している部屋の一覧を取得（閲覧したことのある部屋一覧を見るときに叩く）
 	r.GET("/api/room?roomId=dmlksd")
 
 	// 部屋を建てるまたは、小部屋を作成する（childrenに部屋IDを追加していく）
-	r.POST("/api/room/")
+	r.POST("/api/room/", controller.PostRoom)
 
 	// 参加者の追加
 	r.POST("/api/room/:roomId/member/")
