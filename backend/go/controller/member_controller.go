@@ -3,33 +3,18 @@ package controller
 import (
 	"fmt"
 	"log"
-	"net/http"
-	"strconv"
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/models"
-	"github.com/gin-gonic/gin"
 )
 
-// メンバーの追加 r.POST("/api/room/:roomId/member/", controller.AddMember)
-func AddMember(c *gin.Context) {
-	fmt.Println("AddMember")
-
-	// 送られてきたjsonを取得
-	var reqjson models.Member
-	if err := c.BindJSON(&reqjson); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	// URLパスからroomIdを取得
-	roomId, _ := strconv.Atoi(c.Param("roomId"))
+// メンバーの追加 r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
+func AddMemberData(reqjson models.Member) models.Member {
 
 	// データベースに接続
 	db := lib.SqlConnect()
 
-	// ユーザデータを追加
-	reqjson.RoomId = roomId
+	// タグ情報を追加（最初なのでなし）
 	reqjson.Tag = ""
 
 	// レコードを追加
@@ -38,32 +23,38 @@ func AddMember(c *gin.Context) {
 	}
 
 	// 追加できたことを知らせる
-	fmt.Println("created User")
+	fmt.Println("Created MemberData.")
 
-	// 追加後のメンバーデータを返す
-	c.JSON(http.StatusOK, reqjson)
+	// 追加したユーザーデータを返す
+	return (reqjson)
 }
 
-// メンバーの削除 r.DELETE("/api/room/:roomId/member/:userId/", controller.DeleteMember)
-func DeleteMember(c *gin.Context) {
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"message": "DeleteMember",
-	// })
-	fmt.Println("DeleteMember")
+// メンバーの削除 r.DELETE("/api/room/:roomId/member/:userId/", controller.DeletExitMemberData)
+func ExitMemberData(roomId int, memberId int) string {
+
+	// データベースに接続
+	// db := lib.SqlConnect()
+
+	// レコードを削除
+
+	// 削除できたことを知らせる
+	fmt.Println("Deleted MemberData.")
+
+	// レスポンスに書き込むメッセージを返す
+	return ("SuccessMessage: Deleted MemberData")
 }
 
-// メンバーの概要変更 r.PUT("/api/room/:roomId/member/:userId/", controller.ChangeMemberData)
-func ChangeMemberData(c *gin.Context) {
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"message": "ChangeMemberData",
-	// })
-	fmt.Println("ChangeMemberData")
-}
+// メンバーの概要変更 r.PUT("/api/room/:roomId/member/:userId/", controller.PutChangeMemberData)
+func ChangeMemberData(reqjson models.Member) models.Member {
 
-// テスト
-func Test(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "ChangeMemberData",
-	})
-	// fmt.Println("ChangeMemberData")
+	// データベースに接続
+	// db := lib.SqlConnect()
+
+	// レコードを変更
+
+	// 変更できたことを知らせる
+	fmt.Println("Changed MemberData.")
+
+	// 変更したユーザーデータを返す
+	return (reqjson)
 }
