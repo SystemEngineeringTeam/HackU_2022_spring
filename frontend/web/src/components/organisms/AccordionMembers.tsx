@@ -1,3 +1,4 @@
+import React, { FC } from "react";
 import { useRecoilValue } from "recoil";
 import {
   Accordion,
@@ -12,9 +13,8 @@ import {
 
 import { roomState } from "@/store/roomDetailsState";
 import { MemberCard } from "../molecules/member/MemberCard";
-import React from "react";
 
-export const AccordionMembers = () => {
+export const AccordionMembers: FC = () => {
   const room = useRecoilValue(roomState);
 
   const tags = room.members
@@ -38,11 +38,8 @@ export const AccordionMembers = () => {
               {room.members.map(
                 (member) =>
                   member.tag === tag && (
-                    <React.Fragment  key={member.memberId}>
-                      <MemberCard
-                        name={member.name}
-                        comment={member.comment}
-                      />
+                    <React.Fragment key={member.memberId}>
+                      <MemberCard name={member.name} comment={member.comment} />
                       <Divider />
                     </React.Fragment>
                   )

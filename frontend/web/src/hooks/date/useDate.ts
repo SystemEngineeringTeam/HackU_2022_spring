@@ -1,4 +1,3 @@
-import { useState } from "react";
 import dayjs from "dayjs";
 
 type Props = {

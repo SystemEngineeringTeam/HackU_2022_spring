@@ -10,6 +10,8 @@ import {
   Text,
   Center,
   Textarea,
+  HStack,
+  VStack,
 } from "@chakra-ui/react";
 
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
@@ -53,8 +55,8 @@ export default function RoomBuilding() {
         </Center>
       </Box>
       <form onSubmit={onSubmit}>
-        <Box p={4}>
-        <FormControl isInvalid={errors.roomName !== undefined}>
+        <VStack p={4} spacing={8}>
+          <FormControl isInvalid={errors.roomName !== undefined}>
             <FormLabel mb={3}>
               <Text
                 as="mark"
@@ -80,7 +82,7 @@ export default function RoomBuilding() {
             )}
           </FormControl>
           <FormControl isInvalid={errors.roomName !== undefined}>
-            <FormLabel mt={8} mb={3}>
+            <FormLabel  mb={3}>
               <Text
                 as="mark"
                 p={2}
@@ -105,7 +107,7 @@ export default function RoomBuilding() {
             )}
           </FormControl>
           <FormControl>
-            <FormLabel mt={8} mb={3}>
+            <FormLabel  mb={3}>
               <Text
                 as="mark"
                 p={2}
@@ -125,7 +127,7 @@ export default function RoomBuilding() {
               })}
             />
           </FormControl>
-        </Box>
+        </VStack>
         <Center>
           <Button
             type="submit"
