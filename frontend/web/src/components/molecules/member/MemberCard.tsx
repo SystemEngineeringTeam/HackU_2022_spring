@@ -15,7 +15,7 @@ export const MemberCard: FC<Props> = (props) => {
   return (
     <Flex justify="space-between">
       <Box>
-        <Heading size="xs" textTransform="uppercase">
+        <Heading size="sm" textTransform="uppercase">
           {name}
         </Heading>
         <Text pt="2" fontSize="sm">
