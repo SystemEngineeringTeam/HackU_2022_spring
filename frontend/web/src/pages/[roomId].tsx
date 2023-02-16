@@ -36,7 +36,7 @@ export default function Home() {
   const onDrawerMenberFormOpen = () => setIsDrawerMenberFormOpen(true);
   const onDrawerMenberFormClose = () => setIsDrawerMenberFormOpen(false);
 
-  const { fetchRooms, rooms: fetched } = useGetRooms();
+  const { fetchRooms, rooms: fetched, isLoaded, isError, error } = useGetRooms();
 
   useEffect(() => {
     const roomId = router.query.roomId;
@@ -50,6 +50,10 @@ export default function Home() {
     setRoom(fetched[0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetched]);
+
+  // デバッグ用にコメントアウト
+  // if (isError) return <>Error: {error?.message}</>
+  if (!isLoaded) return <>Now Loading...</>;
 
   return (
     <>
