@@ -21,3 +21,16 @@ func RoomCreate(room models.Room) models.Room {
 	fmt.Println("Creating Room Is Success!!")
 	return (room)
 }
+
+func RoomGet(id []string) []models.Room {
+
+	var rooms []models.Room
+	db := lib.SqlConnect()
+	for _, v := range id {
+		var room models.Room
+		db.Where("id = ?", v).Find(&room)
+		rooms = append(rooms, room)
+	}
+	fmt.Println("Getting Room Is Success!!")
+	return (rooms)
+}
