@@ -10,7 +10,6 @@ import {
   Text,
   Center,
   Textarea,
-  HStack,
   VStack,
 } from "@chakra-ui/react";
 
