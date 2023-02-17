@@ -45,6 +45,7 @@ func ExitMemberData(roomId int, memberId int) string {
 }
 
 // メンバーの概要変更 r.PUT("/api/room/:roomId/member/:userId/", controller.PutChangeMemberData)
+// メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
 func ChangeMemberData(reqjson models.Member) models.Member {
 
 	// データベースに接続

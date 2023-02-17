@@ -36,7 +36,7 @@ content-type: application/json
 }
 
 ### 参加者の変更（名前、または備考欄を変更する時）(PUT api/room/:roomId/member/:memberId)
-PUT  http://localhost:8080/api/room/1/member/2/ HTTP/1.1
+PUT  http://localhost:8080/api/room/member/2/ HTTP/1.1
 content-type: application/json
 
 {
@@ -47,4 +47,4 @@ content-type: application/json
 DELETE  http://localhost:8080/api/room/1/ HTTP/1.1
 
 ### 部屋からの退室(DELETE api/room/:roomId/member/:memberId)
-DELETE  http://localhost:8080/api/room/1/member/5/ HTTP/1.1
+DELETE  http://localhost:8080/api/room/member/6/ HTTP/1.1
