@@ -10,6 +10,7 @@ import {
   Text,
   Center,
   Textarea,
+  VStack,
 } from "@chakra-ui/react";
 
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
@@ -17,6 +18,8 @@ import { useCreateRoom } from "@/hooks/http/post/useCreateRoom";
 import { useEffect } from "react";
 
 type InputContent = {
+  roomMaker: string;
+  comment: string;
   roomName: string;
   summary: string;
   roomMaker: string;
@@ -59,9 +62,34 @@ export default function RoomBuilding() {
         </Center>
       </Box>
       <form onSubmit={onSubmit}>
-        <Box p={4}>
-          <FormControl isInvalid={errors.roomName !== undefined}>
+        <VStack p={4} spacing={8}>
+          <FormControl isInvalid={errors.roomMaker !== undefined}>
             <FormLabel mb={3}>
+              <Text
+                as="mark"
+                p={2}
+                color="white"
+                bg="teal.200"
+                fontSize="md"
+                fontWeight="bold"
+              >
+                作成者名
+              </Text>
+            </FormLabel>
+            <Input
+              id="roomMaker"
+              type="text"
+              placeholder="例：山田太郎"
+              {...register("roomMaker", {
+                required: true,
+              })}
+            />
+            {errors.roomMaker && (
+              <FormErrorMessage>作成者名は必須です。</FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl isInvalid={errors.roomName !== undefined}>
+            <FormLabel  mb={3}>
               <Text
                 as="mark"
                 p={2}
@@ -86,7 +114,7 @@ export default function RoomBuilding() {
             )}
           </FormControl>
           <FormControl>
-            <FormLabel mt={8} mb={3}>
+            <FormLabel  mb={3}>
               <Text
                 as="mark"
                 p={2}
@@ -100,13 +128,13 @@ export default function RoomBuilding() {
             </FormLabel>
             <Textarea
               id="summary"
-              placeholder="例：カラオケの場所（https://...）"
+              placeholder="例：場所（https://...）"
               {...register("summary", {
                 required: false,
               })}
             />
           </FormControl>
-        </Box>
+        </VStack>
         <Center>
           <Button
             type="submit"

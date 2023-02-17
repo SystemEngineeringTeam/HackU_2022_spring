@@ -28,14 +28,12 @@ export const FixedBottomButtons: FC<Props> = (props) => {
       bottom="0%"
     >
       {rightButtonTitle === undefined ? (
-        <>
-          <UnderButton
-            width="100"
-            color="orange"
-            title={leftButtonTitle}
-            onClick={leftButtonOnClick}
-          />
-        </>
+        <UnderButton
+          width="100"
+          color="orange"
+          title={leftButtonTitle}
+          onClick={leftButtonOnClick}
+        />
       ) : (
         <>
           <UnderButton

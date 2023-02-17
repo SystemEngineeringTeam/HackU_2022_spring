@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useRecoilValue } from "recoil";
 import { HStack, Box, Text } from "@chakra-ui/react";
 
 type Props = {

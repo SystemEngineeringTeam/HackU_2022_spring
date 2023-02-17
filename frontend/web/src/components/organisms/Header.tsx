@@ -29,7 +29,7 @@ export const Header: FC = () => {
         <Flex align="center" as="a" ml={2} _hover={{ cursor: "pointer" }}>
           <Box>
             <Heading
-              as="h1"
+              as="button"
               fontSize={{ base: "md", md: "lg" }}
               onClick={onClickHome}
             >

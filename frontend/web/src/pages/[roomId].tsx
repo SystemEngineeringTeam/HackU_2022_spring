@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -10,19 +11,21 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { roomState } from "@/store/roomState";
+import { useDate } from "@/hooks/date/useDate";
 import { Summary } from "@/components/organisms/Summary";
+import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMenber } from "@/components/molecules/modal/ModalAddMenber";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoom";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
-import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
-import { useRouter } from "next/router";
+import { roomState } from "@/store/roomState";
 
-export default function Home() {
+export default function RoomId() {
   const router = useRouter();
+
+  const { formatDate } = useDate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isModalAddMenberOpen, setIsModalAddMenber] = useState(false);
@@ -72,9 +75,16 @@ export default function Home() {
         onClose={onModalAddMenberClose}
       />
       <Box p={4}>
-        <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
-          {room.roomName}
-        </Text>
+        <Box>
+          <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
+            {room.roomName}
+          </Text>
+        </Box>
+        <Box>
+          <Text textAlign="right" fontSize="sm" textColor="gray.500">
+            {`更新日時 : ${formatDate({ lastUpdate: room.lastUpdate })}`}
+          </Text>
+        </Box>
       </Box>
       <Divider borderColor="gray.400" />
       <Summary />
