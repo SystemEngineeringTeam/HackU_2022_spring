@@ -22,7 +22,6 @@ type InputContent = {
   comment: string;
   roomName: string;
   summary: string;
-  roomMaker: string;
 };
 
 export default function RoomBuilding() {
