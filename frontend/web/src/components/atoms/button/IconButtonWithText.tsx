@@ -29,7 +29,7 @@ export const IconButtonWithText: FC<Props> = (props) => {
           <Icon
             as={iconButton}
             variant="none"
-            colorScheme="white"
+            colorscheme="white"
             size="sm/2"
             aria-label={iconLabel}
           />

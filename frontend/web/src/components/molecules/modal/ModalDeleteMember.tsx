@@ -10,7 +10,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useToast,
 } from "@chakra-ui/react";
 
 type Props = {

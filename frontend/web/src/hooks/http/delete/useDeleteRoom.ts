@@ -2,7 +2,7 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomId: string;
+  roomId: number;
 };
 
 export const useDeleteRoom = () => {

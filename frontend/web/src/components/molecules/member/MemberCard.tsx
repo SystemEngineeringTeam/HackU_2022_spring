@@ -6,17 +6,16 @@ import { IconButtonWithText } from "@/components/atoms/button/IconButtonWithText
 
 type Props = {
   name: string;
-  registrationDate: string;
   comment: string;
 };
 
 export const MemberCard: FC<Props> = (props) => {
-  const { name, registrationDate, comment } = props;
+  const { name, comment } = props;
 
   return (
     <Flex justify="space-between">
       <Box>
-        <Heading size="xs" textTransform="uppercase">
+        <Heading size="sm" textTransform="uppercase">
           {name}
         </Heading>
         <Text pt="2" fontSize="sm">

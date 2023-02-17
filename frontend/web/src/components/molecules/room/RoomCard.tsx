@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Heading, HStack, Text, Center } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 
@@ -14,14 +14,15 @@ export const RoomCard: FC<Props> = (props) => {
 
   return (
     <Box as="button">
-      <HStack>
-        <MembersAmount p="1" bg="orange.300" fontSize="sm" />
-      </HStack>
-      <Center>
-        <Heading size="md" textTransform="uppercase">
-          {roomName}
-        </Heading>
-      </Center>
+      <MembersAmount
+        p="1"
+        bg="orange.300"
+        fontSize="sm"
+        memberAmount={memberAmount}
+      />
+      <Box mt={4} mb={2}>
+        <Heading size="md">{roomName}</Heading>
+      </Box>
       <Box>
         <Text
           textAlign="right"
