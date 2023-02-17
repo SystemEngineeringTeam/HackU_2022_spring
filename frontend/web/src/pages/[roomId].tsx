@@ -43,6 +43,12 @@ export default function Home() {
     const isValid = typeof roomId === 'string' && /\d+/.test(roomId);
     if (!isValid) return;
 
+    const strageString = localStorage.getItem('viewHistory');
+    const viewHistory = strageString ? strageString.split(',') : [];
+    if (viewHistory.includes(roomId)) viewHistory.splice(viewHistory.indexOf(roomId), 1);
+    viewHistory.push(roomId);
+    localStorage.setItem('viewHistory', String([...viewHistory]));
+
     fetchRooms({ roomIds: [Number(roomId)] });
   }, [router.query.roomId, fetchRooms]);
 
