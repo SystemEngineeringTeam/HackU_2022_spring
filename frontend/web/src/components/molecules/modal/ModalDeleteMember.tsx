@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import {
   Button,
   Center,
@@ -11,14 +11,31 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
+import { useDeleteMember } from "@/hooks/http/delete/useDeleteMember";
+import { useRecoilValue } from "recoil";
+import { roomState } from "@/store/roomDetailsState";
 
 type Props = {
   onClose: () => void;
   isOpen: boolean;
+  memberId: number;
 };
 
 export const ModalDeleteMember: FC<Props> = (props) => {
   const { onClose, isOpen } = props;
+  const { deleteMember } = useDeleteMember();
+  const room = useRecoilValue(roomState);
+  const onClickYes = useCallback(
+    () => {
+      const deleteProps = {
+        roomId: room.roomId,
+        memberId: props.memberId
+      };
+      deleteMember(deleteProps)
+        .then(() => onClose());
+    }
+    , [deleteMember, room.roomId, props.memberId, onClose]
+  );
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -32,7 +49,7 @@ export const ModalDeleteMember: FC<Props> = (props) => {
               <Button
                 color="white"
                 backgroundColor="orange.400"
-                onClick={onClose}
+                onClick={onClickYes}
               >
                 はい
               </Button>
