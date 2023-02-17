@@ -17,13 +17,13 @@ Content-Type: application/json
     "roomMaker": "たなか"
 }
 
-### 参加者の追加
+### 参加者の追加(POST api/room/:roomId/member/)
 POST  http://localhost:8080/api/room/1/member/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"マイケル・ジョナサン",
-    "comment":"3000円以内のお店がいいです"
+    "name":"ジェームズ・ジョナサン",
+    "comment":"何でもいいです"
 }
 
 
@@ -35,7 +35,7 @@ content-type: application/json
     "summay": "名古屋駅周辺の居酒屋" // 変更後の部屋のデータ 変更点のみ送る
 }
 
-### 参加者の部屋の移動（名前、または備考欄を変更する時）
+### 参加者の変更（名前、または備考欄を変更する時）(PUT api/room/:roomId/member/:memberId)
 PUT  http://localhost:8080/api/room/1/member/2/ HTTP/1.1
 content-type: application/json
 
@@ -46,5 +46,5 @@ content-type: application/json
 ### 部屋を削除
 DELETE  http://localhost:8080/api/room/1/ HTTP/1.1
 
-### 部屋からの退室
-DELETE  http://localhost:8080/api/room/1/member/2/ HTTP/1.1
+### 部屋からの退室(DELETE api/room/:roomId/member/:memberId)
+DELETE  http://localhost:8080/api/room/1/member/5/ HTTP/1.1
