@@ -4,16 +4,26 @@ import { Box, Center, Text } from "@chakra-ui/react";
 
 import { AllRooms } from "@/components/organisms/AllRooms";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
+import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
+import { useRecoilState } from "recoil";
+import { roomListState } from "@/store/roomListState";
 
 export default function RoomList() {
   const router = useRouter();
 
   const onClickPushRoomBuilding = () => router.push("/room_building");
+  const { fetchRooms, rooms } = useGetRooms();
+  const [roomList, setRoomList] = useRecoilState(roomListState);
 
   useEffect(() => {
-    // GET リクエストを送ってグローバルステイトで管理しているroomsにデータを格納する
-    // getSeverSidePropsを使うかUseEffectを使う
-  }, []);
+    const viewHistory = (localStorage.getItem('viewHistory') ?? '').split(',').map(Number);
+    if (viewHistory.length > 0) fetchRooms({ roomIds: viewHistory });
+  }, [fetchRooms]);
+
+  useEffect(() => {
+    if (rooms == null) return;
+    setRoomList(rooms);
+  }, [rooms, setRoomList])
 
   return (
     <>

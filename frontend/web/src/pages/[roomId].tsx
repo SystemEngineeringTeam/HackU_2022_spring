@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 
 import { useDate } from "@/hooks/date/useDate";
-import { roomState } from "@/store/roomDetailsState";
 import { Summary } from "@/components/organisms/Summary";
 import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
@@ -21,6 +20,7 @@ import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoom";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
+import { roomState } from "@/store/roomState";
 
 export default function RoomId() {
   const router = useRouter();
@@ -39,30 +39,27 @@ export default function RoomId() {
   const onDrawerMenberFormOpen = () => setIsDrawerMenberFormOpen(true);
   const onDrawerMenberFormClose = () => setIsDrawerMenberFormOpen(false);
 
-  const {
-    fetchRooms,
-    rooms: fetched,
-    isLoaded,
-    isError,
-    error,
-  } = useGetRooms();
+  const { fetchRooms, rooms: fetched } = useGetRooms();
 
   useEffect(() => {
     const roomId = router.query.roomId;
-    if (typeof roomId !== "string" || !/\d+/.test(roomId)) return;
+    const isValid = typeof roomId === 'string' && /\d+/.test(roomId);
+    if (!isValid) return;
+
+    const strageString = localStorage.getItem('viewHistory');
+    const viewHistory = strageString ? strageString.split(',') : [];
+    if (viewHistory.includes(roomId)) viewHistory.splice(viewHistory.indexOf(roomId), 1);
+    viewHistory.push(roomId);
+    localStorage.setItem('viewHistory', String([...viewHistory]));
+
     fetchRooms({ roomIds: [Number(roomId)] });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query.roomId]);
+  }, [router.query.roomId, fetchRooms]);
 
   useEffect(() => {
-    if (fetched === undefined) return;
-    setRoom(fetched[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetched]);
+    if (fetched == null) return;
 
-  // デバッグ用にコメントアウト
-  // if (isError) return <>Error: {error?.message}</>
-  // if (!isLoaded) return <>Now Loading...</>;
+    setRoom(fetched[0]);
+  }, [fetched, setRoom]);
 
   return (
     <>

@@ -3,10 +3,10 @@ import { Card, CardBody, Stack, StackDivider } from "@chakra-ui/react";
 
 import { useDate } from "@/hooks/date/useDate";
 import { RoomCard } from "../molecules/room/RoomCard";
-import { roomsState } from "@/store/roomDetailsState";
+import { roomListState } from "@/store/roomListState";
 
 export const AllRooms = () => {
-  const rooms = useRecoilValue(roomsState);
+  const rooms = useRecoilValue(roomListState);
 
   const { formatDate } = useDate();
 

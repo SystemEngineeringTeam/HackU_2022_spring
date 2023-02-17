@@ -11,7 +11,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 import { MemberCard } from "../molecules/member/MemberCard";
 
 export const AccordionMembers: FC = () => {
@@ -39,7 +39,7 @@ export const AccordionMembers: FC = () => {
                 (member) =>
                   member.tag === tag && (
                     <React.Fragment key={member.memberId}>
-                      <MemberCard name={member.name} comment={member.comment} />
+                      <MemberCard name={member.name} comment={member.comment} memberId={member.memberId} />
                       <Divider />
                     </React.Fragment>
                   )
