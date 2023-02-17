@@ -19,7 +19,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useAddMember } from "@/hooks/http/post/useAddMember";
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 import { useRecoilValue } from "recoil";
 
 type InputContent = {

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { EditIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Text } from "@chakra-ui/react";
 import { useRecoilValue } from "recoil";
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 
 type Props = {
   isEditSummary: boolean;

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useDeleteMember } from "@/hooks/http/delete/useDeleteMember";
 import { useRecoilValue } from "recoil";
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 
 type Props = {
   onClose: () => void;

@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 import { Summary } from "@/components/organisms/Summary";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMenber } from "@/components/molecules/modal/ModalAddMenber";
@@ -36,24 +36,21 @@ export default function Home() {
   const onDrawerMenberFormOpen = () => setIsDrawerMenberFormOpen(true);
   const onDrawerMenberFormClose = () => setIsDrawerMenberFormOpen(false);
 
-  const { fetchRooms, rooms: fetched, isLoaded, isError, error } = useGetRooms();
+  const { fetchRooms, rooms: fetched } = useGetRooms();
 
   useEffect(() => {
     const roomId = router.query.roomId;
-    if (typeof roomId !== 'string' || !/\d+/.test(roomId)) return;
+    const isValid = typeof roomId === 'string' && /\d+/.test(roomId);
+    if (!isValid) return;
+
     fetchRooms({ roomIds: [Number(roomId)] });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query.roomId]);
+  }, [router.query.roomId, fetchRooms]);
 
   useEffect(() => {
-    if (fetched === undefined) return;
-    setRoom(fetched[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetched]);
+    if (fetched == null) return;
 
-  // デバッグ用にコメントアウト
-  // if (isError) return <>Error: {error?.message}</>
-  // if (!isLoaded) return <>Now Loading...</>;
+    setRoom(fetched[0]);
+  }, [fetched, setRoom]);
 
   return (
     <>

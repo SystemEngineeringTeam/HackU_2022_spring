@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { Stack, StackDivider } from "@chakra-ui/react";
 
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 import { MemberCard } from "../molecules/member/MemberCard";
 
 export const AllMembers = () => {

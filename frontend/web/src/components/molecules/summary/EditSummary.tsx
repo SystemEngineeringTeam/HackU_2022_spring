@@ -9,7 +9,7 @@ import {
   Center,
   Button,
 } from "@chakra-ui/react";
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 import { useEditRoom } from "@/hooks/http/put/useEditRoom";
 import { useRouter } from "next/router";
 

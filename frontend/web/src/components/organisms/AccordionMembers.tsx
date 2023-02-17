@@ -10,7 +10,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 
-import { roomState } from "@/store/roomDetailsState";
+import { roomState } from "@/store/roomState";
 import { MemberCard } from "../molecules/member/MemberCard";
 import React from "react";
 

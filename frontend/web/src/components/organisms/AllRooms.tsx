@@ -2,10 +2,10 @@ import { useRecoilValue } from "recoil";
 import { Card, CardBody, Stack, StackDivider } from "@chakra-ui/react";
 
 import { RoomCard } from "../molecules/room/RoomCard";
-import { roomsState } from "@/store/roomDetailsState";
+import { roomListState } from "@/store/roomListState";
 
 export const AllRooms = () => {
-  const rooms = useRecoilValue(roomsState);
+  const rooms = useRecoilValue(roomListState);
 
   return (
     <Card>
