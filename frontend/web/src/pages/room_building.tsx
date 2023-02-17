@@ -13,10 +13,12 @@ import {
 } from "@chakra-ui/react";
 
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
+import { useCreateRoom } from "@/hooks/http/post/useCreateRoom";
 
 type InputContent = {
   roomName: string;
   summary: string;
+  roomMaker: string;
 };
 
 export default function RoomBuilding() {
@@ -27,14 +29,14 @@ export default function RoomBuilding() {
   } = useForm<InputContent>();
 
   const router = useRouter();
+  const { createRoom } = useCreateRoom();
 
   const onClickPushRoomList = () => router.push("/");
 
   const onSubmit = handleSubmit((data) => {
     // POST で値を送る
-
-    // roomIdと同じパスに遷移？
-    router.push("/1");
+    createRoom(data)
+      .then(() => router.push("/1"));
   });
 
   return (
