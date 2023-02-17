@@ -11,7 +11,7 @@ export const roomsState = atom<Array<Room>>({
       memberAmount: 15, // number その部屋にいる参加者の総数
       summary: "カラオケ：ここにある", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
-      lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
+      lastUpdate: "2023-02-16T13:11:22+09:00", //string 最終更新日 ISO形式
       members: [
         {
           memberId: 1, // string ユーザーId
@@ -88,11 +88,11 @@ export const roomsState = atom<Array<Room>>({
     },
     {
       roomId: 3, // string 部屋ID
-      roomName: "打ち上げ", // string 部屋の名前
+      roomName: "応仁の乱", // string 部屋の名前
       memberAmount: 18, // number その部屋にいる参加者の総数
       summary: "お酒美味しい〜", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
-      lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
+      lastUpdate: "1467-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
       roomMaker: "たなか", // string 部屋を作った人の名前}
     },
@@ -112,7 +112,17 @@ export const roomsState = atom<Array<Room>>({
       memberAmount: 55, // number その部屋にいる参加者の総数
       summary: "メリクリ！", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
-      lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
+      lastUpdate: "2023-01-09T00:08:06+09:00", //string 最終更新日 ISO形式
+      members: [],
+      roomMaker: "たなか", // string 部屋を作った人の名前}
+    },
+    {
+      roomId: 6, // string 部屋ID
+      roomName: "田代砲事件", // string 部屋の名前
+      memberAmount: 55, // number その部屋にいる参加者の総数
+      summary: "メリクリ！", // string 部屋の概要
+      isOpen: true, // boolean 参加者受付中かどうか
+      lastUpdate: "2002-01-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
       roomMaker: "たなか", // string 部屋を作った人の名前}
     },
@@ -127,7 +137,7 @@ export const roomState = atom<Room>({
     memberAmount: 15, // number その部屋にいる参加者の総数
     summary: "カラオケ：ここにある", // string 部屋の概要
     isOpen: true, // boolean 参加者受付中かどうか
-    lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
+    lastUpdate: "2023-02-11T00:31:59+09:00", //string 最終更新日 ISO形式
     members: [
       {
         memberId: 1, // string ユーザーId

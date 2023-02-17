@@ -50,7 +50,7 @@ export const NameAndCommentFormDrawer: FC<Props> = (props) => {
     <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
       <DrawerContent>
-      <DrawerCloseButton />
+        <DrawerCloseButton />
         <DrawerHeader borderBottomWidth="1px">参加フォーム</DrawerHeader>
         <DrawerBody>
           <form onSubmit={onSubmit}>

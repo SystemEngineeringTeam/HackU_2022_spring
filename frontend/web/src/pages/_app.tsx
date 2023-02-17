@@ -1,7 +1,8 @@
-import { HeaderLayout } from "@/components/templates/HeaderLayout";
-import { ChakraProvider } from "@chakra-ui/react";
-import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
+import type { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/react";
+
+import { HeaderLayout } from "@/components/templates/HeaderLayout";
 
 import theme from "../theme/theme";
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -10,19 +11,21 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { useDate } from "@/hooks/date/useDate";
 import { roomState } from "@/store/roomDetailsState";
 import { Summary } from "@/components/organisms/Summary";
+import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMenber } from "@/components/molecules/modal/ModalAddMenber";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoom";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
-import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
-import { useRouter } from "next/router";
 
-export default function Home() {
+export default function RoomId() {
   const router = useRouter();
+
+  const { formatDate } = useDate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isModalAddMenberOpen, setIsModalAddMenber] = useState(false);
@@ -36,11 +39,17 @@ export default function Home() {
   const onDrawerMenberFormOpen = () => setIsDrawerMenberFormOpen(true);
   const onDrawerMenberFormClose = () => setIsDrawerMenberFormOpen(false);
 
-  const { fetchRooms, rooms: fetched, isLoaded, isError, error } = useGetRooms();
+  const {
+    fetchRooms,
+    rooms: fetched,
+    isLoaded,
+    isError,
+    error,
+  } = useGetRooms();
 
   useEffect(() => {
     const roomId = router.query.roomId;
-    if (typeof roomId !== 'string' || !/\d+/.test(roomId)) return;
+    if (typeof roomId !== "string" || !/\d+/.test(roomId)) return;
     fetchRooms({ roomIds: [Number(roomId)] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.roomId]);
@@ -53,7 +62,7 @@ export default function Home() {
 
   // デバッグ用にコメントアウト
   // if (isError) return <>Error: {error?.message}</>
-  if (!isLoaded) return <>Now Loading...</>;
+  // if (!isLoaded) return <>Now Loading...</>;
 
   return (
     <>
@@ -69,9 +78,16 @@ export default function Home() {
         onClose={onModalAddMenberClose}
       />
       <Box p={4}>
-        <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
-          {room.roomName}
-        </Text>
+        <Box>
+          <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
+            {room.roomName}
+          </Text>
+        </Box>
+        <Box>
+          <Text textAlign="right" fontSize="sm" textColor="gray.500">
+            {`更新日時 : ${formatDate({ lastUpdate: room.lastUpdate })}`}
+          </Text>
+        </Box>
       </Box>
       <Divider borderColor="gray.400" />
       <Summary />

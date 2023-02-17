@@ -1,11 +1,14 @@
 import { useRecoilValue } from "recoil";
 import { Card, CardBody, Stack, StackDivider } from "@chakra-ui/react";
 
+import { useDate } from "@/hooks/date/useDate";
 import { RoomCard } from "../molecules/room/RoomCard";
 import { roomsState } from "@/store/roomDetailsState";
 
 export const AllRooms = () => {
   const rooms = useRecoilValue(roomsState);
+
+  const { formatDate } = useDate();
 
   return (
     <Card>
@@ -15,7 +18,7 @@ export const AllRooms = () => {
             <RoomCard
               key={room.roomId}
               roomName={room.roomName}
-              lastUpdate={room.lastUpdate}
+              lastUpdate={formatDate({ lastUpdate: room.lastUpdate })}
               memberAmount={room.memberAmount}
             />
           ))}
