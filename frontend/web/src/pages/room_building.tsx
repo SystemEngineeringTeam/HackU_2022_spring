@@ -14,6 +14,7 @@ import {
 
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { useCreateRoom } from "@/hooks/http/post/useCreateRoom";
+import { useEffect } from "react";
 
 type InputContent = {
   roomName: string;
@@ -29,7 +30,7 @@ export default function RoomBuilding() {
   } = useForm<InputContent>();
 
   const router = useRouter();
-  const { createRoom } = useCreateRoom();
+  const { createRoom, room } = useCreateRoom();
 
   const onClickPushRoomList = () => router.push("/");
 
@@ -38,6 +39,11 @@ export default function RoomBuilding() {
     createRoom(data)
       .then(() => router.push("/1"));
   });
+
+  useEffect(() => {
+    if (room == null) return;
+    router.push(`/${room.roomId}`);
+  }, [room, router]);
 
   return (
     <>
