@@ -25,26 +25,30 @@ func AddMemberData(reqjson models.Member) models.Member {
 	// 追加できたことを知らせる
 	fmt.Println("Created MemberData.")
 
-	// 追加したユーザーデータを返す
+	// 追加したメンバーデータを返す
 	return (reqjson)
 }
 
-// メンバーの削除 r.DELETE("/api/room/:roomId/member/:userId/", controller.DeletExitMemberData)
-func ExitMemberData(roomId int, memberId int) string {
+// メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
+func ExitMemberData(memberId int) string {
 
 	// データベースに接続
-	// db := lib.SqlConnect()
+	db := lib.SqlConnect()
+
+	// 削除するメンバーデータを取得
+	var member *models.Member
+	db.Where("id = ?", memberId).Find(&member)
 
 	// レコードを削除
+	if err := db.Unscoped().Delete(&member).Error; err != nil {
+		// 削除できなかったことを示すメッセージを返り値として渡す
+		return ("Erorr")
+	}
 
-	// 削除できたことを知らせる
-	fmt.Println("Deleted MemberData.")
-
-	// レスポンスに書き込むメッセージを返す
-	return ("SuccessMessage: Deleted MemberData")
+	// 削除できたことを示すメッセージを返り値として渡す
+	return ("Success")
 }
 
-// メンバーの概要変更 r.PUT("/api/room/:roomId/member/:userId/", controller.PutChangeMemberData)
 // メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
 func ChangeMemberData(reqjson models.Member) models.Member {
 
@@ -56,6 +60,20 @@ func ChangeMemberData(reqjson models.Member) models.Member {
 	// 変更できたことを知らせる
 	fmt.Println("Changed MemberData.")
 
-	// 変更したユーザーデータを返す
+	// 変更したメンバーデータを返す
 	return (reqjson)
+}
+
+// 指定された部屋のメンバー取得
+func FindMemberData(roomId int) []*models.Member {
+	// 返り値を代入する変数宣言
+	members := []*models.Member{}
+
+	// データベースに接続
+	db := lib.SqlConnect()
+
+	// 渡されたroomIdに所属するメンバーを全員取得
+	db.Where("room_id = ?", roomId).Find(&members)
+
+	return members
 }
