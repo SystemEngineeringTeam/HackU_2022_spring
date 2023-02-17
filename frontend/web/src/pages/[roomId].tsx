@@ -53,7 +53,7 @@ export default function Home() {
 
   // デバッグ用にコメントアウト
   // if (isError) return <>Error: {error?.message}</>
-  if (!isLoaded) return <>Now Loading...</>;
+  // if (!isLoaded) return <>Now Loading...</>;
 
   return (
     <>

@@ -18,6 +18,9 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import { useAddMember } from "@/hooks/http/post/useAddMember";
+import { roomState } from "@/store/roomDetailsState";
+import { useRecoilValue } from "recoil";
 
 type InputContent = {
   name: string;
@@ -31,6 +34,8 @@ type Props = {
 
 export const NameAndCommentFormDrawer: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
+  const { addMember } = useAddMember();
+  const room = useRecoilValue(roomState);
 
   const {
     register,
@@ -40,10 +45,9 @@ export const NameAndCommentFormDrawer: FC<Props> = (props) => {
   const router = useRouter();
 
   const onSubmit = handleSubmit((data) => {
-    // POST で値を送る
-
-    // roomIdと同じパスに遷移？
-    router.push("/1");
+    const { roomId } = room;
+    addMember({ roomId, ...data })
+      .then(() => router.push(`/${roomId}`));
   });
 
   return (
