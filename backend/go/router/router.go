@@ -23,13 +23,13 @@ func Init() {
 	r.PUT("/api/room/:roomId/")
 
 	// 参加者の変更（名前、または備考欄を変更する時）
-	r.PUT("/api/room/:roomId/member/:userId/", controller.PutChangeMemberData)
+	r.PUT("/api/room/:roomId/member/:memberId/", controller.PutChangeMemberData)
 
 	// 部屋を削除
 	r.DELETE("/api/room/:roomId/:roomKey/")
 
 	// 部屋からの退室
-	r.DELETE("/api/room/:roomId/member/:userId/", controller.DeletExitMemberData)
+	r.DELETE("/api/room/:roomId/member/:memberId/", controller.DeletExitMemberData)
 
 	r.Run()
 }
