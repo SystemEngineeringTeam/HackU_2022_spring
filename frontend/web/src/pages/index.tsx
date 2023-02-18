@@ -4,7 +4,6 @@ import { Box, Center, Text } from "@chakra-ui/react";
 
 import { AllRooms } from "@/components/organisms/AllRooms";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
 import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { useRecoilState } from "recoil";
 import { roomListState } from "@/store/roomListState";
