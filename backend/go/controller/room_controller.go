@@ -13,7 +13,7 @@ func RoomCreate(room models.Room) models.Room {
 
 	room.MemberAmount = 1
 	room.IsOpen = true
-	room.LastUpdate = lib.GetTime()
+	room.LastUpdate = GetTime()
 
 	if err := db.Create(&room).Error; err != nil {
 		log.Fatal(err)
@@ -26,10 +26,13 @@ func RoomGet(id []string) []models.Room {
 
 	var rooms []models.Room
 	db := lib.SqlConnect()
-	for _, v := range id {
+	for i, v := range id {
 		var room models.Room
+		var members []models.Member
 		db.Where("id = ?", v).Find(&room)
 		rooms = append(rooms, room)
+		db.Where("room_id = ?", v).Find(&members)
+		rooms[i].Members = members
 	}
 	fmt.Println("Getting Room Is Success!!")
 	return (rooms)
