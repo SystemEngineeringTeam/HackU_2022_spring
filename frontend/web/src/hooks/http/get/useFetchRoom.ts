@@ -1,38 +1,42 @@
+import { roomState } from "@/store/roomState";
 import { Room } from "@/types/room";
 import axios from "axios";
 import { useCallback, useState } from "react";
+import { useRecoilState } from "recoil";
 
 type Props = {
-  roomIds: number[];
+  roomId: number;
 };
 
-export const useGetRooms = () => {
-  const [rooms, setRooms] = useState<undefined | Room[]>();
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+export const useGetRoom = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
+  const [room, setRoom] = useRecoilState(roomState);
 
-  const fetchRooms = useCallback(
+  const getRoom = useCallback(
     async (props: Props) => {
-      setIsLoaded(false);
+      setIsLoading(true);
       setIsError(false);
+      setError(undefined);
 
       try {
         const response = await axios.get<Room[]>('/api/room', {
           params: {
-            roomIds: String(props.roomIds)
+            roomIds: String(props.roomId)
           }
         });
-        setIsLoaded(true);
-        setRooms(response.data);
+        setRoom(response.data[0]);
       } catch (e) {
         if (e instanceof Error) {
           setIsError(true);
           setError(e);
         }
+      } finally {
+        setIsLoading(false);
       }
-    }, []
+    }, [setRoom]
   );
 
-  return { fetchRooms, isLoaded, rooms, isError, error };
+  return { getRoom, room, isLoading, isError, error };
 };

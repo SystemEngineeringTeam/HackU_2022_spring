@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -13,7 +13,6 @@ import {
 
 import { useDate } from "@/hooks/date/useDate";
 import { Summary } from "@/components/organisms/Summary";
-import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMenber } from "@/components/molecules/modal/ModalAddMenber";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
@@ -21,6 +20,7 @@ import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoo
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 import { roomState } from "@/store/roomState";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 export default function RoomId() {
   const router = useRouter();
@@ -31,15 +31,14 @@ export default function RoomId() {
   const [isModalAddMenberOpen, setIsModalAddMenber] = useState(false);
   const [isDrawerMenberFormOpen, setIsDrawerMenberFormOpen] = useState(false);
 
-  const [room, setRoom] = useRecoilState(roomState);
+  const room = useRecoilValue(roomState);
 
   const onModalAddMenberOpen = () => setIsModalAddMenber(true);
   const onModalAddMenberClose = () => setIsModalAddMenber(false);
 
   const onDrawerMenberFormOpen = () => setIsDrawerMenberFormOpen(true);
   const onDrawerMenberFormClose = () => setIsDrawerMenberFormOpen(false);
-
-  const { fetchRooms, rooms: fetched } = useGetRooms();
+  const { getRoom } = useGetRoom();
 
   useEffect(() => {
     const roomId = router.query.roomId;
@@ -52,14 +51,8 @@ export default function RoomId() {
     viewHistory.push(roomId);
     localStorage.setItem('viewHistory', String([...viewHistory]));
 
-    fetchRooms({ roomIds: [Number(roomId)] });
-  }, [router.query.roomId, fetchRooms]);
-
-  useEffect(() => {
-    if (fetched == null) return;
-
-    setRoom(fetched[0]);
-  }, [fetched, setRoom]);
+    getRoom({ roomId: Number(roomId) });
+  }, [router.query.roomId, getRoom]);
 
   return (
     <>
