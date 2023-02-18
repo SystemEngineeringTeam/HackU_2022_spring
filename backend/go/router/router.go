@@ -12,7 +12,7 @@ func Init() {
 	// 部屋idから部屋の詳細情報を取得
 	r.GET("/api/room", controller.ResponseGetRoom)
 
-	// 部屋を建てるまたは、小部屋を作成する（childrenに部屋IDを追加していく）
+	// 取得したJSONを元に部屋を建てる
 	r.POST("/api/room/", controller.ResponseCreateRoom)
 
 	// 参加者の追加
