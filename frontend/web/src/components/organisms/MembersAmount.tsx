@@ -1,19 +1,15 @@
 import { FC } from "react";
-import { useRecoilValue } from "recoil";
 import { HStack, Box, Text } from "@chakra-ui/react";
-
-import { roomDetailsState } from "@/store/roomDetailsState";
 
 type Props = {
   p: string;
   bg: string;
   fontSize: string;
+  memberAmount: number;
 };
 
 export const MembersAmount: FC<Props> = (props) => {
-  const { p, bg, fontSize } = props;
-
-  const roomDetails = useRecoilValue(roomDetailsState);
+  const { p, bg, fontSize, memberAmount } = props;
 
   return (
     <HStack>
@@ -31,7 +27,7 @@ export const MembersAmount: FC<Props> = (props) => {
       </Box>
       <Box>
         <Text fontSize="lg" fontWeight="bold" whiteSpace="unset">
-          {roomDetails.members.length}人
+          {memberAmount}人
         </Text>
       </Box>
     </HStack>

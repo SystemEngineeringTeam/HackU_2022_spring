@@ -1,9 +1,8 @@
 import { FC } from "react";
-import { useRecoilValue } from "recoil";
 import { EditIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Text } from "@chakra-ui/react";
-
-import { summaryState } from "@/store/summaryState";
+import { useRecoilValue } from "recoil";
+import { roomState } from "@/store/roomState";
 
 type Props = {
   isEditSummary: boolean;
@@ -12,15 +11,13 @@ type Props = {
 
 export const DisplaySummary: FC<Props> = (props) => {
   const { isEditSummary, setIsEditSummary } = props;
-
-  const summary = useRecoilValue(summaryState);
-
   const onClickEditButton = () => setIsEditSummary(!isEditSummary);
+  const room = useRecoilValue(roomState);
 
   return (
     <>
       <Box as="button" padding={4}>
-        <Text whiteSpace="unset">{summary}</Text>
+        <Text whiteSpace="unset">{room.summary}</Text>
       </Box>
       <Box>
         <IconButton
@@ -28,7 +25,7 @@ export const DisplaySummary: FC<Props> = (props) => {
           mr={1}
           as={EditIcon}
           variant="none"
-          colorScheme="white"
+          colorscheme="white"
           size="sm"
           aria-label="Edit Icon"
           onClick={onClickEditButton}

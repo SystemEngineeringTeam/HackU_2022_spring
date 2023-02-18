@@ -2,24 +2,30 @@
 ### REST CLIENTではカンマで区切るとリクエストが送れなくなるので複数の部屋IDを送って動作を調べたい時は、curl コマンドを打って確かめてください
 
 ### 部屋idから部屋の詳細情報を取得
-GET  http://localhost:8080/api/room/details?roomId=1 HTTP/1.1
+GET  http://localhost:8080/api/room?roomId=1,2 HTTP/1.1
 
 ### 参加している部屋の一覧を取得（閲覧したことのある部屋一覧を見るときに叩く）
-GET  http://localhost:8080/api/room?roomId=2 HTTP/1.1
+GET  http://localhost:8080/api/room/2/ HTTP/1.1
 
 ###部屋を建てるまたは、小部屋を作成する（childrenに部屋IDを追加していく）
 POST  http://localhost:8080/api/room/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "roomName": "成人式2次会", // string 部屋の名前
-    "roomMarker": "たなか", // string 部屋を建てる人の名前
-    "parent": "3n2fS9", // string? 作る部屋の親部屋のID
+    "roomName": "成人式2次会",
+    "summary" : "gaburitikin",
+    "roomMaker": "たなか"
 }
 
-### 参加者の追加
-POST  http://localhost:8080/api/room/2/member/ HTTP/1.1
+### 参加者の追加(POST api/room/:roomId/member/)
+POST  http://localhost:8080/api/room/1/member/ HTTP/1.1
 Content-Type: application/json
+
+{
+    "name":"ジェームズ・ジョナサン",
+    "comment":"何でもいいです"
+}
+
 
 ### 部屋の概要を変更
 PUT  http://localhost:8080/api/room/1/ HTTP/1.1
@@ -29,8 +35,8 @@ content-type: application/json
     "summay": "名古屋駅周辺の居酒屋" // 変更後の部屋のデータ 変更点のみ送る
 }
 
-### 参加者の部屋の移動（名前、または備考欄を変更する時）
-PUT  http://localhost:8080/api/room/1/member/2/ HTTP/1.1
+### 参加者の変更（名前、または備考欄を変更する時）(PUT api/room/:roomId/member/:memberId)
+PUT  http://localhost:8080/api/room/member/2/ HTTP/1.1
 content-type: application/json
 
 {
@@ -40,5 +46,5 @@ content-type: application/json
 ### 部屋を削除
 DELETE  http://localhost:8080/api/room/1/ HTTP/1.1
 
-### 部屋からの退室
-DELETE  http://localhost:8080/api/room/1/member/2/ HTTP/1.1
+### 部屋からの退室(DELETE api/room/:roomId/member/:memberId)
+DELETE  http://localhost:8080/api/room/member/6/ HTTP/1.1

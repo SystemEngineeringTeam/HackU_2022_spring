@@ -2,15 +2,15 @@ import { FC } from "react";
 import { Button } from "@chakra-ui/react";
 
 type Props = {
+  onClick?: () => void;
   height?: string;
   width?: string;
   color: string;
   title: string;
-  onClick?: () => void;
 };
 
 export const UnderButton: FC<Props> = (props) => {
-  const { height = "100", width = "50", color, title, onClick } = props;
+  const { onClick, height = "100", width = "50", color, title } = props;
 
   return (
     <Button
