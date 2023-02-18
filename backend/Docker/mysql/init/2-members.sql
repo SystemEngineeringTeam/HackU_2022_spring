@@ -8,3 +8,19 @@ CREATE TABLE data_sets.members( /* ユーザデータ */
     PRIMARY KEY (id),
     FOREIGN KEY room (room_id) REFERENCES rooms (id) /* 外部キーの生成 */
 ) ENGINE = InnoDB; 
+
+/* INSERT QUERY */
+INSERT INTO
+    data_sets.members(room_id, member_name, comment)
+VALUES
+    (1, "鹿さん", "3000円以内がいい");
+
+INSERT INTO
+    data_sets.members(room_id, member_name, comment)
+VALUES
+    (1, "水谷", "肉食べたい");
+
+INSERT INTO
+    data_sets.members(room_id, member_name, comment)
+VALUES
+    (1, "melon", "酒酒酒");
