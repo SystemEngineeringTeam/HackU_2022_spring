@@ -70,5 +70,6 @@ func RoomDelete(room models.Room) models.Room {
 		db.Delete(&members)
 	}
 	db.Delete(&room)
+	fmt.Println("Deleting Room Is Success!!")
 	return (room)
 }
