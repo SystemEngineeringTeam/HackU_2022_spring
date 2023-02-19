@@ -2,7 +2,7 @@ package controller
 
 import (
 	"fmt"
-	"log"
+	"strings"
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/models"
@@ -16,20 +16,23 @@ func RoomCreate(room models.Room) models.Room {
 	room.LastUpdate = GetTime()
 
 	if err := db.Create(&room).Error; err != nil {
-		log.Fatal(err)
+		text := strings.Split(err.Error(), ": ")
+		panic(text[1])
 	}
+
 	fmt.Println("Creating Room Is Success!!")
 	return (room)
 }
 
 func RoomGet(id []string) []models.Room {
-
 	var rooms []models.Room
 	db := lib.SqlConnect()
 	for i, v := range id {
 		var room models.Room
 		var members []models.Member
-		db.Where("id = ?", v).Find(&room)
+		if err := db.Where("id = ?", v).First(&room).Error; err != nil {
+			panic(err.Error())
+		}
 		rooms = append(rooms, room)
 		db.Where("room_id = ?", v).Find(&members)
 		rooms[i].Members = members
