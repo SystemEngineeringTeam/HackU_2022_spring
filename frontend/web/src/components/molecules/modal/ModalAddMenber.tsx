@@ -14,6 +14,7 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
 
 type Props = {
   isOpen: boolean;
@@ -22,6 +23,7 @@ type Props = {
 
 export const ModalAddMenber: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
+  const href = globalThis.window?.location.href;
 
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -34,7 +36,7 @@ export const ModalAddMenber: FC<Props> = (props) => {
           <Center h="80">
             <VStack>
               <Box h="80" w="80" bg="gray.200">
-                QRコード表示
+                <ShareQrCode text={href} />
               </Box>
               <Box>
                 <Text>スマホをピッとするかQRコードを読んでください</Text>
