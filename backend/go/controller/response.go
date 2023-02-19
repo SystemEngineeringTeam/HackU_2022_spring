@@ -42,3 +42,9 @@ func ResponseChangeRoom(c *gin.Context) {
 	id := c.Param("roomId")
 	c.JSON(http.StatusOK, RoomChange(id, req))
 }
+
+func ResponseDeleteRoom(c *gin.Context) {
+	id := c.Param("roomId")
+	room := RoomGet(id)
+	c.JSON(http.StatusOK, RoomDelete(room))
+}
