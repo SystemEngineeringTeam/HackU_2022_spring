@@ -1,5 +1,4 @@
-package lib
-
+package controller
 import "time"
 
 func GetTime() string {
