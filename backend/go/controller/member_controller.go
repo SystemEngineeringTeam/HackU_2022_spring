@@ -50,18 +50,23 @@ func ExitMemberData(memberId int) string {
 }
 
 // メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
-func ChangeMemberData(reqjson models.Member) models.Member {
+func ChangeMemberData(memberId int, reqjson models.Member) *models.Member {
 
 	// データベースに接続
-	// db := lib.SqlConnect()
+	db := lib.SqlConnect()
+
+	// 変更するメンバーデータを取得
+	var member *models.Member
+	db.Where("id = ?", memberId).Find(&member)
 
 	// レコードを変更
+	if err := db.Model(&member).Updates(reqjson).Error; err != nil {
+		// 失敗:メンバーデータを返す（変更したかった部分のみのメンバーデータが返される）
+		return member
+	}
 
-	// 変更できたことを知らせる
-	fmt.Println("Changed MemberData.")
-
-	// 変更したメンバーデータを返す
-	return (reqjson)
+	// 成功:メンバーデータを返す（変更しなかった部分も含め、全てのメンバーデータが返される）
+	return member
 }
 
 // 指定された部屋のメンバー取得
