@@ -19,7 +19,7 @@ func Init() {
 	r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
 
 	// 部屋の概要を変更
-	r.PUT("/api/room/:roomId/")
+	r.PUT("/api/room/:roomId/", controller.ResponseChangeRoom)
 
 	// 参加者の変更（名前、または備考欄を変更する時）
 	r.PUT("/api/room/member/:memberId", controller.PutChangeMemberData)

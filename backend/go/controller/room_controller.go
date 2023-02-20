@@ -24,7 +24,7 @@ func RoomCreate(room models.Room) models.Room {
 	return (room)
 }
 
-func RoomGet(id []string) []models.Room {
+func RoomsGet(id []string) []models.Room {
 	var rooms []models.Room
 	db := lib.SqlConnect()
 	for i, v := range id {
@@ -39,4 +39,26 @@ func RoomGet(id []string) []models.Room {
 	}
 	fmt.Println("Getting Room Is Success!!")
 	return (rooms)
+}
+
+func RoomGet(id string) models.Room {
+	db := lib.SqlConnect()
+	var room models.Room
+	var members []models.Member
+	if err := db.Where("id = ?", id).First(&room).Error; err != nil {
+		panic(err.Error())
+	}
+	db.Where("room_id = ?", id).Find(&members)
+	room.Members = members
+	fmt.Println("Getting Room Is Success!!")
+	return (room)
+}
+
+func RoomChange(id string, req models.Room) models.Room {
+	db := lib.SqlConnect()
+	room := RoomGet(id)
+	req.LastUpdate = GetTime()
+	db.Model(&room).Updates(req)
+	fmt.Println("Changing Room Is Success!!")
+	return (room)
 }
