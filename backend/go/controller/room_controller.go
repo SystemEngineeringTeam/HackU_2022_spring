@@ -62,3 +62,14 @@ func RoomChange(id string, req models.Room) models.Room {
 	fmt.Println("Changing Room Is Success!!")
 	return (room)
 }
+
+func RoomDelete(room models.Room) models.Room {
+	db := lib.SqlConnect()
+	var members []models.Member
+	if err := db.Where("room_id = ?", room.ID).First((&members)).Error; err == nil {
+		db.Delete(&members)
+	}
+	db.Delete(&room)
+	fmt.Println("Deleting Room Is Success!!")
+	return (room)
+}

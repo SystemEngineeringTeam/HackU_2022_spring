@@ -25,7 +25,7 @@ func Init() {
 	r.PUT("/api/room/member/:memberId", controller.PutChangeMemberData)
 
 	// 部屋を削除
-	r.DELETE("/api/room/:roomId/")
+	r.DELETE("/api/room/:roomId/", controller.ResponseDeleteRoom)
 
 	// 部屋からの退室
 	r.DELETE("/api/room/member/:memberId/", controller.DeletExitMemberData)
