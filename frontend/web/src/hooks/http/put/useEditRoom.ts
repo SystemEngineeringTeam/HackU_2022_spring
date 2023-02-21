@@ -21,7 +21,7 @@ export const useEditRoom = () => {
     setIsError(false);
 
     try {
-      const response = await axios.post<Room[]>(`/api/room/${props.roomId}`, {
+      const response = await axios.put<Room[]>(`/api/room/${props.roomId}`, {
         roomName: props.roomName,
         summary: props.summary,
         isOpen: props.isOpen,
