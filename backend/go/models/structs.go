@@ -8,6 +8,7 @@ type Room struct {
 	IsOpen       bool     `json:"isOpen"`
 	LastUpdate   string   `json:"lastUpdated"`
 	Members      []Member `gorm:"foreignKey:RoomId"`
+	tags         string   `json:"tags"`
 	RoomMaker    string   `json:"roomMaker"`
 }
 
