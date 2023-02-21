@@ -13,9 +13,11 @@ docker compose build
 docker compose up -d
 ```
 
+両方立ち上げができるように変更しました
+
 <br />
 
-### goファイルの実行方法
+<!-- ### goファイルの実行方法
 <br />
 
 koukaten2022_GOのコンテナに入る
@@ -31,7 +33,7 @@ main.goを実行
 ```
 go run main.go
 ```
-<br />
+<br /> -->
 
 ### mysqlのデータを確認する方法
 <br />

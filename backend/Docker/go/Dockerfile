@@ -8,3 +8,5 @@ RUN mkdir /go/src/app
 WORKDIR /go/src/app
 # ホストのファイルをコンテナの作業ディレクトリに移行
 ADD . /go/src/app
+
+CMD ["go", "run", "./cmd/main.go"]
