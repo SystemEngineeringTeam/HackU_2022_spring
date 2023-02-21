@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import {
@@ -6,21 +6,26 @@ import {
   Button,
   Center,
   Divider,
+  Flex,
+  FormControl,
+  FormLabel,
   Heading,
+  Switch,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { roomState } from "@/store/roomState";
 import { useDate } from "@/hooks/date/useDate";
 import { Summary } from "@/components/organisms/Summary";
+import { useEditRoom } from "@/hooks/http/put/useEditRoom";
 import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
-import { ModalAddMenber } from "@/components/molecules/modal/ModalAddMenber";
+import { AccordionMembers } from "@/components/organisms/AccordionMembers";
+import { ModalAddMember } from "@/components/molecules/modal/ModalAddMember";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoom";
-import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
-import { roomState } from "@/store/roomState";
 
 export default function RoomId() {
   const router = useRouter();
@@ -28,29 +33,37 @@ export default function RoomId() {
   const { formatDate } = useDate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [isModalAddMenberOpen, setIsModalAddMenber] = useState(false);
-  const [isDrawerMenberFormOpen, setIsDrawerMenberFormOpen] = useState(false);
+  const { fetchRooms, rooms: fetched } = useGetRooms();
+  const { editRoom, isLoaded, isError, error } = useEditRoom();
+
+  const [isRoomOpen, setIsRoomOpen] = useState(true);
+  const [isModalAddMemberOpen, setIsModalAddMember] = useState(false);
+  const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
   const [room, setRoom] = useRecoilState(roomState);
 
-  const onModalAddMenberOpen = () => setIsModalAddMenber(true);
-  const onModalAddMenberClose = () => setIsModalAddMenber(false);
+  const onModalAddMemberOpen = () => setIsModalAddMember(true);
+  const onModalAddMemberClose = () => setIsModalAddMember(false);
 
-  const onDrawerMenberFormOpen = () => setIsDrawerMenberFormOpen(true);
-  const onDrawerMenberFormClose = () => setIsDrawerMenberFormOpen(false);
+  const onDrawerMemberFormOpen = () => setIsDrawerMemberFormOpen(true);
+  const onDrawerMemberFormClose = () => setIsDrawerMemberFormOpen(false);
 
-  const { fetchRooms, rooms: fetched } = useGetRooms();
+  const onChangeIsOpen = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsRoomOpen(!isRoomOpen);
+    editRoom({ roomId: room.roomId, isOpen: !isRoomOpen });
+  };
 
   useEffect(() => {
     const roomId = router.query.roomId;
-    const isValid = typeof roomId === 'string' && /\d+/.test(roomId);
+    const isValid = typeof roomId === "string" && /\d+/.test(roomId);
     if (!isValid) return;
 
-    const strageString = localStorage.getItem('viewHistory');
-    const viewHistory = strageString ? strageString.split(',') : [];
-    if (viewHistory.includes(roomId)) viewHistory.splice(viewHistory.indexOf(roomId), 1);
+    const storageString = localStorage.getItem("viewHistory");
+    const viewHistory = storageString ? storageString.split(",") : [];
+    if (viewHistory.includes(roomId))
+      viewHistory.splice(viewHistory.indexOf(roomId), 1);
     viewHistory.push(roomId);
-    localStorage.setItem('viewHistory', String([...viewHistory]));
+    localStorage.setItem("viewHistory", String([...viewHistory]));
 
     fetchRooms({ roomIds: [Number(roomId)] });
   }, [router.query.roomId, fetchRooms]);
@@ -66,20 +79,33 @@ export default function RoomId() {
       <FixedBottomButtons
         leftButtonTitle="参加者を追加する"
         rightButtonTitle="小部屋を追加する"
-        leftButtonOnClick={onModalAddMenberOpen}
+        leftButtonOnClick={onModalAddMemberOpen}
         rightButtonOnClick={onOpen}
       />
       <ModalAddSmallRoom isOpen={isOpen} onClose={onClose} />
-      <ModalAddMenber
-        isOpen={isModalAddMenberOpen}
-        onClose={onModalAddMenberClose}
+      <ModalAddMember
+        isOpen={isModalAddMemberOpen}
+        onClose={onModalAddMemberClose}
       />
       <Box p={4}>
-        <Box>
-          <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
-            {room.roomName}
-          </Text>
-        </Box>
+        <Flex justify="space-between">
+          <Box>
+            <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
+              {room.roomName}
+            </Text>
+          </Box>
+          <Box>
+            <FormControl display="flex" alignItems="center">
+              <FormLabel mb="0">{room.isOpen ? "受付中" : "締切"}</FormLabel>
+              <Switch
+                colorScheme="yellow"
+                onChange={onChangeIsOpen}
+                defaultChecked
+              />
+            </FormControl>
+          </Box>
+        </Flex>
+
         <Box>
           <Text textAlign="right" fontSize="sm" textColor="gray.500">
             {`更新日時 : ${formatDate({ lastUpdate: room.lastUpdate })}`}
@@ -100,7 +126,7 @@ export default function RoomId() {
           />
         </Box>
       </Box>
-      <TabsAllMemberOrSmallRooms />
+      <AccordionMembers />
       <Center>
         <Button
           type="submit"
@@ -113,7 +139,7 @@ export default function RoomId() {
           mb={8}
           _hover={{ bg: "orange.500" }}
           _active={{ bg: "orange.600" }}
-          onClick={onDrawerMenberFormOpen}
+          onClick={onDrawerMemberFormOpen}
         >
           参加
           <br />
@@ -121,8 +147,8 @@ export default function RoomId() {
         </Button>
       </Center>
       <NameAndCommentFormDrawer
-        isOpen={isDrawerMenberFormOpen}
-        onClose={onDrawerMenberFormClose}
+        isOpen={isDrawerMemberFormOpen}
+        onClose={onDrawerMemberFormClose}
       />
     </>
   );

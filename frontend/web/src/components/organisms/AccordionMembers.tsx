@@ -39,7 +39,11 @@ export const AccordionMembers: FC = () => {
                 (member) =>
                   member.tag === tag && (
                     <React.Fragment key={member.memberId}>
-                      <MemberCard name={member.name} comment={member.comment} memberId={member.memberId} />
+                      <MemberCard
+                        name={member.name}
+                        comment={member.comment}
+                        memberId={member.memberId}
+                      />
                       <Divider />
                     </React.Fragment>
                   )
