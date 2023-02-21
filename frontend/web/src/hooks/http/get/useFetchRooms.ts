@@ -20,7 +20,7 @@ export const useGetRooms = () => {
     try {
       const response = await axios.get<Room[]>("/api/room", {
         params: {
-          roomIds: String(props.roomIds),
+          roomId: String(props.roomIds),
         },
       });
       setIsLoaded(true);
