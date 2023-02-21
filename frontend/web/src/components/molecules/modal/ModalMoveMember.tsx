@@ -3,7 +3,6 @@ import { useRecoilValue } from "recoil";
 import {
   Box,
   Button,
-  Center,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -15,6 +14,7 @@ import {
   ModalContent,
   ModalOverlay,
   Select,
+  Spacer,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -104,20 +104,19 @@ export const ModalMoveMember: FC<Props> = (props) => {
                   </Select>
                 </FormControl>
               </Box>
-              <Center>
-                <HStack spacing={4}>
-                  <Button
-                    type="submit"
-                    color="white"
-                    backgroundColor="orange.400"
-                    _hover={{ bg: "orange.500" }}
-                    _active={{ bg: "orange.600" }}
-                  >
-                    決定
-                  </Button>
-                  <Button onClick={onClose}>戻る</Button>
-                </HStack>
-              </Center>
+              <HStack spacing={4}>
+                <Spacer />
+                <Button
+                  type="submit"
+                  color="white"
+                  backgroundColor="orange.400"
+                  _hover={{ bg: "orange.500" }}
+                  _active={{ bg: "orange.600" }}
+                >
+                  決定
+                </Button>
+                <Button onClick={onClose}>戻る</Button>
+              </HStack>
             </form>
         </ModalBody>
       </ModalContent>
