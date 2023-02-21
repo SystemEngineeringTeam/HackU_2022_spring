@@ -3,12 +3,12 @@ services:
   go:
     container_name: HackU2022_Spring_GO
     build:
-      context: ./docker/go
+      context: ./Docker/go
       dockerfile: Dockerfile
     stdin_open: true
     tty: true
     env_file:
-      - ./docker/go/.env
+      - ./Docker/go/.env
     volumes:
       - ./go:/go/src/app
     ports:
@@ -19,11 +19,11 @@ services:
   mysql:
     container_name: HackU2022_Spring_DB
     build:
-      context: ./docker/mysql
+      context: ./Docker/mysql
       dockerfile: Dockerfile
     ports:
       - "3306:3306"
     volumes:
-      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+      - ./Docker/mysql/init:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: admin
