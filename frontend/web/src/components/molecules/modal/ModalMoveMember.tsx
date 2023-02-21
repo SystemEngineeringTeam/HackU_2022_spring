@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from "react";
+import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import {
   Box,
@@ -13,8 +13,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Select,
   Text,
@@ -52,11 +50,16 @@ export const ModalMoveMember: FC<Props> = (props) => {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
-  const tags = room.members
-    .map((ele) => ele.tag)
-    .filter((elem, index, self) => self.indexOf(elem) === index);
+  const tags = room.tags.split(",");
+  const options = [
+    <option value="" key="">--タグ未選択--</option>,
+    ...tags.map(v => <option value={v} key={v}>{v}</option>)
+  ];
 
   const onSubmit = handleSubmit((data) => {
+    console.log(data);
+    onClose();
+    return;
     editMember({ memberId, ...data })
       .then(() => router.push(`/${room.roomId}`));
   });
@@ -75,7 +78,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
                       名前
                     </Text>
                   </FormLabel>
-                  <Input id="roomName" type="text" placeholder="例：田中山根" {...register("name", { required: true, })} />
+                  <Input id="name" type="text" placeholder="例：田中山根" {...register("name", { required: true, })} />
                   {errors.name && (
                     <FormErrorMessage>ユーザー名は必須です</FormErrorMessage>
                   )}
@@ -88,25 +91,33 @@ export const ModalMoveMember: FC<Props> = (props) => {
                   </FormLabel>
                   <Textarea id="summary" placeholder="例：3000円以内がいい" {...register("comment", { required: false, })} />
                 </FormControl>
+                <FormControl>
+                  <FormLabel mt={8} mb={3}>
+                    <Text as="mark" p={2} color="white" bg="teal.200" fontSize="md" fontWeight="bold">
+                      タグ
+                    </Text>
+                  </FormLabel>
+                  <Select id="summary" {...register("tag", { required: false, })}>
+                    {options}
+                  </Select>
+                </FormControl>
               </Box>
+              <Center>
+                <HStack spacing={4}>
+                  <Button
+                    type="submit"
+                    color="white"
+                    backgroundColor="orange.400"
+                    _hover={{ bg: "orange.500" }}
+                    _active={{ bg: "orange.600" }}
+                  >
+                    決定
+                  </Button>
+                  <Button onClick={onClose}>戻る</Button>
+                </HStack>
+              </Center>
             </form>
         </ModalBody>
-        <ModalFooter>
-          <Center>
-            <HStack spacing={4}>
-              <Button
-                color="white"
-                backgroundColor="orange.400"
-                _hover={{ bg: "orange.500" }}
-                _active={{ bg: "orange.600" }}
-                onClick={onClose}
-              >
-                決定
-              </Button>
-              <Button onClick={onClose}>戻る</Button>
-            </HStack>
-          </Center>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );
