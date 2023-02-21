@@ -11,7 +11,7 @@ export const roomListState = atom<Array<Room>>({
       memberAmount: 15, // number その部屋にいる参加者の総数
       summary: "カラオケ：ここにある", // string 部屋の概要
       isOpen: true, // boolean 参加者受付中かどうか
-      lastUpdate: "2023-02-16T13:11:22+09:00", //string 最終更新日 ISO形式
+      lastUpdate: "2023-02-20T13:11:22+09:00", //string 最終更新日 ISO形式
       members: [
         {
           memberId: 1, // string ユーザーId
