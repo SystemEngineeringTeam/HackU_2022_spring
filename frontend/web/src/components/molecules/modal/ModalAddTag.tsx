@@ -28,7 +28,7 @@ type InputContent = {
   roomName: string;
 };
 
-export const ModalAddSmallRoom: FC<Props> = (props) => {
+export const ModalAddTag: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
 
   const {
@@ -41,7 +41,7 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent mx="1rem">
-        <ModalHeader>小部屋作成</ModalHeader>
+        <ModalHeader>タグ追加</ModalHeader>
         <ModalCloseButton />
         <form
           onSubmit={handleSubmit(() => {
@@ -59,38 +59,13 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
                   fontSize="md"
                   fontWeight="bold"
                 >
-                  作成者
-                </Text>
-              </FormLabel>
-              <Input
-                id="name"
-                type="text"
-                placeholder="山田太郎"
-                {...register("name", {
-                  required: true,
-                })}
-              />
-              {errors.roomName && (
-                <FormErrorMessage>作成者は必須です。</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isInvalid={errors.roomName !== undefined}>
-              <FormLabel mb={3}>
-                <Text
-                  as="mark"
-                  p={2}
-                  color="white"
-                  bg="teal.200"
-                  fontSize="md"
-                  fontWeight="bold"
-                >
-                  部屋名
+                  タグ名
                 </Text>
               </FormLabel>
               <Input
                 id="roomName"
                 type="text"
-                placeholder="例：カラオケ"
+                placeholder="例：支払い済み"
                 {...register("roomName", {
                   required: true,
                 })}
@@ -112,7 +87,7 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
                   isLoading={isSubmitting}
                   onClick={errors.roomName ? undefined : onClose}
                 >
-                  作成
+                  追加
                 </Button>
                 <Button onClick={onClose}>戻る</Button>
               </HStack>
