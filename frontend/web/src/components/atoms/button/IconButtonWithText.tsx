@@ -40,9 +40,9 @@ export const IconButtonWithText: FC<Props> = (props) => {
         </VStack>
       </Button>
       {iconLabel === "削除" ? (
-        <ModalDeleteMember {...{ isOpen, onClose, memberId }} />
+        <ModalDeleteMember {...{ onClose, isOpen, memberId }} />
       ) : (
-        <ModalMoveMember {...{ isOpen, onClose }} />
+        <ModalMoveMember {...{ onClose, isOpen, memberId }} />
       )}
     </>
   );
