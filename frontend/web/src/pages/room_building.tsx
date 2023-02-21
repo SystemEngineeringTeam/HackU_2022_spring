@@ -37,9 +37,7 @@ export default function RoomBuilding() {
   const onClickPushRoomList = () => router.push("/");
 
   const onSubmit = handleSubmit((data) => {
-    // POST で値を送る
     createRoom(data)
-      .then(() => router.push("/1"));
   });
 
   useEffect(() => {

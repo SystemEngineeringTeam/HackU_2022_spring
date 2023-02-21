@@ -24,6 +24,10 @@ export const useCreateRoom = () => {
           roomName: props.roomName,
           roomMaker: props.roomMaker,
           summary: props.summary
+        }, {
+          headers: {
+            "Content-Type": "application/json"
+          }
         });
         setIsLoaded(true);
         setRoom(response.data);
