@@ -7,8 +7,6 @@ export type Room = {
   summary: string;
   isOpen: boolean;
   lastUpdate: string;
-  roomChildren: Array<string>;
-  roomParent: number | null;
   members: Array<Member>;
   roomMaker: string;
 };

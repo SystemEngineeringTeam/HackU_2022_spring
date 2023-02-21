@@ -1,24 +1,19 @@
+import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { Card, CardBody, Stack, StackDivider } from "@chakra-ui/react";
 
-import { rooms } from "@/sample/rooms";
 import { RoomCard } from "../molecules/room/RoomCard";
-import { roomDetailsState } from "@/store/roomDetailsState";
+import { roomListState } from "@/store/roomListState";
 
-export const AllRooms = () => {
-  const roomDetaills = useRecoilValue(roomDetailsState);
+export const AllRooms: FC = () => {
+  const roomList = useRecoilValue(roomListState);
 
   return (
     <Card>
       <CardBody>
         <Stack divider={<StackDivider />} spacing="4">
-          {rooms.map((room) => (
-            <RoomCard
-              key={room.roomName}
-              roomName={room.roomName}
-              lastUpdate={room.lastUpdate}
-              memberAmount={room.memberAmount}
-            />
+          {roomList.map((room) => (
+            <RoomCard key={room.roomId} room={room} />
           ))}
         </Stack>
       </CardBody>
