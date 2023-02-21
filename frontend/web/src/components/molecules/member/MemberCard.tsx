@@ -25,8 +25,16 @@ export const MemberCard: FC<Props> = (props) => {
       </Box>
       <Center>
         <HStack>
-          <IconButtonWithText iconButton={UpDownIcon} iconLabel="移動" memberId={memberId} />
-          <IconButtonWithText iconButton={DeleteIcon} iconLabel="削除" memberId={memberId} />
+          <IconButtonWithText
+            iconButton={UpDownIcon}
+            iconLabel="移動"
+            memberId={memberId}
+          />
+          <IconButtonWithText
+            iconButton={DeleteIcon}
+            iconLabel="削除"
+            memberId={memberId}
+          />
         </HStack>
       </Center>
     </Flex>

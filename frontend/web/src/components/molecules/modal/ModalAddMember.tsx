@@ -13,6 +13,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Flex,
+  Input,
 } from "@chakra-ui/react";
 import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
 
@@ -21,7 +23,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const ModalAddMenber: FC<Props> = (props) => {
+export const ModalAddMember: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
   const href = globalThis.window?.location.href;
 
@@ -39,10 +41,26 @@ export const ModalAddMenber: FC<Props> = (props) => {
                 <ShareQrCode text={href} />
               </Box>
               <Box>
-                <Text>スマホをピッとするかQRコードを読んでください</Text>
+                <Text>QRコードを読んでください</Text>
               </Box>
             </VStack>
           </Center>
+
+
+          {/* <Flex mb={2}>
+        <Input
+          placeholder="dd"
+          value="ddd"
+         
+          mr={2}
+        />
+        <Button onClick={onCopy}>{hasCopied ? "Copied!" : "Copy"}</Button>
+      </Flex>
+      <Editable placeholder="Paste here">
+        <EditablePreview width="100%" />
+        <EditableInput />
+      </Editable> */}
+
         </ModalBody>
         <ModalFooter>
           <Center>
