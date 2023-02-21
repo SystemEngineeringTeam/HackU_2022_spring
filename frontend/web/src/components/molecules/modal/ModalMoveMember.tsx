@@ -58,9 +58,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
   ];
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     onClose();
-    return;
     const { memberId } = member;
     editMember({ memberId, ...data })
       .then(() => router.push(`/${room.roomId}`));
@@ -112,6 +110,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
                   backgroundColor="orange.400"
                   _hover={{ bg: "orange.500" }}
                   _active={{ bg: "orange.600" }}
+                  isLoading={isSubmitting}
                 >
                   決定
                 </Button>
