@@ -4,7 +4,7 @@ services:
     container_name: HackU2022_Spring_GO
     build:
       context: ./docker/go
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     stdin_open: true
     tty: true
     env_file:
@@ -20,7 +20,7 @@ services:
     container_name: HackU2022_Spring_DB
     build:
       context: ./docker/mysql
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     ports:
       - "3306:3306"
     volumes:
