@@ -23,11 +23,12 @@ import { roomState } from "@/store/roomState";
 import { useEditMember } from "@/hooks/http/put/useEditMember";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { Member } from "@/types/member";
 
 type Props = {
   onClose: () => void;
   isOpen: boolean;
-  memberId: number;
+  member: Member;
 };
 
 type InputContent = {
@@ -37,9 +38,9 @@ type InputContent = {
 };
 
 export const ModalMoveMember: FC<Props> = (props) => {
-  const { onClose, isOpen, memberId } = props;
+  const { onClose, isOpen, member } = props;
 
-  const { editMember, isLoaded, member, isError, error } = useEditMember();
+  const { editMember } = useEditMember();
 
   const room = useRecoilValue(roomState);
   const router = useRouter();
@@ -60,6 +61,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
     console.log(data);
     onClose();
     return;
+    const { memberId } = member;
     editMember({ memberId, ...data })
       .then(() => router.push(`/${room.roomId}`));
   });
@@ -78,7 +80,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
                       名前
                     </Text>
                   </FormLabel>
-                  <Input id="name" type="text" placeholder="例：田中山根" {...register("name", { required: true, })} />
+                  <Input id="name" type="text" placeholder="例：田中山根" {...register("name", { required: true, })} defaultValue={member.name} />
                   {errors.name && (
                     <FormErrorMessage>ユーザー名は必須です</FormErrorMessage>
                   )}
@@ -89,7 +91,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
                       コメント
                     </Text>
                   </FormLabel>
-                  <Textarea id="summary" placeholder="例：3000円以内がいい" {...register("comment", { required: false, })} />
+                  <Textarea id="comment" placeholder="例：3000円以内がいい" {...register("comment", { required: false, })} defaultValue={member.comment} />
                 </FormControl>
                 <FormControl>
                   <FormLabel mt={8} mb={3}>
@@ -97,7 +99,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
                       タグ
                     </Text>
                   </FormLabel>
-                  <Select id="summary" {...register("tag", { required: false, })}>
+                  <Select id="tag" {...register("tag", { required: false, })} defaultValue={member.tag}>
                     {options}
                   </Select>
                 </FormControl>
