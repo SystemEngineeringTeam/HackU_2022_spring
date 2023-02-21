@@ -2,14 +2,14 @@ package controller
 
 import (
 	"fmt"
-	"log"
+	"strconv"
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/models"
 )
 
 // メンバーの追加 r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
-func AddMemberData(reqjson models.Member) models.Member {
+func AddMemberData(reqjson models.Member) (string, models.Member) {
 
 	// データベースに接続
 	db := lib.SqlConnect()
@@ -19,14 +19,18 @@ func AddMemberData(reqjson models.Member) models.Member {
 
 	// レコードを追加
 	if err := db.Create(&reqjson).Error; err != nil {
-		log.Fatal(err)
+		return "Error", reqjson
 	}
+
+	// 最終更新時間を今の時間に変更
+	var room models.Room
+	RoomChange(strconv.Itoa(reqjson.RoomId), room)
 
 	// 追加できたことを知らせる
 	fmt.Println("Created MemberData.")
 
 	// 追加したメンバーデータを返す
-	return (reqjson)
+	return "Success", reqjson
 }
 
 // メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
@@ -44,6 +48,10 @@ func ExitMemberData(memberId int) string {
 		// 削除できなかったことを示すメッセージを返り値として渡す
 		return ("Erorr")
 	}
+
+	// 最終更新時間を今の時間に変更
+	var room models.Room
+	RoomChange(strconv.Itoa(member.RoomId), room)
 
 	// 削除できたことを示すメッセージを返り値として渡す
 	return ("Success")
@@ -64,6 +72,10 @@ func ChangeMemberData(memberId int, reqjson models.Member) *models.Member {
 		// 失敗:メンバーデータを返す（変更したかった部分のみのメンバーデータが返される）
 		return member
 	}
+
+	// 最終更新時間を今の時間に変更
+	var room models.Room
+	RoomChange(strconv.Itoa(member.RoomId), room)
 
 	// 成功:メンバーデータを返す（変更しなかった部分も含め、全てのメンバーデータが返される）
 	return member
