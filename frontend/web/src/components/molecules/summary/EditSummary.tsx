@@ -9,8 +9,9 @@ import {
   Center,
   Button,
 } from "@chakra-ui/react";
-
-import { summaryState } from "@/store/summaryState";
+import { roomState } from "@/store/roomState";
+import { useEditRoom } from "@/hooks/http/put/useEditRoom";
+import { useRouter } from "next/router";
 
 type Props = {
   isEditSummary: boolean;
@@ -20,15 +21,22 @@ type Props = {
 export const EditSummary: FC<Props> = (props) => {
   const { isEditSummary, setIsEditSummary } = props;
 
-  const [summay, setSummary] = useRecoilState(summaryState);
-
-  const [draftSummary, setDraftSummary] = useState(summay);
+  const [room, setRoom] = useRecoilState(roomState);
+  const [draftSummary, setDraftSummary] = useState(room.summary);
+  const { editRoom } = useEditRoom();
+  const router = useRouter();
 
   const onClickEditButton = () => setIsEditSummary(!isEditSummary);
 
   const onClickPreserveSummary = (draftSummary: string) => {
-    setSummary(draftSummary);
+    const editProps = {
+      roomId: room.roomId,
+      summary: draftSummary
+    };
+
     setIsEditSummary(!isEditSummary);
+    editRoom(editProps)
+      .catch(v => router.reload());
   };
 
   const onChangeDraftSummary = (e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -49,7 +57,7 @@ export const EditSummary: FC<Props> = (props) => {
           mr={1}
           as={SmallCloseIcon}
           variant="none"
-          colorScheme="white"
+          colorscheme="white"
           textAlign="end"
           size="sm"
           aria-label="Small Close Icon"

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Link from "next/link";
 import { IconButton } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 import {
@@ -13,12 +14,12 @@ import {
 } from "@chakra-ui/react";
 
 type Props = {
-  onClose: () => void;
   isOpen: boolean;
+  onClose: () => void;
 };
 
 export const MenuDrawer: FC<Props> = (props) => {
-  const { onClose, isOpen } = props;
+  const { isOpen, onClose } = props;
 
   return (
     <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
@@ -38,8 +39,12 @@ export const MenuDrawer: FC<Props> = (props) => {
             </Flex>
           </DrawerHeader>
           <DrawerBody p={0} bg="gray.100">
-            <Button w="100%">閲覧したことのあるイベント</Button>
-            <Button w="100%">新しいイベントを作成</Button>
+            <Link href="/">
+              <Button w="100%">閲覧したことのある部屋</Button>
+            </Link>
+            <Link href="/room_building">
+              <Button w="100%">新しい部屋を作成</Button>
+            </Link>
           </DrawerBody>
         </DrawerContent>
       </DrawerOverlay>

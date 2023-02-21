@@ -4,12 +4,12 @@ import { useCallback, useState } from "react";
 
 type Props = {
   roomName: string;
+  summary?: string;
   roomMaker: string;
-  parent?: string;
 };
 
 export const useCreateRoom = () => {
-  const [room, setRoom] = useState<undefined | Room[]>();
+  const [room, setRoom] = useState<undefined | Room>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -20,10 +20,10 @@ export const useCreateRoom = () => {
       setIsError(false);
 
       try {
-        const response = await axios.post<Room[]>('/api/room', {
+        const response = await axios.post<Room>('/api/room', {
           roomName: props.roomName,
           roomMaker: props.roomMaker,
-          parent: props.parent
+          summary: props.summary
         });
         setIsLoaded(true);
         setRoom(response.data);

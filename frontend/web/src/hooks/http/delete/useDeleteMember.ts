@@ -2,8 +2,8 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomId: string;
-  userId: string;
+  roomId: number;
+  memberId: number;
 };
 
 export const useDeleteMember = () => {
@@ -17,7 +17,7 @@ export const useDeleteMember = () => {
       setIsError(false);
 
       try {
-        const response = await axios.delete(`/api/room/${props.roomId}/member/${props.userId}`);
+        const response = await axios.delete(`/api/room/${props.roomId}/member/${props.memberId}`);
         setIsDeleted(true);
       } catch (e) {
         if (e instanceof Error) {

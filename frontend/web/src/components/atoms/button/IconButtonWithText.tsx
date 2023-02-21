@@ -15,10 +15,11 @@ import { ModalDeleteMember } from "@/components/molecules/modal/ModalDeleteMembe
 type Props = {
   iconButton: As<any>;
   iconLabel: string;
+  memberId: number;
 };
 
 export const IconButtonWithText: FC<Props> = (props) => {
-  const { iconButton, iconLabel } = props;
+  const { iconButton, iconLabel, memberId } = props;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -29,7 +30,7 @@ export const IconButtonWithText: FC<Props> = (props) => {
           <Icon
             as={iconButton}
             variant="none"
-            colorScheme="white"
+            colorscheme="white"
             size="sm/2"
             aria-label={iconLabel}
           />
@@ -39,9 +40,9 @@ export const IconButtonWithText: FC<Props> = (props) => {
         </VStack>
       </Button>
       {iconLabel === "削除" ? (
-        <ModalDeleteMember isOpen={isOpen} onClose={onClose} />
+        <ModalDeleteMember {...{ onClose, isOpen, memberId }} />
       ) : (
-        <ModalMoveMember isOpen={isOpen} onClose={onClose} />
+        <ModalMoveMember {...{ onClose, isOpen, memberId }} />
       )}
     </>
   );

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import {
   FormErrorMessage,
@@ -9,10 +10,16 @@ import {
   Text,
   Center,
   Textarea,
+  VStack,
 } from "@chakra-ui/react";
+
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
+import { useCreateRoom } from "@/hooks/http/post/useCreateRoom";
+import { useEffect } from "react";
 
 type InputContent = {
+  roomMaker: string;
+  comment: string;
   roomName: string;
   summary: string;
 };
@@ -24,9 +31,28 @@ export default function RoomBuilding() {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
+  const router = useRouter();
+  const { createRoom, room } = useCreateRoom();
+
+  const onClickPushRoomList = () => router.push("/");
+
+  const onSubmit = handleSubmit((data) => {
+    // POST で値を送る
+    createRoom(data)
+      .then(() => router.push("/1"));
+  });
+
+  useEffect(() => {
+    if (room == null) return;
+    router.push(`/${room.roomId}`);
+  }, [room, router]);
+
   return (
     <>
-      <FixedBottomButtons leftButtonTitle="部屋一覧を見る" />
+      <FixedBottomButtons
+        leftButtonTitle="部屋一覧を見る"
+        leftButtonOnClick={onClickPushRoomList}
+      />
       <Box p={2}>
         <Center>
           <Text fontSize="2xl" fontWeight="bold" whiteSpace="unset">
@@ -34,14 +60,35 @@ export default function RoomBuilding() {
           </Text>
         </Center>
       </Box>
-      <form
-        onSubmit={handleSubmit(() => {
-          console.log("ddd");
-        })}
-      >
-        <Box p={4}>
-          <FormControl isInvalid={errors.roomName !== undefined}>
+      <form onSubmit={onSubmit}>
+        <VStack p={4} spacing={8}>
+          <FormControl isInvalid={errors.roomMaker !== undefined}>
             <FormLabel mb={3}>
+              <Text
+                as="mark"
+                p={2}
+                color="white"
+                bg="teal.200"
+                fontSize="md"
+                fontWeight="bold"
+              >
+                作成者名
+              </Text>
+            </FormLabel>
+            <Input
+              id="roomMaker"
+              type="text"
+              placeholder="例：山田太郎"
+              {...register("roomMaker", {
+                required: true,
+              })}
+            />
+            {errors.roomMaker && (
+              <FormErrorMessage>作成者名は必須です。</FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl isInvalid={errors.roomName !== undefined}>
+            <FormLabel  mb={3}>
               <Text
                 as="mark"
                 p={2}
@@ -66,7 +113,7 @@ export default function RoomBuilding() {
             )}
           </FormControl>
           <FormControl>
-            <FormLabel mt={8} mb={3}>
+            <FormLabel  mb={3}>
               <Text
                 as="mark"
                 p={2}
@@ -80,18 +127,18 @@ export default function RoomBuilding() {
             </FormLabel>
             <Textarea
               id="summary"
-              placeholder="例：カラオケの場所（https://...）"
+              placeholder="例：場所（https://...）"
               {...register("summary", {
                 required: false,
               })}
             />
           </FormControl>
-        </Box>
+        </VStack>
         <Center>
           <Button
             type="submit"
-            backgroundColor="orange.400"
             color="white"
+            backgroundColor="orange.400"
             w="40%"
             mt={4}
             _hover={{ bg: "orange.500" }}

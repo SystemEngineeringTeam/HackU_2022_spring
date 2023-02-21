@@ -3,9 +3,10 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 
 type Props = {
-  roomId: string;
+  roomId: number;
   name: string;
-  comment: string;
+  comment?: string;
+  tag?: string;
 };
 
 export const useAddMember = () => {
@@ -22,7 +23,8 @@ export const useAddMember = () => {
       try {
         const response = await axios.post<Member[]>(`/api/room/${props.roomId}/member`, {
           name: props.name,
-          comment: props.comment
+          comment: props.comment,
+          tag: props.tag
         });
         setIsLoaded(true);
         setMember(response.data);
