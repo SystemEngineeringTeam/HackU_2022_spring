@@ -14,7 +14,7 @@ export const AllMembers = () => {
           key={member.memberId}
           name={member.name}
           comment={member.comment}
-          memberId={member.memberId}
+          member={member}
         />
       ))}
     </Stack>

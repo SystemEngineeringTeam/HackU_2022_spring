@@ -11,15 +11,16 @@ import {
 
 import { ModalMoveMember } from "@/components/molecules/modal/ModalMoveMember";
 import { ModalDeleteMember } from "@/components/molecules/modal/ModalDeleteMember";
+import { Member } from "@/types/member";
 
 type Props = {
   iconButton: As<any>;
   iconLabel: string;
-  memberId: number;
+  member: Member;
 };
 
 export const IconButtonWithText: FC<Props> = (props) => {
-  const { iconButton, iconLabel, memberId } = props;
+  const { iconButton, iconLabel, member } = props;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -40,9 +41,9 @@ export const IconButtonWithText: FC<Props> = (props) => {
         </VStack>
       </Button>
       {iconLabel === "削除" ? (
-        <ModalDeleteMember {...{ onClose, isOpen, memberId }} />
+        <ModalDeleteMember {...{ onClose, isOpen, member }} />
       ) : (
-        <ModalMoveMember {...{ onClose, isOpen, memberId }} />
+        <ModalMoveMember {...{ onClose, isOpen, member }} />
       )}
     </>
   );

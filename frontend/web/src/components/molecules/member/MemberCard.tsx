@@ -1,17 +1,18 @@
 import { FC } from "react";
-import { DeleteIcon, UpDownIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Box, Heading, HStack, Text, Flex, Center } from "@chakra-ui/react";
 
 import { IconButtonWithText } from "@/components/atoms/button/IconButtonWithText";
+import { Member } from "@/types/member";
 
 type Props = {
   name: string;
   comment: string;
-  memberId: number;
+  member: Member;
 };
 
 export const MemberCard: FC<Props> = (props) => {
-  const { name, comment, memberId } = props;
+  const { name, comment, member } = props;
 
   return (
     <Flex justify="space-between">
@@ -26,14 +27,14 @@ export const MemberCard: FC<Props> = (props) => {
       <Center>
         <HStack>
           <IconButtonWithText
-            iconButton={UpDownIcon}
-            iconLabel="移動"
-            memberId={memberId}
+            iconButton={EditIcon}
+            iconLabel="編集"
+            member={member}
           />
           <IconButtonWithText
             iconButton={DeleteIcon}
             iconLabel="削除"
-            memberId={memberId}
+            member={member}
           />
         </HStack>
       </Center>
