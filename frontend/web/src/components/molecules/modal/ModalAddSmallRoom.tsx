@@ -24,6 +24,7 @@ type Props = {
 };
 
 type InputContent = {
+  name: string;
   roomName: string;
 };
 
@@ -48,6 +49,31 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
           })}
         >
           <ModalBody>
+            <FormControl isInvalid={errors.roomName !== undefined}>
+              <FormLabel mb={3}>
+                <Text
+                  as="mark"
+                  p={2}
+                  color="white"
+                  bg="teal.200"
+                  fontSize="md"
+                  fontWeight="bold"
+                >
+                  作成者
+                </Text>
+              </FormLabel>
+              <Input
+                id="name"
+                type="text"
+                placeholder="山田太郎"
+                {...register("name", {
+                  required: true,
+                })}
+              />
+              {errors.roomName && (
+                <FormErrorMessage>作成者は必須です。</FormErrorMessage>
+              )}
+            </FormControl>
             <FormControl isInvalid={errors.roomName !== undefined}>
               <FormLabel mb={3}>
                 <Text

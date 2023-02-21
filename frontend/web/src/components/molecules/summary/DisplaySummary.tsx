@@ -1,7 +1,8 @@
 import { FC } from "react";
+import { useRecoilValue } from "recoil";
 import { EditIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Text } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
+
 import { roomState } from "@/store/roomState";
 
 type Props = {
