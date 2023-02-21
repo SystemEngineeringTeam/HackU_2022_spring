@@ -25,8 +25,15 @@ func PostAddMemberData(c *gin.Context) {
 	// roomIdを送られてきたjsonに追加
 	reqjson.RoomId = roomId
 
+	message, reqjson := AddMemberData(reqjson)
+
 	// 追加後のメンバーデータを返す
-	c.JSON(http.StatusOK, AddMemberData(reqjson))
+	if message == "Success" {
+		c.JSON(http.StatusOK, reqjson)
+	} else {
+		c.String(http.StatusBadRequest, "Could not add a member because a room with the specified room ID could not be found.")
+	}
+
 }
 
 // メンバーの削除 r.DELETE("/api/room/member/:memberId/", controller.DeleteMember)
