@@ -6,7 +6,7 @@ type Room struct {
 	MemberAmount int      `json:"memberAmount"`
 	Summary      string   `json:"summary"`
 	IsOpen       bool     `json:"isOpen"`
-	LastUpdate   string   `json:"lastUpdated"`
+	LastUpdate   string   `json:"lastUpdate"`
 	Members      []Member `json:"members"`
 	tags         string   `json:"tags"`
 	RoomMaker    string   `json:"roomMaker"`
