@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { DeleteIcon, UpDownIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Box, Heading, HStack, Text, Flex, Center } from "@chakra-ui/react";
 
 import { IconButtonWithText } from "@/components/atoms/button/IconButtonWithText";
@@ -26,8 +26,8 @@ export const MemberCard: FC<Props> = (props) => {
       <Center>
         <HStack>
           <IconButtonWithText
-            iconButton={UpDownIcon}
-            iconLabel="移動"
+            iconButton={EditIcon}
+            iconLabel="編集"
             memberId={memberId}
           />
           <IconButtonWithText
