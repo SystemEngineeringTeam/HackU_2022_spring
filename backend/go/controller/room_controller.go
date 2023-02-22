@@ -54,11 +54,12 @@ func RoomGet(id string) models.Room {
 	return (room)
 }
 
-func RoomChange(id string, req models.Room) models.Room {
+func RoomChange(req, room models.Room) models.Room {
 	db := lib.SqlConnect()
-	room := RoomGet(id)
 	req.LastUpdate = GetTime()
-	db.Model(&room).Updates(req)
+	if err := db.Model(&room).Updates(req).Error; err != nil {
+		panic(err.Error())
+	}
 	fmt.Println("Changing Room Is Success!!")
 	return (room)
 }
