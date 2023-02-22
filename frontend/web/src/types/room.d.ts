@@ -9,4 +9,5 @@ export type Room = {
   lastUpdate: string;
   members: Array<Member>;
   roomMaker: string;
+  tags: string;
 };

@@ -73,6 +73,7 @@ export const roomState = atom<Room>({
         tag: "カラオケ",
       },
     ],
-    roomMaker: "たなか", // string 部屋を作った人の名前}
+    roomMaker: "たなか", // string 部屋を作った人の名前
+    tags: "カラオケ,居酒屋,ボーリング" // string 部屋に存在するタグの一覧
   }
 });

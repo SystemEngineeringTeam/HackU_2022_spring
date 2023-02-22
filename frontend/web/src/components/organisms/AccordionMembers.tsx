@@ -29,43 +29,36 @@ export const AccordionMembers: FC = () => {
   const onClickAddTag = () => {};
 
   return (
-    <>
-      <Button w="100%" onClick={onOpen}>
-        <AddIcon />
-        　新しくタグを作る
-      </Button>
-      <Accordion allowMultiple>
-        {tags.map((tag) => (
-          <AccordionItem key={tag}>
-            <h2>
-              <AccordionButton p={4}>
-                <Box as="span" flex="1" textAlign="left">
-                  {tag}
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              <Stack spacing={4}>
-                {room.members.map(
-                  (member) =>
-                    member.tag === tag && (
-                      <React.Fragment key={member.memberId}>
-                        <MemberCard
-                          name={member.name}
-                          comment={member.comment}
-                          memberId={member.memberId}
-                        />
-                        <Divider />
-                      </React.Fragment>
-                    )
-                )}
-              </Stack>
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion>
-      <ModalAddTag isOpen={isOpen} onClose={onClose} />
-    </>
+    <Accordion allowMultiple>
+      {tags.map((tag) => (
+        <AccordionItem key={tag}>
+          <h2>
+            <AccordionButton p={4}>
+              <Box as="span" flex="1" textAlign="left">
+                {tag}
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <Stack spacing={4}>
+              {room.members.map(
+                (member) =>
+                  member.tag === tag && (
+                    <React.Fragment key={member.memberId}>
+                      <MemberCard
+                        name={member.name}
+                        comment={member.comment}
+                        member={member}
+                      />
+                      <Divider />
+                    </React.Fragment>
+                  )
+              )}
+            </Stack>
+          </AccordionPanel>
+        </AccordionItem>
+      ))}
+    </Accordion>
   );
 };
