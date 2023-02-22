@@ -16,37 +16,29 @@ import { MemberCard } from "../molecules/member/MemberCard";
 
 export const AccordionMembers: FC = () => {
   const room = useRecoilValue(roomState);
-
-  const tags = room.members
-    .map((ele) => ele.tag)
-    .filter((elem, index, self) => self.indexOf(elem) === index);
+  const grouped = groupBy(room.members, m => m.tag);
 
   return (
-    <Accordion allowMultiple>
-      {tags.map((tag) => (
+    <Accordion allowMultiple defaultIndex={0}>
+      {grouped.map(([tag, members]) => (
         <AccordionItem key={tag}>
           <h2>
             <AccordionButton p={4}>
               <Box as="span" flex="1" textAlign="left">
-                {tag}
+                {tag || "タグ未設定"}
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
             <Stack spacing={4}>
-              {room.members.map(
-                (member) =>
-                  member.tag === tag && (
-                    <React.Fragment key={member.memberId}>
-                      <MemberCard
-                        name={member.name}
-                        comment={member.comment}
-                        member={member}
-                      />
-                      <Divider />
-                    </React.Fragment>
-                  )
+              {members.map(
+                m => (
+                  <React.Fragment key={m.memberId}>
+                    <MemberCard member={m} />
+                    <Divider />
+                  </React.Fragment>
+                )
               )}
             </Stack>
           </AccordionPanel>
@@ -55,3 +47,17 @@ export const AccordionMembers: FC = () => {
     </Accordion>
   );
 };
+
+const groupBy = <K, V>(
+  array: readonly V[],
+  getKey: (cur: V, idx: number, src: readonly V[]) => K
+): [K, V[]][] =>
+  Array.from(
+    array.reduce((map, cur, idx, src) => {
+      const key = getKey(cur, idx, src);
+      const list = map.get(key);
+      if (list) list.push(cur);
+      else map.set(key, [cur]);
+      return map;
+    }, new Map<K, V[]>())
+);

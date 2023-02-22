@@ -22,8 +22,8 @@ import {
 import { roomState } from "@/store/roomState";
 import { useEditMember } from "@/hooks/http/put/useEditMember";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { Member } from "@/types/member";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 type Props = {
   onClose: () => void;
@@ -43,7 +43,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
   const { editMember } = useEditMember();
 
   const room = useRecoilValue(roomState);
-  const router = useRouter();
+  const { fetchRoom } = useGetRoom();
 
   const {
     register,
@@ -61,7 +61,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
     onClose();
     const { memberId } = member;
     editMember({ memberId, ...data })
-      .then(() => router.push(`/${room.roomId}`));
+      .then(() => fetchRoom({ roomId: room.roomId }));
   });
 
   return (
