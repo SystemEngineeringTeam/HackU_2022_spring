@@ -24,11 +24,10 @@ type Props = {
 };
 
 type InputContent = {
-  name: string;
-  roomName: string;
+  tag: string;
 };
 
-export const ModalAddSmallRoom: FC<Props> = (props) => {
+export const ModalAddTag: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
 
   const {
@@ -41,7 +40,7 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent mx="1rem">
-        <ModalHeader>小部屋作成</ModalHeader>
+        <ModalHeader>タグ追加</ModalHeader>
         <ModalCloseButton />
         <form
           onSubmit={handleSubmit(() => {
@@ -49,7 +48,7 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
           })}
         >
           <ModalBody>
-            <FormControl isInvalid={errors.roomName !== undefined}>
+            <FormControl isInvalid={errors.tag !== undefined}>
               <FormLabel mb={3}>
                 <Text
                   as="mark"
@@ -59,44 +58,19 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
                   fontSize="md"
                   fontWeight="bold"
                 >
-                  作成者
+                  タグ名
                 </Text>
               </FormLabel>
               <Input
-                id="name"
+                id="tag"
                 type="text"
-                placeholder="山田太郎"
-                {...register("name", {
+                placeholder="例：支払い済み"
+                {...register("tag", {
                   required: true,
                 })}
               />
-              {errors.roomName && (
-                <FormErrorMessage>作成者は必須です。</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl isInvalid={errors.roomName !== undefined}>
-              <FormLabel mb={3}>
-                <Text
-                  as="mark"
-                  p={2}
-                  color="white"
-                  bg="teal.200"
-                  fontSize="md"
-                  fontWeight="bold"
-                >
-                  部屋名
-                </Text>
-              </FormLabel>
-              <Input
-                id="roomName"
-                type="text"
-                placeholder="例：カラオケ"
-                {...register("roomName", {
-                  required: true,
-                })}
-              />
-              {errors.roomName && (
-                <FormErrorMessage>部屋名は必須です。</FormErrorMessage>
+              {errors.tag && (
+                <FormErrorMessage>タグ名は必須です。</FormErrorMessage>
               )}
             </FormControl>
           </ModalBody>
@@ -110,9 +84,9 @@ export const ModalAddSmallRoom: FC<Props> = (props) => {
                   _hover={{ bg: "orange.500" }}
                   _active={{ bg: "orange.600" }}
                   isLoading={isSubmitting}
-                  onClick={errors.roomName ? undefined : onClose}
+                  onClick={errors.tag ? undefined : onClose}
                 >
-                  作成
+                  追加
                 </Button>
                 <Button onClick={onClose}>戻る</Button>
               </HStack>
