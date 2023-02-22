@@ -38,7 +38,7 @@ func DeletExitMemberData(c *gin.Context) {
 
 	// メンバーデータを削除する関数に値を渡して、その処理結果を返す
 	defer ErrorResponse(c)
-	c.String(http.StatusOK, ExitMemberData(memberId))
+	c.JSON(http.StatusOK, ExitMemberData(memberId))
 }
 
 // メンバーの概要変更 r.PUT("/api/room/member/:memberId/", controller.ChangeMemberData)
