@@ -6,6 +6,7 @@ import (
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/models"
+	"github.com/gin-gonic/gin"
 )
 
 // メンバーの追加 r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
@@ -26,7 +27,7 @@ func AddMemberData(reqjson models.Member) models.Member {
 	var room models.Room
 	getroom := RoomGet(strconv.Itoa(reqjson.RoomId))
 	room.MemberAmount = getroom.MemberAmount + 1
-	RoomChange(strconv.Itoa(reqjson.RoomId), room)
+	RoomChange(room, getroom)
 
 	// 追加できたことを知らせる
 	fmt.Println("Created MemberData.")
@@ -36,7 +37,7 @@ func AddMemberData(reqjson models.Member) models.Member {
 }
 
 // メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
-func ExitMemberData(memberId int) string {
+func ExitMemberData(memberId int) gin.H {
 
 	// データベースに接続
 	db := lib.SqlConnect()
@@ -55,10 +56,10 @@ func ExitMemberData(memberId int) string {
 	var room models.Room
 	getroom := RoomGet(strconv.Itoa(member.RoomId))
 	room.MemberAmount = getroom.MemberAmount - 1
-	RoomChange(strconv.Itoa(member.RoomId), room)
+	RoomChange(room, getroom)
 
 	// 削除できたことを示すメッセージを返り値として渡す
-	return "MemberData could be deleted."
+	return gin.H{"message": "MemberData could be deleted."}
 }
 
 // メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
@@ -78,7 +79,8 @@ func ChangeMemberData(memberId int, reqjson models.Member) *models.Member {
 
 	// 最終更新時間を今の時間に変更
 	var room models.Room
-	RoomChange(strconv.Itoa(member.RoomId), room)
+	getroom := RoomGet(strconv.Itoa(member.RoomId))
+	RoomChange(room, getroom)
 
 	// 成功:メンバーデータを返す（変更しなかった部分も含め、全てのメンバーデータが返される）
 	return member
