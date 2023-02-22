@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -36,11 +36,10 @@ export default function RoomId() {
   const { fetchRoom } = useGetRoom();
   const { editRoom } = useEditRoom();
 
-  const [isRoomOpen, setIsRoomOpen] = useState(true);
   const [isModalAddMemberOpen, setIsModalAddMember] = useState(false);
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
-  const room = useRecoilValue(roomState);
+  const [room] = useRecoilState(roomState);
 
   const onModalAddMemberOpen = () => setIsModalAddMember(true);
   const onModalAddMemberClose = () => setIsModalAddMember(false);
@@ -49,8 +48,7 @@ export default function RoomId() {
   const onDrawerMemberFormClose = () => setIsDrawerMemberFormOpen(false);
 
   const onChangeIsOpen = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsRoomOpen(!isRoomOpen);
-    editRoom({ roomId: room.roomId, isOpen: !isRoomOpen })
+    editRoom({ roomId: room.roomId, isOpen: !room.isOpen })
       .then(() => fetchRoom({ roomId: room.roomId }));
   };
 
