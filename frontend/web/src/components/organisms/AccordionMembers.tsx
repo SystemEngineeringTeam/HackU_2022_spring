@@ -42,7 +42,7 @@ export const AccordionMembers: FC = () => {
                       <MemberCard
                         name={member.name}
                         comment={member.comment}
-                        memberId={member.memberId}
+                        member={member}
                       />
                       <Divider />
                     </React.Fragment>
