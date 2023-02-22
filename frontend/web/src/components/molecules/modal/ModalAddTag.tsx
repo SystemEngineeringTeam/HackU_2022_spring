@@ -24,8 +24,7 @@ type Props = {
 };
 
 type InputContent = {
-  name: string;
-  roomName: string;
+  tag: string;
 };
 
 export const ModalAddTag: FC<Props> = (props) => {
@@ -49,7 +48,7 @@ export const ModalAddTag: FC<Props> = (props) => {
           })}
         >
           <ModalBody>
-            <FormControl isInvalid={errors.roomName !== undefined}>
+            <FormControl isInvalid={errors.tag !== undefined}>
               <FormLabel mb={3}>
                 <Text
                   as="mark"
@@ -63,15 +62,15 @@ export const ModalAddTag: FC<Props> = (props) => {
                 </Text>
               </FormLabel>
               <Input
-                id="roomName"
+                id="tag"
                 type="text"
                 placeholder="例：支払い済み"
-                {...register("roomName", {
+                {...register("tag", {
                   required: true,
                 })}
               />
-              {errors.roomName && (
-                <FormErrorMessage>部屋名は必須です。</FormErrorMessage>
+              {errors.tag && (
+                <FormErrorMessage>タグ名は必須です。</FormErrorMessage>
               )}
             </FormControl>
           </ModalBody>
@@ -85,7 +84,7 @@ export const ModalAddTag: FC<Props> = (props) => {
                   _hover={{ bg: "orange.500" }}
                   _active={{ bg: "orange.600" }}
                   isLoading={isSubmitting}
-                  onClick={errors.roomName ? undefined : onClose}
+                  onClick={errors.tag ? undefined : onClose}
                 >
                   追加
                 </Button>

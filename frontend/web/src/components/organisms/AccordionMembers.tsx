@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useRecoilValue } from "recoil";
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Accordion,
   AccordionButton,
@@ -10,12 +11,11 @@ import {
   Stack,
   Divider,
   useDisclosure,
+  Button,
 } from "@chakra-ui/react";
 
 import { roomState } from "@/store/roomState";
 import { MemberCard } from "../molecules/member/MemberCard";
-import { Button } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
 import { ModalAddTag } from "../molecules/modal/ModalAddTag";
 
 export const AccordionMembers: FC = () => {
@@ -26,39 +26,44 @@ export const AccordionMembers: FC = () => {
     .map((ele) => ele.tag)
     .filter((elem, index, self) => self.indexOf(elem) === index);
 
-  const onClickAddTag = () => {};
-
   return (
-    <Accordion allowMultiple>
-      {tags.map((tag) => (
-        <AccordionItem key={tag}>
-          <h2>
-            <AccordionButton p={4}>
-              <Box as="span" flex="1" textAlign="left">
-                {tag}
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <Stack spacing={4}>
-              {room.members.map(
-                (member) =>
-                  member.tag === tag && (
-                    <React.Fragment key={member.memberId}>
-                      <MemberCard
-                        name={member.name}
-                        comment={member.comment}
-                        member={member}
-                      />
-                      <Divider />
-                    </React.Fragment>
-                  )
-              )}
-            </Stack>
-          </AccordionPanel>
-        </AccordionItem>
-      ))}
-    </Accordion>
+    <>
+      <Button w="100%" onClick={onOpen} color="gray.400">
+        <AddIcon color="gray.400" />
+        　新しくタグを作る
+      </Button>
+      <ModalAddTag isOpen={isOpen} onClose={onClose} />
+      <Accordion allowMultiple>
+        {tags.map((tag) => (
+          <AccordionItem key={tag}>
+            <h2>
+              <AccordionButton p={4}>
+                <Box as="span" flex="1" textAlign="left">
+                  {tag}
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <Stack spacing={4}>
+                {room.members.map(
+                  (member) =>
+                    member.tag === tag && (
+                      <React.Fragment key={member.memberId}>
+                        <MemberCard
+                          name={member.name}
+                          comment={member.comment}
+                          member={member}
+                        />
+                        <Divider />
+                      </React.Fragment>
+                    )
+                )}
+              </Stack>
+            </AccordionPanel>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </>
   );
 };
