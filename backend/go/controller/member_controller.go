@@ -9,28 +9,30 @@ import (
 )
 
 // メンバーの追加 r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
-func AddMemberData(reqjson models.Member) (string, models.Member) {
+func AddMemberData(reqjson models.Member) models.Member {
 
 	// データベースに接続
 	db := lib.SqlConnect()
 
 	// タグ情報を追加（最初なのでなし）
-	reqjson.Tag = ""
+	// reqjson.Tag = &[]string{"nil"}[0]
 
 	// レコードを追加
 	if err := db.Create(&reqjson).Error; err != nil {
-		return "Error", reqjson
+		panic(err.Error())
 	}
 
-	// 最終更新時間を今の時間に変更
+	// 最終更新時間を今の時間に変更、memberAmountを増やす
 	var room models.Room
+	getroom := RoomGet(strconv.Itoa(reqjson.RoomId))
+	room.MemberAmount = getroom.MemberAmount + 1
 	RoomChange(strconv.Itoa(reqjson.RoomId), room)
 
 	// 追加できたことを知らせる
 	fmt.Println("Created MemberData.")
 
 	// 追加したメンバーデータを返す
-	return "Success", reqjson
+	return reqjson
 }
 
 // メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
@@ -45,16 +47,18 @@ func ExitMemberData(memberId int) string {
 
 	// レコードを削除
 	if err := db.Unscoped().Delete(&member).Error; err != nil {
-		// 削除できなかったことを示すメッセージを返り値として渡す
-		return ("Erorr")
+		// 削除できなかったことを示す
+		panic(err.Error())
 	}
 
-	// 最終更新時間を今の時間に変更
+	// 最終更新時間を今の時間に変更、memberAmountを増やす
 	var room models.Room
+	getroom := RoomGet(strconv.Itoa(member.RoomId))
+	room.MemberAmount = getroom.MemberAmount - 1
 	RoomChange(strconv.Itoa(member.RoomId), room)
 
 	// 削除できたことを示すメッセージを返り値として渡す
-	return ("Success")
+	return "MemberData could be deleted."
 }
 
 // メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
@@ -69,8 +73,7 @@ func ChangeMemberData(memberId int, reqjson models.Member) *models.Member {
 
 	// レコードを変更
 	if err := db.Model(&member).Updates(reqjson).Error; err != nil {
-		// 失敗:メンバーデータを返す（変更したかった部分のみのメンバーデータが返される）
-		return member
+		panic(err.Error())
 	}
 
 	// 最終更新時間を今の時間に変更
