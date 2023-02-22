@@ -40,7 +40,9 @@ func ResponseChangeRoom(c *gin.Context) {
 		return
 	}
 	id := c.Param("roomId")
-	c.JSON(http.StatusOK, RoomChange(id, req))
+	defer ErrorResponse(c)
+	room := RoomGet(id)
+	c.JSON(http.StatusOK, RoomChange(req, room))
 }
 
 func ResponseDeleteRoom(c *gin.Context) {
