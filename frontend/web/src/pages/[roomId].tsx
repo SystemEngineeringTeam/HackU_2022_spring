@@ -20,10 +20,10 @@ import { useDate } from "@/hooks/date/useDate";
 import { Summary } from "@/components/organisms/Summary";
 import { useEditRoom } from "@/hooks/http/put/useEditRoom";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
-import { AccordionMembers } from "@/components/organisms/AccordionMembers";
 import { ModalAddMember } from "@/components/molecules/modal/ModalAddMember";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddSmallRoom";
+// import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddTag";
+import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
@@ -71,11 +71,8 @@ export default function RoomId() {
     <>
       <FixedBottomButtons
         leftButtonTitle="参加者を追加する"
-        rightButtonTitle="小部屋を追加する"
         leftButtonOnClick={onModalAddMemberOpen}
-        rightButtonOnClick={onOpen}
       />
-      <ModalAddSmallRoom isOpen={isOpen} onClose={onClose} />
       <ModalAddMember
         isOpen={isModalAddMemberOpen}
         onClose={onModalAddMemberClose}
@@ -119,7 +116,8 @@ export default function RoomId() {
           />
         </Box>
       </Box>
-      <AccordionMembers />
+      <TabsAllMemberOrSmallRooms />
+
       <Center>
         <Button
           type="submit"
