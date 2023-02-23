@@ -1,18 +1,19 @@
 import { useCallback, useState } from "react";
 import axios from "axios";
 
-import { Room } from "@/types/room";
+import { FrontRoom, Room } from "@/types/room";
+import { tagsParse } from "../util/parseTags";
 
 type Props = {
   roomId: number;
   roomName?: string;
   summary?: string;
   isOpen?: boolean;
-  tags?: string;
+  tags?: string[];
 };
 
 export const useEditRoom = () => {
-  const [room, setRoom] = useState<undefined | Room[]>();
+  const [room, setRoom] = useState<undefined | FrontRoom>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -22,14 +23,15 @@ export const useEditRoom = () => {
     setIsError(false);
 
     try {
-      const response = await axios.put<Room[]>(`/api/room/${props.roomId}`, {
+      const response = await axios.put<Room>(`/api/room/${props.roomId}`, {
         roomName: props.roomName,
         summary: props.summary,
         isOpen: props.isOpen,
-        tags: props.tags,
+        tags: props.tags?.join(","),
       });
+      const room = tagsParse(response.data);
       setIsLoaded(true);
-      setRoom(response.data);
+      setRoom(room);
     } catch (e) {
       if (e instanceof Error) {
         setIsError(true);

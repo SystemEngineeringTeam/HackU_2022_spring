@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -12,7 +12,6 @@ import {
   Heading,
   Switch,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { roomState } from "@/store/roomState";
@@ -22,7 +21,6 @@ import { useEditRoom } from "@/hooks/http/put/useEditRoom";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMember } from "@/components/molecules/modal/ModalAddMember";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-// import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddTag";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
@@ -31,7 +29,6 @@ export default function RoomId() {
   const router = useRouter();
 
   const { formatDate } = useDate();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { fetchRoom } = useGetRoom();
   const { editRoom } = useEditRoom();

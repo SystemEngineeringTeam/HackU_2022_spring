@@ -33,7 +33,7 @@ type InputContent = {
 
 export const ModalAddTag: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
-  const room = useRecoilValue(roomState);
+  const { tags, roomId } = useRecoilValue(roomState);
   const { editRoom } = useEditRoom();
   const { fetchRoom } = useGetRoom();
 
@@ -44,14 +44,11 @@ export const ModalAddTag: FC<Props> = (props) => {
   } = useForm<InputContent>();
 
   const onSubmit = handleSubmit(({ tag }) => {
-    const tags = room.tags.split(',');
     if (tags.includes(tag)) return;
     tags.push(tag);
 
-    editRoom({
-      roomId: room.roomId,
-      tags: tags.join(',')
-    }).then(() => fetchRoom({ roomId: room.roomId }));
+    editRoom({ roomId, tags })
+      .then(() => fetchRoom({ roomId }));
   });
 
   return (

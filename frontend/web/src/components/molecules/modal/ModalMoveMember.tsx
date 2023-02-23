@@ -51,10 +51,9 @@ export const ModalMoveMember: FC<Props> = (props) => {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
-  const tags = room.tags.split(",");
   const options = [
     <option value="" key="">--タグ未選択--</option>,
-    ...tags.filter(v => v).map(v => <option value={v} key={v}>{v}</option>)
+    ...room.tags.map(v => <option value={v} key={v}>{v}</option>)
   ];
 
   const onSubmit = handleSubmit((data) => {

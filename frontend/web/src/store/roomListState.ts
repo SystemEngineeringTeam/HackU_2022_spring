@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-import { Room } from "../types/room";
+import { FrontRoom } from "@/types/room";
 
-export const roomListState = atom<Array<Room>>({
+export const roomListState = atom<Array<FrontRoom>>({
   key: "roomListState",
   default: [
     {
@@ -74,7 +74,9 @@ export const roomListState = atom<Array<Room>>({
           tag: "カラオケ",
         },
       ],
-      roomMaker: "たなか", // string 部屋を作った人の名前}
+      roomMaker: "たなか", // string 部屋を作った人の名前
+      tags: ["カラオケ", "居酒屋", "ボーリング"], // string[] タグ一覧
+
     },
     {
       roomId: 2, // string 部屋ID
@@ -85,6 +87,7 @@ export const roomListState = atom<Array<Room>>({
       lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
       roomMaker: "たなか", // string 部屋を作った人の名前}
+      tags: [], // string[] タグ一覧
     },
     {
       roomId: 3, // string 部屋ID
@@ -95,6 +98,7 @@ export const roomListState = atom<Array<Room>>({
       lastUpdate: "1467-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
       roomMaker: "たなか", // string 部屋を作った人の名前}
+      tags: [], // string[] タグ一覧
     },
     {
       roomId: 4, // string 部屋ID
@@ -105,6 +109,7 @@ export const roomListState = atom<Array<Room>>({
       lastUpdate: "2022-05-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
       roomMaker: "たなか", // string 部屋を作った人の名前}
+      tags: [], // string[] タグ一覧
     },
     {
       roomId: 5, // string 部屋ID
@@ -115,6 +120,7 @@ export const roomListState = atom<Array<Room>>({
       lastUpdate: "2023-01-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
       roomMaker: "たなか", // string 部屋を作った人の名前}
+      tags: [], // string[] タグ一覧
     },
     {
       roomId: 6, // string 部屋ID
@@ -125,6 +131,7 @@ export const roomListState = atom<Array<Room>>({
       lastUpdate: "2002-01-09T00:08:06+09:00", //string 最終更新日 ISO形式
       members: [],
       roomMaker: "たなか", // string 部屋を作った人の名前}
+      tags: [], // string[] タグ一覧
     },
   ],
 });

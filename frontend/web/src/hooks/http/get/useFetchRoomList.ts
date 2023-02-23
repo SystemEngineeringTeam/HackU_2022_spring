@@ -4,6 +4,7 @@ import axios from "axios";
 import { Room } from "@/types/room";
 import { useRecoilState } from "recoil";
 import { roomListState } from "@/store/roomListState";
+import { tagsParse } from "../util/parseTags";
 
 type Props = {
   roomIds: number[];
@@ -25,8 +26,9 @@ export const useGetRoomList = () => {
           roomId: String(props.roomIds),
         },
       });
+      const roomList = response.data.map(tagsParse);
       setIsLoaded(true);
-      setRoomList(response.data);
+      setRoomList(roomList);
     } catch (e) {
       if (e instanceof Error) {
         setIsError(true);

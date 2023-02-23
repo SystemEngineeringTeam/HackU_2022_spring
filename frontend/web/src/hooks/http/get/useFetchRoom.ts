@@ -4,6 +4,7 @@ import axios from "axios";
 import { Room } from "@/types/room";
 import { useRecoilState } from "recoil";
 import { roomState } from "@/store/roomState";
+import { tagsParse } from "../util/parseTags";
 
 type Props = {
   roomId: number;
@@ -25,8 +26,9 @@ export const useGetRoom = () => {
           roomId: String(props.roomId),
         },
       });
+      const [room] = response.data.map(tagsParse);
       setIsLoaded(true);
-      setRoom(response.data[0]);
+      setRoom(room);
     } catch (e) {
       if (e instanceof Error) {
         setIsError(true);
