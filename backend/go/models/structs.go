@@ -3,12 +3,12 @@ package models
 type Room struct {
 	ID           int      `json:"roomId"`
 	RoomName     string   `json:"roomName"`
-	MemberAmount int      `json:"memberAmount"`
-	Summary      string   `json:"summary"`
-	IsOpen       bool     `json:"isOpen"`
+	MemberAmount *int      `json:"memberAmount"`
+	Summary      *string   `json:"summary"`
+	IsOpen       *bool     `json:"isOpen"`
 	LastUpdate   string   `json:"lastUpdate"`
 	Members      []Member `json:"members"`
-	tags         string   `json:"tags"`
+	Tags         *string   `json:"tags"`
 	RoomMaker    string   `json:"roomMaker"`
 }
 
