@@ -17,6 +17,10 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { useRecoilValue } from "recoil";
+import { roomState } from "@/store/roomState";
+import { useEditRoom } from "@/hooks/http/put/useEditRoom";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 type Props = {
   isOpen: boolean;
@@ -29,6 +33,9 @@ type InputContent = {
 
 export const ModalAddTag: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
+  const room = useRecoilValue(roomState);
+  const { editRoom } = useEditRoom();
+  const { fetchRoom } = useGetRoom();
 
   const {
     register,
@@ -36,17 +43,24 @@ export const ModalAddTag: FC<Props> = (props) => {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
+  const onSubmit = handleSubmit(({ tag }) => {
+    const tags = room.tags.split(',');
+    if (tags.includes(tag)) return;
+    tags.push(tag);
+
+    editRoom({
+      roomId: room.roomId,
+      tags: tags.join(',')
+    }).then(() => fetchRoom({ roomId: room.roomId }));
+  });
+
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent mx="1rem">
         <ModalHeader>タグ追加</ModalHeader>
         <ModalCloseButton />
-        <form
-          onSubmit={handleSubmit(() => {
-            console.log("ddd");
-          })}
-        >
+        <form onSubmit={onSubmit}>
           <ModalBody>
             <FormControl isInvalid={errors.tag !== undefined}>
               <FormLabel mb={3}>

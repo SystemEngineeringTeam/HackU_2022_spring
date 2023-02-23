@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import {
   Box,
@@ -51,10 +51,10 @@ export const ModalMoveMember: FC<Props> = (props) => {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
-  const tags = room.tags?.split(",") ?? [];
+  const tags = room.tags.split(",");
   const options = [
     <option value="" key="">--タグ未選択--</option>,
-    ...tags.map(v => <option value={v} key={v}>{v}</option>)
+    ...tags.filter(v => v).map(v => <option value={v} key={v}>{v}</option>)
   ];
 
   const onSubmit = handleSubmit((data) => {

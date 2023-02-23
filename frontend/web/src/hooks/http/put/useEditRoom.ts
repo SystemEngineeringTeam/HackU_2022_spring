@@ -8,6 +8,7 @@ type Props = {
   roomName?: string;
   summary?: string;
   isOpen?: boolean;
+  tags?: string;
 };
 
 export const useEditRoom = () => {
@@ -25,6 +26,7 @@ export const useEditRoom = () => {
         roomName: props.roomName,
         summary: props.summary,
         isOpen: props.isOpen,
+        tags: props.tags,
       });
       setIsLoaded(true);
       setRoom(response.data);
