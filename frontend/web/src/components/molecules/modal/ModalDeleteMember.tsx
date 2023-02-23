@@ -14,11 +14,12 @@ import {
 import { useDeleteMember } from "@/hooks/http/delete/useDeleteMember";
 import { useRecoilValue } from "recoil";
 import { roomState } from "@/store/roomState";
+import { Member } from "@/types/member";
 
 type Props = {
   onClose: () => void;
   isOpen: boolean;
-  memberId: number;
+  member: Member;
 };
 
 export const ModalDeleteMember: FC<Props> = (props) => {
@@ -29,12 +30,12 @@ export const ModalDeleteMember: FC<Props> = (props) => {
     () => {
       const deleteProps = {
         roomId: room.roomId,
-        memberId: props.memberId
+        memberId: props.member.memberId
       };
       deleteMember(deleteProps)
         .then(() => onClose());
     }
-    , [deleteMember, room.roomId, props.memberId, onClose]
+    , [deleteMember, room.roomId, props.member.memberId, onClose]
   );
 
   return (

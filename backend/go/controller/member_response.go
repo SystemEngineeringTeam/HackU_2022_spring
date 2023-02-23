@@ -26,6 +26,7 @@ func PostAddMemberData(c *gin.Context) {
 	reqjson.RoomId = roomId
 
 	// 追加後のメンバーデータを返す
+	defer ErrorResponse(c)
 	c.JSON(http.StatusOK, AddMemberData(reqjson))
 }
 
@@ -35,13 +36,9 @@ func DeletExitMemberData(c *gin.Context) {
 	// URLパスからmemberIdを取得
 	memberId, _ := strconv.Atoi(c.Param("memberId"))
 
-	// メンバーデータを削除する関数に値を渡して、その処理結果を知らせる
-	if ExitMemberData(memberId) == "Success" {
-		c.String(http.StatusOK, "MemberData could be deleted.")
-	} else {
-		c.String(http.StatusBadRequest, "MemberData could not be deleted because there is no corresponding MemberData.")
-	}
-
+	// メンバーデータを削除する関数に値を渡して、その処理結果を返す
+	defer ErrorResponse(c)
+	c.JSON(http.StatusOK, ExitMemberData(memberId))
 }
 
 // メンバーの概要変更 r.PUT("/api/room/member/:memberId/", controller.ChangeMemberData)
@@ -54,21 +51,14 @@ func PutChangeMemberData(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(reqjson)
+
 	// URLパスからmemberIdを取得して送られてきたjsonに追加
 	memberId, _ := strconv.Atoi(c.Param("memberId"))
-	// reqjson.ID = memberId
 
-	// メンバーデータの変更
-	memberData := ChangeMemberData(memberId, reqjson)
-
-	fmt.Println(memberData)
-	// 変更後のメンバーデータを返す
-	// メンバーデータを変更する関数に値を渡して、その処理結果を知らせる
-	if memberData.ID != 0 {
-		c.JSON(http.StatusOK, memberData)
-	} else {
-		c.String(http.StatusBadRequest, "MemberData could not be changed because there is no corresponding MemberData.")
-	}
+	// メンバーデータを変更する関数に値を渡して、その処理結果を返す
+	defer ErrorResponse(c)
+	c.JSON(http.StatusOK, ChangeMemberData(memberId, reqjson))
 }
 
 // テスト
