@@ -8,7 +8,7 @@ type Room struct {
 	IsOpen       bool     `json:"isOpen"`
 	LastUpdate   string   `json:"lastUpdate"`
 	Members      []Member `json:"members"`
-	tags         string   `json:"tags"`
+	Tags         string   `json:"tags"`
 	RoomMaker    string   `json:"roomMaker"`
 }
 
