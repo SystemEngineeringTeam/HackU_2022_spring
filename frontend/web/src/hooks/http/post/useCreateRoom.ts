@@ -1,6 +1,7 @@
-import { Room } from "@/types/room";
+import { FrontRoom, Room } from "@/types/room";
 import axios from "axios";
 import { useCallback, useState } from "react";
+import { tagsParse } from "../util/parseTags";
 
 type Props = {
   roomName: string;
@@ -9,7 +10,7 @@ type Props = {
 };
 
 export const useCreateRoom = () => {
-  const [room, setRoom] = useState<undefined | Room>();
+  const [room, setRoom] = useState<undefined | FrontRoom>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -29,8 +30,9 @@ export const useCreateRoom = () => {
             "Content-Type": "application/json"
           }
         });
+        const room = tagsParse(response.data);
         setIsLoaded(true);
-        setRoom(response.data);
+        setRoom(room);
       } catch (e) {
         if (e instanceof Error) {
           setIsError(true);

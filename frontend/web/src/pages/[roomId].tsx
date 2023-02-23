@@ -109,7 +109,7 @@ export default function RoomId() {
             p="2"
             bg="orange.300"
             fontSize="md"
-            memberAmount={room.memberAmount}
+            memberAmount={room.members.length}
           />
         </Box>
       </Box>
