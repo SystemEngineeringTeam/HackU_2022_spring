@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -36,7 +36,7 @@ export default function RoomId() {
   const [isModalAddMemberOpen, setIsModalAddMember] = useState(false);
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
-  const [room] = useRecoilState(roomState);
+  const room = useRecoilValue(roomState);
 
   const onModalAddMemberOpen = () => setIsModalAddMember(true);
   const onModalAddMemberClose = () => setIsModalAddMember(false);

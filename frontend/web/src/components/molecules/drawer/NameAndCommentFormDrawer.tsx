@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import {
   Box,
@@ -21,6 +20,7 @@ import {
 import { useAddMember } from "@/hooks/http/post/useAddMember";
 import { roomState } from "@/store/roomState";
 import { useRecoilValue } from "recoil";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 type InputContent = {
   name: string;
@@ -35,6 +35,7 @@ type Props = {
 export const NameAndCommentFormDrawer: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
   const { addMember } = useAddMember();
+  const { fetchRoom } = useGetRoom();
   const room = useRecoilValue(roomState);
 
   const {
@@ -42,12 +43,12 @@ export const NameAndCommentFormDrawer: FC<Props> = (props) => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
-  const router = useRouter();
 
   const onSubmit = handleSubmit((data) => {
     const { roomId } = room;
+    onClose();
     addMember({ roomId, ...data })
-      .then(() => router.push(`/${roomId}`));
+      .then(() => fetchRoom({ roomId }));
   });
 
   return (
@@ -76,12 +77,10 @@ export const NameAndCommentFormDrawer: FC<Props> = (props) => {
                   id="roomName"
                   type="text"
                   placeholder="例：田中山根"
-                  {...register("name", {
-                    required: true,
-                  })}
+                  {...register("name", { required: true })}
                 />
                 {errors.name && (
-                  <FormErrorMessage>部屋名は必須です。</FormErrorMessage>
+                  <FormErrorMessage>ユーザー名は必須です。</FormErrorMessage>
                 )}
               </FormControl>
               <FormControl>
@@ -100,9 +99,7 @@ export const NameAndCommentFormDrawer: FC<Props> = (props) => {
                 <Textarea
                   id="summary"
                   placeholder="例：3000円以内がいい"
-                  {...register("comment", {
-                    required: false,
-                  })}
+                  {...register("comment", { required: false })}
                 />
               </FormControl>
             </Box>
