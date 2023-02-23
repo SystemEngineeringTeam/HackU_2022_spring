@@ -9,11 +9,10 @@ import (
 
 func RoomCreate(room models.Room) models.Room {
 	db := lib.SqlConnect()
-	pamount := &[]int{0}[0]
 	ptrue := &[]bool{true}[0]
 	ptag := &[]string{""}[0]
 
-	room.MemberAmount = pamount
+	room.MemberAmount = 0
 	room.IsOpen = ptrue
 	room.LastUpdate = GetTime()
 	room.Tags = ptag

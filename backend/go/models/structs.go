@@ -3,7 +3,7 @@ package models
 type Room struct {
 	ID           int      `json:"roomId"`
 	RoomName     string   `json:"roomName"`
-	MemberAmount *int      `json:"memberAmount"`
+	MemberAmount int      `json:"memberAmount"`
 	Summary      *string   `json:"summary"`
 	IsOpen       *bool     `json:"isOpen"`
 	LastUpdate   string   `json:"lastUpdate"`
