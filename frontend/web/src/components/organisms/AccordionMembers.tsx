@@ -33,7 +33,7 @@ export const AccordionMembers: FC = () => {
         　新しくタグを作る
       </Button>
       <ModalAddTag isOpen={isOpen} onClose={onClose} />
-      <Accordion allowMultiple>
+      <Accordion allowMultiple defaultIndex={Array.from(tags.keys())}>
         {tags.map((tag) => (
           <AccordionItem key={tag}>
             <h2>

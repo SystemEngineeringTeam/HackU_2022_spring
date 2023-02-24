@@ -12,7 +12,6 @@ import {
   Spacer,
   Switch,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import { roomState } from "@/store/roomState";
@@ -21,11 +20,10 @@ import { Summary } from "@/components/organisms/Summary";
 import { useEditRoom } from "@/hooks/http/put/useEditRoom";
 import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
-import { ModalAddMember } from "@/components/molecules/modal/ModalAddMember";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
+import { AccordionMembers } from "@/components/organisms/AccordionMembers";
 
 export default function RoomId() {
   const router = useRouter();
@@ -33,7 +31,7 @@ export default function RoomId() {
   const { formatDate } = useDate();
 
   const { fetchRooms, rooms: fetched } = useGetRooms();
-  const { editRoom, isLoaded, isError, error } = useEditRoom();
+  const { editRoom } = useEditRoom();
 
   const [isRoomOpen, setIsRoomOpen] = useState(true);
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
@@ -119,7 +117,7 @@ export default function RoomId() {
         <Spacer />
         <ShareQrCode text={roomUrl}/>
       </HStack>
-      <TabsAllMemberOrSmallRooms />
+      <AccordionMembers />
 
       <NameAndCommentFormDrawer
         isOpen={isDrawerMemberFormOpen}
