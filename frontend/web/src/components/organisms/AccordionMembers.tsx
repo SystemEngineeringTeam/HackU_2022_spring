@@ -17,24 +17,24 @@ import {
 import { roomState } from "@/store/roomState";
 import { MemberCard } from "../molecules/member/MemberCard";
 import { ModalAddTag } from "../molecules/modal/ModalAddTag";
+import { Member } from "@/types/member";
+
+const UNSET_KEY = 'タグ未設定';
 
 export const AccordionMembers: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const room = useRecoilValue(roomState);
-
-  const tags = room.members
-    .map((ele) => ele.tag)
-    .filter((elem, index, self) => self.indexOf(elem) === index);
+  const { members, tags } = useRecoilValue(roomState);
+  const grouped = groupByTag(members, tags);
 
   return (
     <>
       <Button w="100%" onClick={onOpen} color="gray.400">
         <AddIcon color="gray.400" />
-        　新しくタグを作る
+        新しくタグを作る
       </Button>
       <ModalAddTag isOpen={isOpen} onClose={onClose} />
-      <Accordion allowMultiple>
-        {tags.map((tag) => (
+      <Accordion allowMultiple defaultIndex={[0]}>
+        {grouped.map(([tag, members]) => (
           <AccordionItem key={tag}>
             <h2>
               <AccordionButton p={4}>
@@ -46,19 +46,12 @@ export const AccordionMembers: FC = () => {
             </h2>
             <AccordionPanel pb={4}>
               <Stack spacing={4}>
-                {room.members.map(
-                  (member) =>
-                    member.tag === tag && (
-                      <React.Fragment key={member.memberId}>
-                        <MemberCard
-                          name={member.name}
-                          comment={member.comment}
-                          member={member}
-                        />
-                        <Divider />
-                      </React.Fragment>
-                    )
-                )}
+                {members.map(m => (
+                  <React.Fragment key={m.memberId}>
+                    <MemberCard member={m} />
+                    <Divider />
+                  </React.Fragment>
+                ))}
               </Stack>
             </AccordionPanel>
           </AccordionItem>
@@ -66,4 +59,14 @@ export const AccordionMembers: FC = () => {
       </Accordion>
     </>
   );
+};
+
+const groupByTag = (members: Member[], tags: string[]) => {
+  const grouped = new Map<string, Member[]>(tags.map(v=> [v, []]));
+  grouped.set(UNSET_KEY, []);
+  for (const m of members) {
+    const target = grouped.get(m.tag) ?? grouped.get(UNSET_KEY)!;
+    target.push(m);
+  }
+  return Array.from(grouped);
 };

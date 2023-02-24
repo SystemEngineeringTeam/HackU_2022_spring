@@ -1,5 +1,5 @@
-import { useState, FC, ChangeEvent } from "react";
-import { useRecoilState } from "recoil";
+import { useState, FC, ChangeEvent, useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 import {
   VStack,
@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { roomState } from "@/store/roomState";
 import { useEditRoom } from "@/hooks/http/put/useEditRoom";
-import { useRouter } from "next/router";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 type Props = {
   isEditSummary: boolean;
@@ -21,10 +21,10 @@ type Props = {
 export const EditSummary: FC<Props> = (props) => {
   const { isEditSummary, setIsEditSummary } = props;
 
-  const [room, setRoom] = useRecoilState(roomState);
+  const room = useRecoilValue(roomState);
   const [draftSummary, setDraftSummary] = useState(room.summary);
   const { editRoom } = useEditRoom();
-  const router = useRouter();
+  const { fetchRoom } = useGetRoom();
 
   const onClickEditButton = () => setIsEditSummary(!isEditSummary);
 
@@ -36,11 +36,15 @@ export const EditSummary: FC<Props> = (props) => {
 
     setIsEditSummary(!isEditSummary);
     editRoom(editProps)
-      .catch(v => router.reload());
+      .then(() => fetchRoom({ roomId: room.roomId }));
   };
 
   const onChangeDraftSummary = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setDraftSummary(e.target.value);
+
+  useEffect(() => {
+    setDraftSummary(room.summary);
+  }, [room]);
 
   return (
     <VStack w="100%" spacing={4} align="strech">

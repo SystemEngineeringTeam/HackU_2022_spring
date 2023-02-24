@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-import { Room } from "../types/room";
+import { FrontRoom } from "@/types/room";
 
-export const roomState = atom<Room>({
+export const roomState = atom<FrontRoom>({
   key: "roomState",
   default: {
     roomId: 1, // string 部屋ID
@@ -74,6 +74,6 @@ export const roomState = atom<Room>({
       },
     ],
     roomMaker: "たなか", // string 部屋を作った人の名前
-    tags: "カラオケ,居酒屋,ボーリング" // string 部屋に存在するタグの一覧
+    tags: ["カラオケ","居酒屋","ボーリング"] // string[] 部屋に存在するタグの一覧
   }
 });

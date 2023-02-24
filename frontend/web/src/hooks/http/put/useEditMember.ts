@@ -26,6 +26,7 @@ export const useEditMember = () => {
         {
           name: props.name,
           comment: props.comment,
+          tag: props.tag
         }
       );
       setIsLoaded(true);

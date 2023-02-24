@@ -12,8 +12,6 @@ export const AllMembers = () => {
       {room.members.map((member) => (
         <MemberCard
           key={member.memberId}
-          name={member.name}
-          comment={member.comment}
           member={member}
         />
       ))}

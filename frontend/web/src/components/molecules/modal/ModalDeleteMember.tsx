@@ -15,6 +15,7 @@ import { useDeleteMember } from "@/hooks/http/delete/useDeleteMember";
 import { useRecoilValue } from "recoil";
 import { roomState } from "@/store/roomState";
 import { Member } from "@/types/member";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 type Props = {
   onClose: () => void;
@@ -25,17 +26,21 @@ type Props = {
 export const ModalDeleteMember: FC<Props> = (props) => {
   const { onClose, isOpen } = props;
   const { deleteMember } = useDeleteMember();
+  const { fetchRoom } = useGetRoom();
   const room = useRecoilValue(roomState);
+
   const onClickYes = useCallback(
     () => {
       const deleteProps = {
-        roomId: room.roomId,
         memberId: props.member.memberId
       };
       deleteMember(deleteProps)
-        .then(() => onClose());
+        .then(() => {
+          onClose();
+          fetchRoom({ roomId: room.roomId });
+        });
     }
-    , [deleteMember, room.roomId, props.member.memberId, onClose]
+    , [deleteMember, props.member.memberId, onClose, fetchRoom, room.roomId]
   );
 
   return (

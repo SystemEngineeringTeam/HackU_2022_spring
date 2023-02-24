@@ -6,22 +6,20 @@ import { IconButtonWithText } from "@/components/atoms/button/IconButtonWithText
 import { Member } from "@/types/member";
 
 type Props = {
-  name: string;
-  comment: string;
   member: Member;
 };
 
 export const MemberCard: FC<Props> = (props) => {
-  const { name, comment, member } = props;
+  const { member } = props;
 
   return (
     <Flex justify="space-between">
       <Box>
         <Heading size="sm" textTransform="uppercase">
-          {name}
+          {member.name}
         </Heading>
         <Text pt="2" fontSize="sm">
-          {comment}
+          {member.comment}
         </Text>
       </Box>
       <Center>
