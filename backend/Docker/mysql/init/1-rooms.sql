@@ -12,9 +12,3 @@ CREATE TABLE data_sets.rooms(
     room_maker VARCHAR(15), /* 部屋作成者の名前 */
     PRIMARY KEY (id)
 ) ENGINE = InnoDB;
-
-/* INSERT QUERY */
-INSERT INTO
-    data_sets.rooms(room_name, member_amount, summary, is_open, last_update, room_maker)
-VALUES
-    ("test", 10, "3000円以内がいい", true, "2022-01-03T09:10:31+09:00", "田中");
