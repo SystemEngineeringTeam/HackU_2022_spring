@@ -45,9 +45,9 @@ export const ModalAddTag: FC<Props> = (props) => {
 
   const onSubmit = handleSubmit(({ tag }) => {
     if (tags.includes(tag)) return;
-    tags.push(tag);
+    const added = tags.concat(tag);
 
-    editRoom({ roomId, tags })
+    editRoom({ roomId, tags: added })
       .then(() => fetchRoom({ roomId }));
   });
 
