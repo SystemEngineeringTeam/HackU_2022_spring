@@ -75,7 +75,7 @@ export const ModalAddTag: FC<Props> = (props) => {
               <Input
                 id="tag"
                 type="text"
-                placeholder="例：支払い済み"
+                placeholder="例：5号室"
                 {...register("tag", {
                   required: true,
                 })}
@@ -88,6 +88,7 @@ export const ModalAddTag: FC<Props> = (props) => {
           <ModalFooter>
             <Center>
               <HStack spacing={4}>
+                <Button onClick={onClose}>戻る</Button>
                 <Button
                   type="submit"
                   color="white"
@@ -99,7 +100,6 @@ export const ModalAddTag: FC<Props> = (props) => {
                 >
                   追加
                 </Button>
-                <Button onClick={onClose}>戻る</Button>
               </HStack>
             </Center>
           </ModalFooter>

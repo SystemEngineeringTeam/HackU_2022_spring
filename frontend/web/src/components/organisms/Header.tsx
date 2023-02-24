@@ -1,19 +1,15 @@
 import { FC, useCallback } from "react";
 import { useRouter } from "next/router";
-import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
   Heading,
-  IconButton,
-  useDisclosure,
+  HStack,
 } from "@chakra-ui/react";
-
-import { MenuDrawer } from "@/components/molecules/drawer/MenuDrawer";
+import Image from "next/image";
 
 export const Header: FC = () => {
   const router = useRouter();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onClickHome = useCallback(() => router.push("/"), [router]);
   return (
@@ -25,28 +21,22 @@ export const Header: FC = () => {
         align="center"
         justify="space-between"
         padding={{ base: 1, md: 5 }}
+        height={"2.5em"}
       >
         <Flex align="center" as="a" ml={2} _hover={{ cursor: "pointer" }}>
-          <Box>
-            <Heading
-              as="button"
-              fontSize={{ base: "md", md: "lg" }}
-              onClick={onClickHome}
-            >
-              人数管理する蔵（仮）
-            </Heading>
-          </Box>
+          <HStack onClick={onClickHome}>
+            <Image src="/images/ET_GAP.png" width={32} height={32} alt="ET_GAP" />
+            <Box>
+              <Heading
+                as="button"
+                fontSize={{ base: "md", md: "lg" }}
+              >
+                ET GAP
+              </Heading>
+            </Box>
+          </HStack>
         </Flex>
-        <IconButton
-          icon={<HamburgerIcon />}
-          size="lg"
-          variant="unstyled"
-          onClick={onOpen}
-          display={{ base: "black", md: "none" }}
-          aria-label="メニューボタン"
-        />
       </Flex>
-      <MenuDrawer onClose={onClose} isOpen={isOpen} />
     </>
   );
 };

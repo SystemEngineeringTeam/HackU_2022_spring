@@ -3,13 +3,13 @@ import { useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
 import {
   Box,
-  Button,
-  Center,
   Divider,
   Flex,
   FormControl,
   FormLabel,
   Heading,
+  HStack,
+  Spacer,
   Switch,
   Text,
 } from "@chakra-ui/react";
@@ -19,10 +19,10 @@ import { useDate } from "@/hooks/date/useDate";
 import { Summary } from "@/components/organisms/Summary";
 import { useEditRoom } from "@/hooks/http/put/useEditRoom";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
-import { ModalAddMember } from "@/components/molecules/modal/ModalAddMember";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
+import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
+import { AccordionMembers } from "@/components/organisms/AccordionMembers";
 import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 export default function RoomId() {
@@ -37,9 +37,6 @@ export default function RoomId() {
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
   const room = useRecoilValue(roomState);
-
-  const onModalAddMemberOpen = () => setIsModalAddMember(true);
-  const onModalAddMemberClose = () => setIsModalAddMember(false);
 
   const onDrawerMemberFormOpen = () => setIsDrawerMemberFormOpen(true);
   const onDrawerMemberFormClose = () => setIsDrawerMemberFormOpen(false);
@@ -68,11 +65,7 @@ export default function RoomId() {
     <>
       <FixedBottomButtons
         leftButtonTitle="参加者を追加する"
-        leftButtonOnClick={onModalAddMemberOpen}
-      />
-      <ModalAddMember
-        isOpen={isModalAddMemberOpen}
-        onClose={onModalAddMemberClose}
+        leftButtonOnClick={onDrawerMemberFormOpen}
       />
       <Box p={4}>
         <Flex justify="space-between">
@@ -102,38 +95,23 @@ export default function RoomId() {
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
-      <Box p={4}>
-        <Heading size="md">参加者一覧</Heading>
-        <Box pt={4}>
-          <MembersAmount
-            p="2"
-            bg="orange.300"
-            fontSize="md"
-            memberAmount={room.members.length}
-          />
+      <HStack>
+        <Box p={4}>
+          <Heading size="md">参加者一覧</Heading>
+          <Box pt={4}>
+            <MembersAmount
+              p="2"
+              bg="orange.300"
+              fontSize="md"
+              memberAmount={room.members.length}
+            />
+          </Box>
         </Box>
-      </Box>
-      <TabsAllMemberOrSmallRooms />
+        <Spacer />
+        <ShareQrCode />
+      </HStack>
+      <AccordionMembers />
 
-      <Center>
-        <Button
-          type="submit"
-          w="100px"
-          h="100px"
-          rounded="full"
-          color="white"
-          backgroundColor="orange.400"
-          mt={4}
-          mb={8}
-          _hover={{ bg: "orange.500" }}
-          _active={{ bg: "orange.600" }}
-          onClick={onDrawerMemberFormOpen}
-        >
-          参加
-          <br />
-          入力する
-        </Button>
-      </Center>
       <NameAndCommentFormDrawer
         isOpen={isDrawerMemberFormOpen}
         onClose={onDrawerMemberFormClose}
