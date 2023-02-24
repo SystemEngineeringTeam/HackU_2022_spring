@@ -8,6 +8,8 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  HStack,
+  Spacer,
   Switch,
   Text,
   useDisclosure,
@@ -23,6 +25,7 @@ import { ModalAddMember } from "@/components/molecules/modal/ModalAddMember";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
+import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
 
 export default function RoomId() {
   const router = useRouter();
@@ -36,6 +39,7 @@ export default function RoomId() {
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
   const [room, setRoom] = useRecoilState(roomState);
+  const roomUrl = globalThis.window?.location.href;
 
   const onDrawerMemberFormOpen = () => setIsDrawerMemberFormOpen(true);
   const onDrawerMemberFormClose = () => setIsDrawerMemberFormOpen(false);
@@ -100,17 +104,21 @@ export default function RoomId() {
       <Divider borderColor="gray.400" />
       <Summary />
       <Divider borderColor="gray.400" />
-      <Box p={4}>
-        <Heading size="md">参加者一覧</Heading>
-        <Box pt={4}>
-          <MembersAmount
-            p="2"
-            bg="orange.300"
-            fontSize="md"
-            memberAmount={room.memberAmount}
-          />
+      <HStack>
+        <Box p={4}>
+          <Heading size="md">参加者一覧</Heading>
+          <Box pt={4}>
+            <MembersAmount
+              p="2"
+              bg="orange.300"
+              fontSize="md"
+              memberAmount={room.memberAmount}
+            />
+          </Box>
         </Box>
-      </Box>
+        <Spacer />
+        <ShareQrCode text={roomUrl}/>
+      </HStack>
       <TabsAllMemberOrSmallRooms />
 
       <NameAndCommentFormDrawer

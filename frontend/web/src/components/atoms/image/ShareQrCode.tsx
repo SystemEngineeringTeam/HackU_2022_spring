@@ -19,7 +19,7 @@ export const ShareQrCode: FC<Props> = (props) => {
         level: 'M',
         margin: 3,
         scale: 4,
-        width: 400,
+        width:96,
         color: {
           dark: '#000000',
           light: '#ffffff',
