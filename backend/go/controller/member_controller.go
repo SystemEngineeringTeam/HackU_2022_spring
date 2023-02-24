@@ -10,14 +10,15 @@ import (
 )
 
 // メンバーの追加 r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
-func AddMemberData(reqjson models.Member, getroom models.Room) models.Member {
+func AddMemberData(reqjson models.Member) models.Member {
 
 	// データベースに接続
 	db := lib.SqlConnect()
 
 	// 部屋がメンバーを募集しているかどうかの判定
+	getroom := RoomGet(strconv.Itoa(reqjson.RoomId))
 	var isOpen bool
-	db.Where("id = ?", reqjson.RoomId).Find(&isOpen)
+	db.Where("id = ?", reqjson.RoomId).Find(&isOpen) //RoomGetが成功している場合、ここでエラーは出ないので例外処理は無視
 	// getroomのIsOpenがfalseの場合、エラー
 	if !isOpen {
 		panic("This Room Is No Longer Wanted")

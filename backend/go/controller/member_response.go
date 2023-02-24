@@ -27,8 +27,7 @@ func PostAddMemberData(c *gin.Context) {
 
 	// 追加後のメンバーデータを返す
 	defer ErrorResponse(c)
-	getroom := RoomGet(strconv.Itoa(reqjson.RoomId))
-	c.JSON(http.StatusOK, AddMemberData(reqjson, getroom))
+	c.JSON(http.StatusOK, AddMemberData(reqjson))
 }
 
 // メンバーの削除 r.DELETE("/api/room/member/:memberId/", controller.DeleteMember)
