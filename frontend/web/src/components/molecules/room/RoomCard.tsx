@@ -1,10 +1,8 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
 import { Box, Heading, Text } from "@chakra-ui/react";
 
 import { FrontRoom } from "@/types/room";
-import { roomState } from "@/store/roomState";
 import { useDate } from "@/hooks/date/useDate";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 
@@ -18,10 +16,7 @@ export const RoomCard: FC<Props> = (props) => {
   const router = useRouter();
   const { formatDate } = useDate();
 
-  const setRoom = useSetRecoilState(roomState);
-
   const onClickTransitionRoomPage = () => {
-    setRoom(room);
     router.push(`/${room.roomId}`);
   };
 
