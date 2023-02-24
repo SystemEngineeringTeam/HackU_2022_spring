@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useQRCode } from "next-qrcode";
-import { Box, Modal, ModalContent, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Modal, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 
 type Props = {};
 
@@ -32,6 +32,8 @@ export const ShareQrCode: FC<Props> = (props) => {
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>
+          <ModalHeader>部屋共有用QRコード</ModalHeader>
+          <ModalCloseButton />
           {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image
             text={href}
@@ -48,6 +50,7 @@ export const ShareQrCode: FC<Props> = (props) => {
               },
             }}
           />
+          <ModalFooter>参加者にQUコードを読み込んででもらいましょう</ModalFooter>
         </ModalContent>
       </Modal>
     </>
