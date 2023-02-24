@@ -104,6 +104,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
               </Box>
               <HStack spacing={4}>
                 <Spacer />
+                <Button onClick={onClose}>戻る</Button>
                 <Button
                   type="submit"
                   color="white"
@@ -114,7 +115,6 @@ export const ModalMoveMember: FC<Props> = (props) => {
                 >
                   決定
                 </Button>
-                <Button onClick={onClose}>戻る</Button>
               </HStack>
             </form>
         </ModalBody>
