@@ -15,7 +15,8 @@ import {
 
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { useCreateRoom } from "@/hooks/http/post/useCreateRoom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useAddMember } from "@/hooks/http/post/useAddMember";
 
 type InputContent = {
   roomMaker: string;
@@ -33,19 +34,25 @@ export default function RoomBuilding() {
 
   const router = useRouter();
   const { createRoom, room } = useCreateRoom();
+  const { addMember } = useAddMember();
+  const [roomMaker, setRoomMaker] = useState<string>();
 
   const onClickPushRoomList = () => router.push("/");
 
   const onSubmit = handleSubmit((data) => {
-    // POST で値を送る
-    createRoom(data)
-      .then(() => router.push("/1"));
+    setRoomMaker(data.roomMaker);
+    createRoom(data);
   });
 
   useEffect(() => {
-    if (room == null) return;
+    if (room == null || roomMaker == null) return;
+    addMember({
+      roomId: room.roomId,
+      name: roomMaker
+    });
+
     router.push(`/${room.roomId}`);
-  }, [room, router]);
+  }, [room, roomMaker, addMember, router]);
 
   return (
     <>

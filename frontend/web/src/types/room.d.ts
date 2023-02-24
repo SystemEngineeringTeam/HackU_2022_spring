@@ -11,3 +11,5 @@ export type Room = {
   roomMaker: string;
   tags: string;
 };
+
+export type FrontRoom = Omit<Room, 'tags'> & { tags: string[] };
