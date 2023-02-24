@@ -39,7 +39,7 @@ export const AccordionMembers: FC = () => {
             <h2>
               <AccordionButton p={4}>
                 <Box as="span" flex="1" textAlign="left">
-                  {tag}
+                  {`${tag}（${members.length}）`}
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
