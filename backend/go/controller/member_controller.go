@@ -10,10 +10,18 @@ import (
 )
 
 // メンバーの追加 r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
-func AddMemberData(reqjson models.Member) models.Member {
+func AddMemberData(reqjson models.Member, getroom models.Room) models.Member {
 
 	// データベースに接続
 	db := lib.SqlConnect()
+
+	// 部屋がメンバーを募集しているかどうかの判定
+	var isOpen bool
+	db.Where("id = ?", reqjson.RoomId).Find(&isOpen)
+	// getroomのIsOpenがfalseの場合、エラー
+	if !isOpen {
+		panic("This Room Is No Longer Wanted")
+	}
 
 	// タグ情報を追加（最初なのでなし）
 	// reqjson.Tag = &[]string{"nil"}[0]
@@ -25,7 +33,7 @@ func AddMemberData(reqjson models.Member) models.Member {
 
 	// 最終更新時間を今の時間に変更、memberAmountを増やす
 	var room models.Room
-	getroom := RoomGet(strconv.Itoa(reqjson.RoomId))
+
 	room.MemberAmount = getroom.MemberAmount + 1
 	RoomChange(room, getroom)
 
