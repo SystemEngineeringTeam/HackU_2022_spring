@@ -3,8 +3,6 @@ import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import {
   Box,
-  Button,
-  Center,
   Divider,
   Flex,
   FormControl,
@@ -23,7 +21,6 @@ import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { ModalAddMember } from "@/components/molecules/modal/ModalAddMember";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
-// import { ModalAddSmallRoom } from "@/components/molecules/modal/ModalAddTag";
 import { TabsAllMemberOrSmallRooms } from "@/components/organisms/TabsAllMemberOrSmallRooms";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 
@@ -31,19 +28,14 @@ export default function RoomId() {
   const router = useRouter();
 
   const { formatDate } = useDate();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { fetchRooms, rooms: fetched } = useGetRooms();
   const { editRoom, isLoaded, isError, error } = useEditRoom();
 
   const [isRoomOpen, setIsRoomOpen] = useState(true);
-  const [isModalAddMemberOpen, setIsModalAddMember] = useState(false);
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
   const [room, setRoom] = useRecoilState(roomState);
-
-  const onModalAddMemberOpen = () => setIsModalAddMember(true);
-  const onModalAddMemberClose = () => setIsModalAddMember(false);
 
   const onDrawerMemberFormOpen = () => setIsDrawerMemberFormOpen(true);
   const onDrawerMemberFormClose = () => setIsDrawerMemberFormOpen(false);
@@ -78,11 +70,7 @@ export default function RoomId() {
     <>
       <FixedBottomButtons
         leftButtonTitle="参加者を追加する"
-        leftButtonOnClick={onModalAddMemberOpen}
-      />
-      <ModalAddMember
-        isOpen={isModalAddMemberOpen}
-        onClose={onModalAddMemberClose}
+        leftButtonOnClick={onDrawerMemberFormOpen}
       />
       <Box p={4}>
         <Flex justify="space-between">
@@ -125,25 +113,6 @@ export default function RoomId() {
       </Box>
       <TabsAllMemberOrSmallRooms />
 
-      <Center>
-        <Button
-          type="submit"
-          w="100px"
-          h="100px"
-          rounded="full"
-          color="white"
-          backgroundColor="orange.400"
-          mt={4}
-          mb={8}
-          _hover={{ bg: "orange.500" }}
-          _active={{ bg: "orange.600" }}
-          onClick={onDrawerMemberFormOpen}
-        >
-          参加
-          <br />
-          入力する
-        </Button>
-      </Center>
       <NameAndCommentFormDrawer
         isOpen={isDrawerMemberFormOpen}
         onClose={onDrawerMemberFormClose}
