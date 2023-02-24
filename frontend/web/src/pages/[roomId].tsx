@@ -37,7 +37,6 @@ export default function RoomId() {
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
   const [room, setRoom] = useRecoilState(roomState);
-  const roomUrl = globalThis.window?.location.href;
 
   const onDrawerMemberFormOpen = () => setIsDrawerMemberFormOpen(true);
   const onDrawerMemberFormClose = () => setIsDrawerMemberFormOpen(false);
@@ -115,7 +114,7 @@ export default function RoomId() {
           </Box>
         </Box>
         <Spacer />
-        <ShareQrCode text={roomUrl}/>
+        <ShareQrCode />
       </HStack>
       <AccordionMembers />
 
