@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-import { Room } from "../types/room";
+import { FrontRoom } from "@/types/room";
 
-export const roomListState = atom<Array<Room>>({
+export const roomListState = atom<Array<FrontRoom>>({
   key: "roomListState",
   default: [],
 });

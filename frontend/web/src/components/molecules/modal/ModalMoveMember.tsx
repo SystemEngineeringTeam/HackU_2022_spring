@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import {
   Box,
@@ -22,8 +22,8 @@ import {
 import { roomState } from "@/store/roomState";
 import { useEditMember } from "@/hooks/http/put/useEditMember";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { Member } from "@/types/member";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 type Props = {
   onClose: () => void;
@@ -43,7 +43,7 @@ export const ModalMoveMember: FC<Props> = (props) => {
   const { editMember } = useEditMember();
 
   const room = useRecoilValue(roomState);
-  const router = useRouter();
+  const { fetchRoom } = useGetRoom();
 
   const {
     register,
@@ -51,17 +51,16 @@ export const ModalMoveMember: FC<Props> = (props) => {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
-  const tags = room.tags.split(",");
   const options = [
     <option value="" key="">--タグ未選択--</option>,
-    ...tags.map(v => <option value={v} key={v}>{v}</option>)
+    ...room.tags.map(v => <option value={v} key={v}>{v}</option>)
   ];
 
   const onSubmit = handleSubmit((data) => {
     onClose();
     const { memberId } = member;
     editMember({ memberId, ...data })
-      .then(() => router.push(`/${room.roomId}`));
+      .then(() => fetchRoom({ roomId: room.roomId }));
   });
 
   return (

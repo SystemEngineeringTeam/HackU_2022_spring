@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -18,32 +18,32 @@ import { roomState } from "@/store/roomState";
 import { useDate } from "@/hooks/date/useDate";
 import { Summary } from "@/components/organisms/Summary";
 import { useEditRoom } from "@/hooks/http/put/useEditRoom";
-import { useGetRooms } from "@/hooks/http/get/useFetchRooms";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
 import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
 import { AccordionMembers } from "@/components/organisms/AccordionMembers";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 export default function RoomId() {
   const router = useRouter();
 
   const { formatDate } = useDate();
 
-  const { fetchRooms, rooms: fetched } = useGetRooms();
+  const { fetchRoom } = useGetRoom();
   const { editRoom } = useEditRoom();
 
-  const [isRoomOpen, setIsRoomOpen] = useState(true);
+  const [isModalAddMemberOpen, setIsModalAddMember] = useState(false);
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
-  const [room, setRoom] = useRecoilState(roomState);
+  const room = useRecoilValue(roomState);
 
   const onDrawerMemberFormOpen = () => setIsDrawerMemberFormOpen(true);
   const onDrawerMemberFormClose = () => setIsDrawerMemberFormOpen(false);
 
   const onChangeIsOpen = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsRoomOpen(!isRoomOpen);
-    editRoom({ roomId: room.roomId, isOpen: !isRoomOpen });
+    editRoom({ roomId: room.roomId, isOpen: !room.isOpen })
+      .then(() => fetchRoom({ roomId: room.roomId }));
   };
 
   useEffect(() => {
@@ -58,14 +58,8 @@ export default function RoomId() {
     viewHistory.push(roomId);
     localStorage.setItem("viewHistory", String([...viewHistory]));
 
-    fetchRooms({ roomIds: [Number(roomId)] });
-  }, [router.query.roomId, fetchRooms]);
-
-  useEffect(() => {
-    if (fetched == null) return;
-
-    setRoom(fetched[0]);
-  }, [fetched, setRoom]);
+    fetchRoom({ roomId: Number(roomId) });
+  }, [router.query.roomId, fetchRoom]);
 
   return (
     <>

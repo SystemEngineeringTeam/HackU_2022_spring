@@ -25,6 +25,10 @@ export const useAddMember = () => {
           name: props.name,
           comment: props.comment,
           tag: props.tag
+        }, {
+          headers: {
+            "Content-Type": "application/json"
+          }
         });
         setIsLoaded(true);
         setMember(response.data);

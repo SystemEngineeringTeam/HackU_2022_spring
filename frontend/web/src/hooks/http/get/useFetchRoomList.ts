@@ -2,18 +2,21 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 
 import { Room } from "@/types/room";
+import { useRecoilState } from "recoil";
+import { roomListState } from "@/store/roomListState";
+import { tagsParse } from "../util/parseTags";
 
 type Props = {
   roomIds: number[];
 };
 
-export const useGetRooms = () => {
-  const [rooms, setRooms] = useState<undefined | Room[]>();
+export const useGetRoomList = () => {
+  const [roomList, setRoomList] = useRecoilState(roomListState);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  const fetchRooms = useCallback(async (props: Props) => {
+  const fetchRoomList = useCallback(async (props: Props) => {
     setIsLoaded(false);
     setIsError(false);
 
@@ -23,15 +26,16 @@ export const useGetRooms = () => {
           roomId: String(props.roomIds),
         },
       });
+      const roomList = response.data.map(tagsParse);
       setIsLoaded(true);
-      setRooms(response.data);
+      setRoomList(roomList);
     } catch (e) {
       if (e instanceof Error) {
         setIsError(true);
         setError(e);
       }
     }
-  }, []);
+  }, [setRoomList]);
 
-  return { fetchRooms, isLoaded, rooms, isError, error };
+  return { fetchRoomList, isLoaded, roomList, isError, error };
 };

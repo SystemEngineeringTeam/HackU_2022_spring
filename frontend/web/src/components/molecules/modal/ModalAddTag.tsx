@@ -17,6 +17,10 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { useRecoilValue } from "recoil";
+import { roomState } from "@/store/roomState";
+import { useEditRoom } from "@/hooks/http/put/useEditRoom";
+import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
 
 type Props = {
   isOpen: boolean;
@@ -29,6 +33,9 @@ type InputContent = {
 
 export const ModalAddTag: FC<Props> = (props) => {
   const { isOpen, onClose } = props;
+  const { tags, roomId } = useRecoilValue(roomState);
+  const { editRoom } = useEditRoom();
+  const { fetchRoom } = useGetRoom();
 
   const {
     register,
@@ -36,17 +43,21 @@ export const ModalAddTag: FC<Props> = (props) => {
     formState: { errors, isSubmitting },
   } = useForm<InputContent>();
 
+  const onSubmit = handleSubmit(({ tag }) => {
+    if (tags.includes(tag)) return;
+    const added = tags.concat(tag);
+
+    editRoom({ roomId, tags: added })
+      .then(() => fetchRoom({ roomId }));
+  });
+
   return (
     <Modal onClose={onClose} isOpen={isOpen} isCentered>
       <ModalOverlay />
       <ModalContent mx="1rem">
         <ModalHeader>タグ追加</ModalHeader>
         <ModalCloseButton />
-        <form
-          onSubmit={handleSubmit(() => {
-            console.log("ddd");
-          })}
-        >
+        <form onSubmit={onSubmit}>
           <ModalBody>
             <FormControl isInvalid={errors.tag !== undefined}>
               <FormLabel mb={3}>

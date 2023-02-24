@@ -4,11 +4,11 @@ type Room struct {
 	ID           int      `json:"roomId"`
 	RoomName     string   `json:"roomName"`
 	MemberAmount int      `json:"memberAmount"`
-	Summary      string   `json:"summary"`
-	IsOpen       bool     `json:"isOpen"`
+	Summary      *string   `json:"summary"`
+	IsOpen       *bool     `json:"isOpen"`
 	LastUpdate   string   `json:"lastUpdate"`
 	Members      []Member `json:"members"`
-	Tags         string   `json:"tags"`
+	Tags         *string   `json:"tags"`
 	RoomMaker    string   `json:"roomMaker"`
 }
 
