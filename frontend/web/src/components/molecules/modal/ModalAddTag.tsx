@@ -75,7 +75,7 @@ export const ModalAddTag: FC<Props> = (props) => {
               <Input
                 id="tag"
                 type="text"
-                placeholder="例：支払い済み"
+                placeholder="例：5号室"
                 {...register("tag", {
                   required: true,
                 })}

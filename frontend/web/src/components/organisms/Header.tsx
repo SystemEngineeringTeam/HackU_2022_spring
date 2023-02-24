@@ -4,7 +4,9 @@ import {
   Box,
   Flex,
   Heading,
+  HStack,
 } from "@chakra-ui/react";
+import Image from "next/image";
 
 export const Header: FC = () => {
   const router = useRouter();
@@ -22,15 +24,17 @@ export const Header: FC = () => {
         height={"2.5em"}
       >
         <Flex align="center" as="a" ml={2} _hover={{ cursor: "pointer" }}>
-          <Box>
-            <Heading
-              as="button"
-              fontSize={{ base: "md", md: "lg" }}
-              onClick={onClickHome}
-            >
-              人数管理する蔵（仮）
-            </Heading>
-          </Box>
+          <HStack onClick={onClickHome}>
+            <Image src="/images/ET_GAP.png" width={32} height={32} alt="ET_GAP" />
+            <Box>
+              <Heading
+                as="button"
+                fontSize={{ base: "md", md: "lg" }}
+              >
+                ET GAP
+              </Heading>
+            </Box>
+          </HStack>
         </Flex>
       </Flex>
     </>

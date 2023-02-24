@@ -50,7 +50,7 @@ export const ShareQrCode: FC<Props> = (props) => {
               },
             }}
           />
-          <ModalFooter>参加者にQUコードを読み込んででもらいましょう</ModalFooter>
+          <ModalFooter>他の参加者にQUコードを読み込んででもらいましょう</ModalFooter>
         </ModalContent>
       </Modal>
     </>
