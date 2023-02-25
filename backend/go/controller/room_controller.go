@@ -28,15 +28,20 @@ func RoomCreate(room models.Room) models.Room {
 func RoomsGet(id []string) []models.Room {
 	var rooms []models.Room
 	db := lib.SqlConnect()
-	for i, v := range id {
+	i := 0
+	for _, v := range id {
 		var room models.Room
 		var members []models.Member
-		if err := db.Where("id = ?", v).First(&room).Error; err != nil {
-			panic(err.Error())
+		if err := db.Where("id = ?", v).First(&room).Error; err == nil {
+			rooms = append(rooms, room)
+			db.Where("room_id = ?", v).Find(&members)
+			fmt.Println(rooms[i])
+			rooms[i].Members = members
+			i++
 		}
-		rooms = append(rooms, room)
-		db.Where("room_id = ?", v).Find(&members)
-		rooms[i].Members = members
+	}
+	if rooms == nil {
+		panic("This Room Does Not Exist")
 	}
 	fmt.Println("Getting Room Is Success!!")
 	return (rooms)
