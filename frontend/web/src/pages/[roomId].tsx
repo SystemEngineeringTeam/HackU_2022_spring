@@ -19,11 +19,11 @@ import { useDate } from "@/hooks/date/useDate";
 import { Summary } from "@/components/organisms/Summary";
 import { useEditRoom } from "@/hooks/http/put/useEditRoom";
 import { MembersAmount } from "@/components/organisms/MembersAmount";
-import { FixedBottomButtons } from "@/components/organisms/FixedBottomButtons";
 import { NameAndCommentFormDrawer } from "@/components/molecules/drawer/NameAndCommentFormDrawer";
 import { ShareQrCode } from "@/components/atoms/image/ShareQrCode";
 import { AccordionMembers } from "@/components/organisms/AccordionMembers";
 import { useGetRoom } from "@/hooks/http/get/useFetchRoom";
+import { UnderButton } from "@/components/atoms/button/UnderButton";
 
 export default function RoomId() {
   const router = useRouter();
@@ -33,7 +33,6 @@ export default function RoomId() {
   const { fetchRoom } = useGetRoom();
   const { editRoom } = useEditRoom();
 
-  const [isModalAddMemberOpen, setIsModalAddMember] = useState(false);
   const [isDrawerMemberFormOpen, setIsDrawerMemberFormOpen] = useState(false);
 
   const room = useRecoilValue(roomState);
@@ -63,10 +62,22 @@ export default function RoomId() {
 
   return (
     <>
-      <FixedBottomButtons
-        leftButtonTitle="参加者を追加する"
-        leftButtonOnClick={onDrawerMemberFormOpen}
-      />
+      <HStack
+        h="70px"
+        w="100%"
+        spacing={0}
+        position="fixed"
+        zIndex={1}
+        bottom="0%"
+      >
+        <UnderButton
+          width="100"
+          color="orange"
+          title={"参加者を追加する"}
+          isDisabled={!room.isOpen}
+          onClick={onDrawerMemberFormOpen}
+        />
+      </HStack>
       <Box p={4}>
         <Flex justify="space-between">
           <Box>
@@ -80,7 +91,7 @@ export default function RoomId() {
               <Switch
                 colorScheme="yellow"
                 onChange={onChangeIsOpen}
-                defaultChecked
+                isChecked={room.isOpen}
               />
             </FormControl>
           </Box>
