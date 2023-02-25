@@ -9,6 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Room struct {
+	IsOpen bool `json:"isOpen"`
+}
+
 // メンバーの追加 r.POST("/api/room/:roomId/member/", controller.PostAddMemberData)
 func AddMemberData(reqjson models.Member) models.Member {
 
@@ -17,10 +21,10 @@ func AddMemberData(reqjson models.Member) models.Member {
 
 	// 部屋がメンバーを募集しているかどうかの判定
 	getroom := RoomGet(strconv.Itoa(reqjson.RoomId))
-	var isOpen bool
-	db.Where("id = ?", reqjson.RoomId).Find(&isOpen) //RoomGetが成功している場合、ここでエラーは出ないので例外処理は無視
+	var check Room
+	db.Where("id = ?", reqjson.RoomId).Find(&check) //RoomGetが成功している場合、ここでエラーは出ないので例外処理は無視
 	// getroomのIsOpenがfalseの場合、エラー
-	if !isOpen {
+	if !check.IsOpen {
 		panic("This Room Is No Longer Wanted")
 	}
 
