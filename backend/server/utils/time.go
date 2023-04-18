@@ -1,8 +1,8 @@
-package controller
+package utils
 
 import "time"
 
-func GetTime() string {
+func GetCurrentTime() string {
 	jst, err := time.LoadLocation(("Asia/Tokyo"))
 	if err != nil {
 		panic(err)
