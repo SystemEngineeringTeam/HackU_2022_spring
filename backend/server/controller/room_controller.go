@@ -3,8 +3,8 @@ package controller
 import (
 	"fmt"
 
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/models"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/db"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/models"
 )
 
 func RoomCreate(room models.Room) models.Room {

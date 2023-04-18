@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/controller"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/controller"
 )
 
 func Init() {

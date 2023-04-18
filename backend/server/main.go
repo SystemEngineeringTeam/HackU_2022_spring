@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/router"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/router"
 )
 
 func main() {

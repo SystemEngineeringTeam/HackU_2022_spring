@@ -1,4 +1,5 @@
 package controller
+
 import "time"
 
 func GetTime() string {

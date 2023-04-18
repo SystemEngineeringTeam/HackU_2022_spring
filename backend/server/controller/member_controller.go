@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/lib"
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/go/models"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/db"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/models"
 	"github.com/gin-gonic/gin"
 )
 
