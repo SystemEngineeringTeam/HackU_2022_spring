@@ -74,7 +74,7 @@ func CreateRoom(r Room) Room {
 	return r
 }
 
-func ChangeRoom(req, r Room) Room {
+func UpdateRoom(req, r Room) Room {
 	db := db.GetDB()
 	req.LastUpdate = utils.GetCurrentTime()
 	if err := db.Model(&r).Updates(req).Error; err != nil {
