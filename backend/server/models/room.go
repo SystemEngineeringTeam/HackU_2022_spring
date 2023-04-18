@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/db"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/utils"
 )
 
 type Room struct {
@@ -48,44 +49,40 @@ func FindByRoomID(id string) Room {
 	return r
 }
 
-func CreateRoom(room models.Room) models.Room {
-	db := lib.SqlConnect()
+func CreateRoom(r Room) Room {
+	db := db.GetDB()
 	ptrue := &[]bool{true}[0]
 	ptag := &[]string{""}[0]
 
-	room.MemberAmount = 0
-	room.IsOpen = ptrue
-	room.LastUpdate = GetTime()
-	room.Tags = ptag
+	r.MemberAmount = 0
+	r.IsOpen = ptrue
+	r.LastUpdate = utils.GetCurrentTime()
+	r.Tags = ptag
 
-	if err := db.Create(&room).Error; err != nil {
+	if err := db.Create(&r).Error; err != nil {
 		panic(err.Error())
 	}
-
-	fmt.Println("Creating Room Is Success!!")
-	return (room)
+	return r
 }
 
-func ChangeRoom(req, room models.Room) models.Room {
-	db := lib.SqlConnect()
-	req.LastUpdate = GetTime()
-	if err := db.Model(&room).Updates(req).Error; err != nil {
+func ChangeRoom(req, r Room) Room {
+	db := db.GetDB()
+	req.LastUpdate = utils.GetCurrentTime()
+	if err := db.Model(&r).Updates(req).Error; err != nil {
 		panic(err.Error())
 	}
-	fmt.Println("Changing Room Is Success!!")
-	return (room)
+	return (r)
 }
 
-func DeleteRoom(room models.Room) models.Room {
-	db := lib.SqlConnect()
-	var members []models.Member
-	if db.Where("room_id = ?", room.ID).First(&members).Error == nil {
-		db.Where("room_id = ?", room.ID).Find(&members)
+func DeleteRoom(r Room) Room {
+	db := db.GetDB()
+	var members []Member
+	if db.Where("room_id = ?", r.ID).First(&members).Error == nil {
+		db.Where("room_id = ?", r.ID).Find(&members)
 		db.Delete(&members)
 	}
-	if err := db.Delete(&room).Error; err != nil {
+	if err := db.Delete(&r).Error; err != nil {
 		panic(err.Error())
 	}
-	fmt.Println("Deleting Room Is Success!!")
-	return (room)
+	return r
 }

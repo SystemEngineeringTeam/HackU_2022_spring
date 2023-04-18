@@ -5,6 +5,5 @@ import (
 )
 
 func main() {
-	//本番はrouter.Init()のみでいい
 	router.Init()
 }
