@@ -20,33 +20,42 @@ type Room struct {
 }
 
 func GetRooms(id []string) []Room {
-	var rooms []Room
 	db := db.GetDB()
+	rs := []Room{}
 	for i, v := range id {
-		var room Room
-		var members []Member
-		if err := db.Where("id = ?", v).First(&room).Error; err != nil {
-			panic(err.Error())
+		r := Room{}
+		ms := []Member{}
+		if err := db.Where("id = ?", v).First(&r).Error; err != nil {
+			log.Fatal(err)
 		}
-		rooms = append(rooms, room)
-		db.Where("room_id = ?", v).Find(&members)
-		rooms[i].Members = members
+		rs = append(rs, r)
+		db.Where("room_id = ?", v).Find(&ms)
+		rs[i].Members = ms
 	}
-	// fmt.Println("Getting Room Is Success!!")
-	return (rooms)
+	return rs
 }
 
 func FindByRoomID(id string) Room {
 	db := db.GetDB()
-	var r Room
-	var m []Member
+	r := Room{}
+	ms := []Member{}
 	if err := db.Where("id = ?", id).First(&r).Error; err != nil {
 		log.Fatal(err)
 	}
-	db.Where("room_id = ?", id).Find(&m)
-	r.Members = m
+	db.Where("room_id = ?", id).Find(&ms)
+	r.Members = ms
 	// fmt.Println("Getting Room Is Success!!")
 	return r
+}
+
+func FindIsOpenByRoomID(id string) bool {
+	db := db.GetDB()
+	r := Room{}
+	if err := db.Where("id = ?", id).First(&r).Error; err != nil {
+		log.Fatal(err)
+	}
+	res := *r.IsOpen
+	return res
 }
 
 func CreateRoom(r Room) Room {
@@ -60,7 +69,7 @@ func CreateRoom(r Room) Room {
 	r.Tags = ptag
 
 	if err := db.Create(&r).Error; err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 	return r
 }
@@ -69,20 +78,20 @@ func ChangeRoom(req, r Room) Room {
 	db := db.GetDB()
 	req.LastUpdate = utils.GetCurrentTime()
 	if err := db.Model(&r).Updates(req).Error; err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
-	return (r)
+	return r
 }
 
 func DeleteRoom(r Room) Room {
 	db := db.GetDB()
-	var members []Member
-	if db.Where("room_id = ?", r.ID).First(&members).Error == nil {
-		db.Where("room_id = ?", r.ID).Find(&members)
-		db.Delete(&members)
+	ms := []Member{}
+	if db.Where("room_id = ?", r.ID).First(&ms).Error == nil {
+		db.Where("room_id = ?", r.ID).Find(&ms)
+		db.Delete(&ms)
 	}
 	if err := db.Delete(&r).Error; err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 	return r
 }
