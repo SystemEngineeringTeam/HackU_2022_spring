@@ -1,45 +1,26 @@
-package lib
+package databases
 
 import (
-	"fmt"
-	"os"
-	"time"
+	"log"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"github.com/karasuneo/aikodai-annai-suru-zo/backend/config"
 )
 
-func SqlConnect() (database *gorm.DB) {
-	USER := os.Getenv("MYSQL_USER")
-	PASS := os.Getenv("MYSQL_PASSWORD")
-	PROTOCOL := os.Getenv("MYSQL_PROTOCOL")
-	DBNAME := os.Getenv("MYSQL_DBNAME")
+var db *gorm.DB
 
-	dsn := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
-	dialector := mysql.Open(dsn)
-
-	var db *gorm.DB
+func init() {
 	var err error
-
-	if db, err = gorm.Open(dialector); err != nil {
-		db = connect(dialector, 10)
+	c := config.GetMysqlConfig()
+	dsn := c.GetString("mysql.user") + ":" + c.GetString("mysql.password") + "@" + c.GetString("mysql.protocol") + "/" + c.GetString("mysql.dbname") + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatal(err)
 	}
-	fmt.Println("db connected!!")
-
-	return db
 }
 
-func connect(dialector gorm.Dialector, count uint) *gorm.DB {
-	var err error
-	var db *gorm.DB
-	if db, err = gorm.Open(dialector); err != nil {
-		if count > 1 {
-			time.Sleep(time.Second * 2)
-			count--
-			fmt.Printf("retry... count:%v\n", count)
-			connect(dialector, count)
-		}
-		panic(err.Error())
-	}
-	return (db)
+func GetDB() *gorm.DB {
+	return db
 }
