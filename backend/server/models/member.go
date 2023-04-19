@@ -2,9 +2,9 @@ package models
 
 import (
 	"log"
-	"strconv"
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/db"
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -55,7 +55,7 @@ func DeleteMember(memberId int) gin.H {
 		log.Fatal(err)
 	}
 
-	var room Room
+	room := Room{}
 	r := FindByRoomID(m.RoomId)
 	room.MemberAmount = r.MemberAmount - 1
 	UpdateRoom(room, r)
@@ -64,24 +64,21 @@ func DeleteMember(memberId int) gin.H {
 }
 
 // メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
-func UpdateMember(memberId int, m Member) *Member {
+func UpdateMember(memberId int, m Member) Member {
+	db := db.GetDB()
+	resM := Member{}
 
-	db := lib.SqlConnect()
+	db.Where("id = ?", memberId).Find(&resM)
 
-	// 変更するメンバーデータを取得
-	var member *models.Member
-	db.Where("id = ?", memberId).Find(&member)
-
-	// レコードを変更
-	if err := db.Model(&member).Updates(m).Error; err != nil {
+	if err := db.Model(&resM).Updates(m).Error; err != nil {
 		log.Fatal(err)
 	}
 
 	// 最終更新時間を今の時間に変更
-	var room models.Room
-	r := RoomGet(strconv.Itoa(member.RoomId))
-	RoomChange(room, r)
+	reqR := Room{}
+	r := FindByRoomID(resM.RoomId)
+	reqR.LastUpdate = utils.GetCurrentTime()
+	UpdateRoom(reqR, r)
 
-	// 成功:メンバーデータを返す（変更しなかった部分も含め、全てのメンバーデータが返される）
-	return member
+	return resM
 }

@@ -55,6 +55,7 @@ func FindIsOpenByRoomID(id string) bool {
 		log.Fatal(err)
 	}
 	res := *r.IsOpen
+
 	return res
 }
 
