@@ -3,7 +3,7 @@ services:
   go:
     container_name: HackU2022_Spring_GO
     build:
-      context: ./docker/go
+      context: ./Docker/go
       dockerfile: Dockerfile
     stdin_open: true
     tty: true

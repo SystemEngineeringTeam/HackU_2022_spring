@@ -1,5 +1,5 @@
 mysql:
   user: root
   password: admin
-  protocol: tcp(koukaten2022_DB:3306)
+  protocol: tcp(HackU2022_Spring_DB:3306)
   dbname: data_sets

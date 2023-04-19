@@ -8,3 +8,5 @@ RUN mkdir /server
 WORKDIR /server
 # ホストのファイルをコンテナの作業ディレクトリに移行
 ADD . /server
+
+CMD ["go", "run", "main.go"]

@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/models"
 	"github.com/gin-gonic/gin"
+
+	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/models"
 )
 
 func ErrorResponse(c *gin.Context) {
