@@ -37,8 +37,8 @@ func AddMember(m Member) Member {
 
 // 指定された部屋のメンバー取得
 func FindMemberByRoomId(rId int) []*Member {
-	ms := []*Member{}
 	db := db.GetDB()
+	ms := []*Member{}
 
 	db.Where("room_id = ?", rId).Find(&ms)
 
@@ -46,11 +46,11 @@ func FindMemberByRoomId(rId int) []*Member {
 }
 
 // メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
-func DeleteMember(memberId int) gin.H {
+func DeleteMember(mId int) gin.H {
 	db := db.GetDB()
 	m := Member{}
 
-	db.Where("id = ?", memberId).Find(&m)
+	db.Where("id = ?", mId).Find(&m)
 	if err := db.Unscoped().Delete(&m).Error; err != nil {
 		log.Fatal(err)
 	}
