@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 
@@ -19,70 +18,54 @@ type Member struct {
 
 func AddMember(m Member) Member {
 	db := db.GetDB()
+	reqR := Room{}
 	r := FindByRoomID(m.RoomId)
 	isOpen := FindIsOpenByRoomID(m.RoomId)
+
 	if !isOpen {
 		log.Fatal("This Room Is No Longer Wanted")
 	}
 	if err := db.Create(&m).Error; err != nil {
 		log.Fatal(err)
 	}
-	
-	var room Room
 
-	room.MemberAmount = r.MemberAmount + 1
-	UpdateRoom(room, r)
+	reqR.MemberAmount = r.MemberAmount + 1
+	UpdateRoom(reqR, r)
 
-	// 追加できたことを知らせる
-	fmt.Println("Created MemberData.")
-
-	// 追加したメンバーデータを返す
 	return m
 }
 
 // 指定された部屋のメンバー取得
-func FindMemberByRoomId(roomId int) []*Member {
-	// 返り値を代入する変数宣言
-	members := []*Member{}
+func FindMemberByRoomId(rId int) []*Member {
+	ms := []*Member{}
+	db := db.GetDB()
 
-	// データベースに接続
-	db := lib.SqlConnect()
+	db.Where("room_id = ?", rId).Find(&ms)
 
-	// 渡されたroomIdに所属するメンバーを全員取得
-	db.Where("room_id = ?", roomId).Find(&members)
-
-	return members
+	return ms
 }
 
 // メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
-func ExitMemberData(memberId int) gin.H {
-	// データベースに接続
-	db := lib.SqlConnect()
+func DeleteMember(memberId int) gin.H {
+	db := db.GetDB()
+	m := Member{}
 
-	// 削除するメンバーデータを取得
-	var member *models.Member
-	db.Where("id = ?", memberId).Find(&member)
-
-	// レコードを削除
-	if err := db.Unscoped().Delete(&member).Error; err != nil {
-		// 削除できなかったことを示す
+	db.Where("id = ?", memberId).Find(&m)
+	if err := db.Unscoped().Delete(&m).Error; err != nil {
 		log.Fatal(err)
 	}
 
-	// 最終更新時間を今の時間に変更、memberAmountを増やす
-	var room models.Room
-	r := RoomGet(strconv.Itoa(member.RoomId))
+	var room Room
+	r := FindByRoomID(m.RoomId)
 	room.MemberAmount = r.MemberAmount - 1
-	RoomChange(room, r)
+	UpdateRoom(room, r)
 
-	// 削除できたことを示すメッセージを返り値として渡す
 	return gin.H{"message": "MemberData could be deleted."}
 }
 
 // メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
 func UpdateMember(memberId int, m Member) *Member {
 
-	// データベースに接続
 	db := lib.SqlConnect()
 
 	// 変更するメンバーデータを取得
