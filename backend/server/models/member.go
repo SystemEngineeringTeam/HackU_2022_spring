@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"log"
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/db"
@@ -18,13 +19,19 @@ type Member struct {
 func AddMember(m Member) (Member, error) {
 	db := db.GetDB()
 	reqR := Room{}
-	r := FindByRoomID(m.RoomId)
 	isOpen := FindIsOpenByRoomID(m.RoomId)
+	r, err := FindByRoomID(m.RoomId)
+	if err != nil {
+		log.Fatal(err)
+		return m, err
+	}
 
 	if !isOpen {
 		log.Fatal("This Room Is No Longer Wanted")
+		return m, errors.New("This Room Is No Longer Wanted")
+
 	}
-	err := db.Create(&m).Error
+	err = db.Create(&m).Error
 	if err != nil {
 		log.Fatal(err)
 		return m, err
@@ -61,7 +68,12 @@ func UpdateMember(memberId int, m Member) (Member, error) {
 
 	// 最終更新時間を今の時間に変更
 	reqR := Room{}
-	r := FindByRoomID(resM.RoomId)
+	r, err := FindByRoomID(resM.RoomId)
+	if err != nil {
+		log.Fatal(err)
+		return resM, err
+	}
+
 	reqR.LastUpdate = utils.GetCurrentTime()
 	UpdateRoom(reqR, r)
 
@@ -81,7 +93,12 @@ func DeleteMember(mId int) (string, error) {
 	}
 
 	room := Room{}
-	r := FindByRoomID(m.RoomId)
+	r, err := FindByRoomID(m.RoomId)
+	if err != nil {
+		log.Fatal(err)
+		return "Member could not be deleted.", err
+	}
+
 	room.MemberAmount = r.MemberAmount - 1
 	UpdateRoom(room, r)
 

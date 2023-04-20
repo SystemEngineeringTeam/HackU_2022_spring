@@ -17,37 +17,65 @@ func ErrorResponse(c *gin.Context) {
 }
 
 func CreateRoom(c *gin.Context) {
+	defer ErrorResponse(c)
 	req := models.Room{}
-	if err := c.ShouldBindJSON(&req); err != nil {
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	defer ErrorResponse(c)
-	c.JSON(http.StatusOK, models.CreateRoom(req))
+
+	res, err := models.CreateRoom(req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"Error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, res)
 }
 
 func GetRoom(c *gin.Context) {
+	defer ErrorResponse(c)
 	req := c.Query("roomId")
 	id := strings.Split(req, ",")
-	defer ErrorResponse(c)
-	c.JSON(http.StatusOK, models.GetRooms(id))
+
+	res, err := models.GetRooms(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, res)
 }
 
 func UpdateRoom(c *gin.Context) {
+	defer ErrorResponse(c)
 	req := models.Room{}
-	if err := c.ShouldBindJSON(&req); err != nil {
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	id := c.Param("roomId")
-	defer ErrorResponse(c)
-	room := models.FindByRoomID(id)
-	c.JSON(http.StatusOK, models.UpdateRoom(req, room))
+
+	r, err := models.FindByRoomID(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, r)
 }
 
 func DeleteRoom(c *gin.Context) {
-	id := c.Param("roomId")
 	defer ErrorResponse(c)
-	r := models.FindByRoomID(id)
-	c.JSON(http.StatusOK, models.DeleteRoom(r))
+	id := c.Param("roomId")
+	r, err := models.FindByRoomID(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, r)
 }

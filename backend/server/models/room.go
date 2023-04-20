@@ -19,7 +19,7 @@ type Room struct {
 	RoomMaker    string   `json:"roomMaker"`
 }
 
-func GetRooms(id []string) []Room {
+func GetRooms(id []string) ([]Room, error) {
 	db := db.GetDB()
 	rs := []Room{}
 	var err error
@@ -30,7 +30,7 @@ func GetRooms(id []string) []Room {
 		err = db.Where("id = ?", v).First(&r).Error
 		if err != nil {
 			log.Fatal(err)
-			return rs
+			return rs, err
 		}
 
 		rs = append(rs, r)
@@ -38,22 +38,22 @@ func GetRooms(id []string) []Room {
 		rs[i].Members = ms
 	}
 
-	return rs
+	return rs, err
 }
 
-func FindByRoomID(id string) Room {
+func FindByRoomID(id string) (Room, error) {
 	db := db.GetDB()
 	r := Room{}
 	ms := []Member{}
 	err := db.Where("id = ?", id).First(&r).Error
 	if err != nil {
 		log.Fatal(err)
-		return r
+		return r, err
 	}
 
 	db.Where("room_id = ?", id).Find(&ms)
 	r.Members = ms
-	return r
+	return r, err
 }
 
 func FindIsOpenByRoomID(id string) bool {
@@ -89,31 +89,35 @@ func CreateRoom(r Room) (Room, error) {
 	return r, err
 }
 
-func UpdateRoom(reqR, r Room) Room {
+func UpdateRoom(reqR, r Room) (Room, error) {
 	db := db.GetDB()
 	reqR.LastUpdate = utils.GetCurrentTime()
 	err := db.Model(&r).Updates(reqR).Error
 	if err != nil {
 		log.Fatal(err)
-		return r
+		return r, err
 	}
 
-	return r
+	return r, err
 }
 
-func DeleteRoom(r Room) Room {
+func DeleteRoom(r Room) (Room, error) {
 	db := db.GetDB()
 	ms := []Member{}
 
-	if db.Where("room_id = ?", r.ID).First(&ms).Error == nil {
-		db.Where("room_id = ?", r.ID).Find(&ms)
-		db.Delete(&ms)
-	}
-	err := db.Delete(&r).Error
+	err := db.Where("room_id = ?", r.ID).First(&ms).Error
 	if err != nil {
 		log.Fatal(err)
-		return r
+		return r, err
+	}
+	db.Where("room_id = ?", r.ID).Find(&ms)
+	db.Delete(&ms)
+
+	err = db.Delete(&r).Error
+	if err != nil {
+		log.Fatal(err)
+		return r, err
 	}
 
-	return r
+	return r, err
 }
