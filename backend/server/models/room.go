@@ -22,16 +22,22 @@ type Room struct {
 func GetRooms(id []string) []Room {
 	db := db.GetDB()
 	rs := []Room{}
+	var err error
+
 	for i, v := range id {
 		r := Room{}
 		ms := []Member{}
-		if err := db.Where("id = ?", v).First(&r).Error; err != nil {
+		err = db.Where("id = ?", v).First(&r).Error
+		if err != nil {
 			log.Fatal(err)
+			return rs
 		}
+
 		rs = append(rs, r)
 		db.Where("room_id = ?", v).Find(&ms)
 		rs[i].Members = ms
 	}
+
 	return rs
 }
 
@@ -39,27 +45,32 @@ func FindByRoomID(id string) Room {
 	db := db.GetDB()
 	r := Room{}
 	ms := []Member{}
-	if err := db.Where("id = ?", id).First(&r).Error; err != nil {
+	err := db.Where("id = ?", id).First(&r).Error
+	if err != nil {
 		log.Fatal(err)
+		return r
 	}
+
 	db.Where("room_id = ?", id).Find(&ms)
 	r.Members = ms
-	// fmt.Println("Getting Room Is Success!!")
 	return r
 }
 
 func FindIsOpenByRoomID(id string) bool {
 	db := db.GetDB()
 	r := Room{}
-	if err := db.Where("id = ?", id).First(&r).Error; err != nil {
+	err := db.Where("id = ?", id).First(&r).Error
+	if err != nil {
 		log.Fatal(err)
+		return false
 	}
+
 	res := *r.IsOpen
 
 	return res
 }
 
-func CreateRoom(r Room) Room {
+func CreateRoom(r Room) (Room, error) {
 	db := db.GetDB()
 	ptrue := &[]bool{true}[0]
 	ptag := &[]string{""}[0]
@@ -69,30 +80,40 @@ func CreateRoom(r Room) Room {
 	r.LastUpdate = utils.GetCurrentTime()
 	r.Tags = ptag
 
-	if err := db.Create(&r).Error; err != nil {
+	err := db.Create(&r).Error
+	if err != nil {
 		log.Fatal(err)
+		return r, err
 	}
-	return r
+
+	return r, err
 }
 
 func UpdateRoom(reqR, r Room) Room {
 	db := db.GetDB()
 	reqR.LastUpdate = utils.GetCurrentTime()
-	if err := db.Model(&r).Updates(reqR).Error; err != nil {
+	err := db.Model(&r).Updates(reqR).Error
+	if err != nil {
 		log.Fatal(err)
+		return r
 	}
+
 	return r
 }
 
 func DeleteRoom(r Room) Room {
 	db := db.GetDB()
 	ms := []Member{}
+
 	if db.Where("room_id = ?", r.ID).First(&ms).Error == nil {
 		db.Where("room_id = ?", r.ID).Find(&ms)
 		db.Delete(&ms)
 	}
-	if err := db.Delete(&r).Error; err != nil {
+	err := db.Delete(&r).Error
+	if err != nil {
 		log.Fatal(err)
+		return r
 	}
+
 	return r
 }

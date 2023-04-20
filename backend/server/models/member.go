@@ -5,7 +5,6 @@ import (
 
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/db"
 	"github.com/SystemEngineeringTeam/Hack-U_2022/backend/server/utils"
-	"github.com/gin-gonic/gin"
 )
 
 type Member struct {
@@ -16,7 +15,7 @@ type Member struct {
 	Tag        *string `json:"tag"`
 }
 
-func AddMember(m Member) Member {
+func AddMember(m Member) (Member, error) {
 	db := db.GetDB()
 	reqR := Room{}
 	r := FindByRoomID(m.RoomId)
@@ -25,14 +24,16 @@ func AddMember(m Member) Member {
 	if !isOpen {
 		log.Fatal("This Room Is No Longer Wanted")
 	}
-	if err := db.Create(&m).Error; err != nil {
+	err := db.Create(&m).Error
+	if err != nil {
 		log.Fatal(err)
+		return m, err
 	}
 
 	reqR.MemberAmount = r.MemberAmount + 1
 	UpdateRoom(reqR, r)
 
-	return m
+	return m, err
 }
 
 // 指定された部屋のメンバー取得
@@ -45,33 +46,17 @@ func FindMemberByRoomId(rId int) []*Member {
 	return ms
 }
 
-// メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
-func DeleteMember(mId int) gin.H {
-	db := db.GetDB()
-	m := Member{}
-
-	db.Where("id = ?", mId).Find(&m)
-	if err := db.Unscoped().Delete(&m).Error; err != nil {
-		log.Fatal(err)
-	}
-
-	room := Room{}
-	r := FindByRoomID(m.RoomId)
-	room.MemberAmount = r.MemberAmount - 1
-	UpdateRoom(room, r)
-
-	return gin.H{"message": "MemberData could be deleted."}
-}
-
 // メンバーの概要変更 r.PUT("/api/room/member/:userId/", controller.PutChangeMemberData)
-func UpdateMember(memberId int, m Member) Member {
+func UpdateMember(memberId int, m Member) (Member, error) {
 	db := db.GetDB()
 	resM := Member{}
 
 	db.Where("id = ?", memberId).Find(&resM)
 
-	if err := db.Model(&resM).Updates(m).Error; err != nil {
+	err := db.Model(&resM).Updates(m).Error
+	if err != nil {
 		log.Fatal(err)
+		return resM, err
 	}
 
 	// 最終更新時間を今の時間に変更
@@ -80,5 +65,25 @@ func UpdateMember(memberId int, m Member) Member {
 	reqR.LastUpdate = utils.GetCurrentTime()
 	UpdateRoom(reqR, r)
 
-	return resM
+	return resM, err
+}
+
+// メンバーの削除 r.DELETE("/api/room/member/:userId/", controller.DeletExitMemberData)
+func DeleteMember(mId int) (string, error) {
+	db := db.GetDB()
+	m := Member{}
+
+	db.Where("id = ?", mId).Find(&m)
+	err := db.Unscoped().Delete(&m).Error
+	if err != nil {
+		log.Fatal(err)
+		return "Member could not be deleted.", err
+	}
+
+	room := Room{}
+	r := FindByRoomID(m.RoomId)
+	room.MemberAmount = r.MemberAmount - 1
+	UpdateRoom(room, r)
+
+	return "Member could be deleted.", err
 }
